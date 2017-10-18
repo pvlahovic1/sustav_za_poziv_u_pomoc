@@ -44,7 +44,7 @@ captures/
 *.iml
 *.ipr
 target/
-!.mvn/wrapper/maven-wrapper.jar
+.mvn/**
 
 # Keystore files
 *.jks
