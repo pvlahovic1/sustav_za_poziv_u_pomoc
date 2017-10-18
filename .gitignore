@@ -8,6 +8,13 @@
 # Java class files
 *.class
 
+# Package Files #
+*.jar
+*.war
+*.ear
+
+!/.mvn/wrapper/maven-wrapper.jar
+
 # Generated files
 bin/
 gen/
@@ -44,7 +51,6 @@ captures/
 *.iml
 *.ipr
 target/
-.mvn/**
 
 # Keystore files
 *.jks
