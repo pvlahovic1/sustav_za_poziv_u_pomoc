@@ -39,6 +39,12 @@ captures/
 .idea/gradle.xml
 .idea/dictionaries
 .idea/libraries
+.idea
+*.iws
+*.iml
+*.ipr
+target/
+!.mvn/wrapper/maven-wrapper.jar
 
 # Keystore files
 *.jks
