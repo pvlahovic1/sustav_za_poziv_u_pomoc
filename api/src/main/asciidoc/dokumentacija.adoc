@@ -1,0 +1,79 @@
+:toc: left
+:toclevels: 4
+:toc-title: Sadržaj
+
+= Tehnička dokumentacija REST API-a sustava za slanje poziva u pomoć
+
+== Uvod
+Ovaj dokuemnt predstavlja dokumentaciju koja služi kao pomoć pri korištenju API-a. Unutar dokumenta biti će objašnjene
+glavne funkcionalnosti API-a.
+
+API sustava za poziv u pomoć služi za dohvačanje podataka iz sustava. API je organiziran kao REST servis te se do podataka
+dolazi uz pomoć HTTP zahtjeva na određeni URL. Dalje u dokumentu nalaze specificirani HTTP zahtjevi za izmjenu podataka sa sustavom.
+
+== Popis HTTP statusa
+Niže u tablici nalaze se popisi svih HTTP statusa koji se mogu dogoditi unutar ovog API-a.
+
+[cols="2", options="header"]
+|==========================
+|HTTP status                |Opis
+|200 OK                     |Standardni pozitivni odgovor HTTP odgovora. Točan odgovor ovisiti će o korištenoj HTTP metodi. U slučaju GET metode, odgovor će sadržavati JSON sadržaj koji odgovara uvjetima u zahtjevu. Prilikom korištenja POST metode, postoji više mogučnosti. 1. odgovor će biti prazan (označava da je zahtjevana akcija uspješno izvršena). 2. Odgovor će sadržavati status izvršene akcije. 3. Dogovor sadrži JSON sadržaj koji odgovara uvjetima u zahtjevu.
+|404 Not Found              |Status koji označava da se zahtjeva sadržaj na URL koji nije specificiran.
+|400 Bad Request            |Status koji označava da aplikacija ne može obraditi zahtjev zbog korisničke pogreške. Do greške često dolai zbog toga što se u zahtjevu ne specificiraju potrebni parametri.
+|500 Internal Server Error  |Status koji označava grešku u radu samog API-a.
+|==========================
+
+== Korisnik
+Unutar ovog poglavlja nalaziti će se podaci vezani uz manipulaciju podataka o korisniku.
+
+=== Prijava korisnika
+Zahtjevi za provjeru ispravnosti korisničkih podataka.
+
+==== CURL zahtjev
+include::{snippets}/korisnik-prijava/curl-request.adoc[]
+
+==== httpie zahtjev
+include::{snippets}/korisnik-prijava/httpie-request.adoc[]
+
+==== HTTP zahtjev
+include::{snippets}/korisnik-prijava/http-request.adoc[]
+
+Sljedeća tablica prikazuje podatke koji se nalaze unutar tijela zahtjeva u JSON formatu.
+[cols="2", options="header"]
+|===
+|Varijabla|Značenje
+|mail       | eMail adresa korisnika za kojeg se želi provjeriti ispravnost podataka
+|lozinka    | Lozinka korisnika za kojeg se želi provjeriti ispravnost podataka
+|===
+
+==== HTTP odgovor
+Prikaz odgovora nakon uspješne prijave
+include::{snippets}/korisnik-prijava/http-response.adoc[]
+
+Podaci koji se nalaze unutar tablice objašnjavaju podatke koji su dohvaćeni sa servisa nakon uspješne prijave.
+include::{snippets}/korisnik-prijava/response-fields.adoc[]
+
+=== Registracija korisnika
+Zahtjevi za registraciju korisnika.
+
+==== CURL zahtjev
+include::{snippets}/korisnik-registracija/curl-request.adoc[]
+
+==== httpie zahtjev
+include::{snippets}/korisnik-registracija/httpie-request.adoc[]
+
+==== HTTP zahtjev
+include::{snippets}/korisnik-registracija/http-request.adoc[]
+
+Sljedeća tablica prikazuje podatke koji se nalaze unutar tijela zahtjeva u JSON formatu.
+[cols="2", options="header"]
+|===
+|Varijabla|Značenje
+|oib        | OIB novog korisnika
+|ime        | Ime novog korisnika
+|prezime    | Prezime novog korisnika
+|adresa     | Adresa novog korisnika
+|mail       | eMail adresa novog korisnika
+|lozinka    | Lozinka novog korisnika
+|brojMob    | Broj mobitela novog korisnika
+|===
