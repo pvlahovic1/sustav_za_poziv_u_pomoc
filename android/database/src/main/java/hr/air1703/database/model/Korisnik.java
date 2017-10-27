@@ -18,9 +18,9 @@ public class Korisnik extends BaseModel {
 
     @PrimaryKey(autoincrement = true)
     @Column
-    private int id;
+    private int idKorisnik;
     @Column
-    private String OIB;
+    private String oib;
     @Column
     private String ime;
     @Column
@@ -28,40 +28,40 @@ public class Korisnik extends BaseModel {
     @Column
     private String adresa;
     @Column
-    private String email;
+    private String mail;
     @Column
     private String lozinka;
     @Column
-    private String brojMobitela;
+    private String brojMob;
 
     public Korisnik() {
     }
 
-    public Korisnik(int id, String OIB, String ime, String prezime, String adresa, String email, String lozinka, String brojMobitela) {
-        this.id = id;
-        this.OIB = OIB;
+    public Korisnik(int idKorisnik, String oib, String ime, String prezime, String adresa, String mail, String lozinka, String brojMob) {
+        this.idKorisnik = idKorisnik;
+        this.oib = oib;
         this.ime = ime;
         this.prezime = prezime;
         this.adresa = adresa;
-        this.email = email;
+        this.mail = mail;
         this.lozinka = lozinka;
-        this.brojMobitela = brojMobitela;
+        this.brojMob = brojMob;
     }
 
-    public int getId() {
-        return id;
+    public int getIdKorisnik() {
+        return idKorisnik;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdKorisnik(int idKorisnik) {
+        this.idKorisnik = idKorisnik;
     }
 
-    public String getOIB() {
-        return OIB;
+    public String getOib() {
+        return oib;
     }
 
-    public void setOIB(String OIB) {
-        this.OIB = OIB;
+    public void setOib(String oib) {
+        this.oib = oib;
     }
 
     public String getIme() {
@@ -88,12 +88,12 @@ public class Korisnik extends BaseModel {
         this.adresa = adresa;
     }
 
-    public String getEmail() {
-        return email;
+    public String getMail() {
+        return mail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     public String getLozinka() {
@@ -104,12 +104,12 @@ public class Korisnik extends BaseModel {
         this.lozinka = lozinka;
     }
 
-    public String getBrojMobitela() {
-        return brojMobitela;
+    public String getBrojMob() {
+        return brojMob;
     }
 
-    public void setBrojMobitela(String brojMobitela) {
-        this.brojMobitela = brojMobitela;
+    public void setBrojMob(String brojMob) {
+        this.brojMob = brojMob;
     }
 
     public static List<Korisnik> getAll(){
