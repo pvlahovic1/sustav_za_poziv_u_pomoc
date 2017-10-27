@@ -3,6 +3,7 @@ package hr.foi.airprojekt.controller.rest;
 import hr.foi.airprojekt.exception.KorisnikCredentialsException;
 import hr.foi.airprojekt.model.Korisnik;
 import hr.foi.airprojekt.service.KorisnikService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -17,11 +18,11 @@ import java.util.Map;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/rest-api")
 public class KorisnikRestController {
 
-    @Autowired
-    private KorisnikService korisnikService;
+    private final KorisnikService korisnikService;
 
     @PostMapping("/korisnik/login")
     public Korisnik provideKorisnik(HttpServletResponse httpServletResponse, @RequestBody Map<String, String> map) throws IOException {

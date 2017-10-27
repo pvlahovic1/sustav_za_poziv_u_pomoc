@@ -3,14 +3,15 @@ package hr.foi.airprojekt.service;
 import hr.foi.airprojekt.exception.KorisnikCredentialsException;
 import hr.foi.airprojekt.model.Korisnik;
 import hr.foi.airprojekt.repository.KorisnikRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class KorisnikServiceImpl implements KorisnikService {
 
-    @Autowired
-    private KorisnikRepository korisnikRepository;
+    private final KorisnikRepository korisnikRepository;
 
     @Override
     public Korisnik fetchKorisnikByMailAndLozinka(String mail, String lozinka) {
