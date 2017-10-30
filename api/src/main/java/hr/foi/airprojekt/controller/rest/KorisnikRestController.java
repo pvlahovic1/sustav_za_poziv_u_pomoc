@@ -26,7 +26,7 @@ public class KorisnikRestController {
 
     @PostMapping("/korisnik/login")
     public Korisnik provideKorisnik(HttpServletResponse httpServletResponse, @RequestBody Map<String, String> map) throws IOException {
-        log.trace("POST /rest-api/korisnik/login");
+        log.info("POST /rest-api/korisnik/login");
         String mail = map.get("mail");
         String lozinka = map.get("lozinka");
         Korisnik korisnik = null;
@@ -48,13 +48,28 @@ public class KorisnikRestController {
 
     @PostMapping("/korisnik")
     public void registerNewKorisnik(HttpServletResponse httpServletResponse, @RequestBody Korisnik korisnik) throws IOException {
-        log.trace("POST /rest-api/korisnik");
+        log.info("POST /rest-api/korisnik");
         try {
             korisnikService.registerNewKorisnik(korisnik);
         } catch (KorisnikCredentialsException e) {
             log.error(e.getMessage(), e);
             httpServletResponse.sendError(400, e.getMessage());
         }
+    }
+
+    @PostMapping("/korisnik/update")
+    public Korisnik updateKorisnik(HttpServletResponse httpServletResponse, @RequestBody Korisnik korisnikUpdate) throws IOException {
+        log.info("POST /rest-api/korisnik/update");
+        Korisnik postojeciKorisnik = null;
+        try {
+            postojeciKorisnik = korisnikService.fetchKorisnikByOib(korisnikUpdate.getOib());
+            postojeciKorisnik = korisnikService.updateKorisnik(postojeciKorisnik, korisnikUpdate);
+        } catch (KorisnikCredentialsException e) {
+            log.error(e.getMessage(), e);
+            httpServletResponse.sendError(400, e.getMessage());
+        }
+
+        return postojeciKorisnik;
     }
 }
 

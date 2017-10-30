@@ -77,3 +77,23 @@ Sljedeća tablica prikazuje podatke koji se nalaze unutar tijela zahtjeva u JSON
 |lozinka    | Lozinka novog korisnika
 |brojMob    | Broj mobitela novog korisnika
 |===
+
+
+=== Update korisnika
+Zahtjevi za udpate korisnika.
+
+==== CURL zahtjev
+include::{snippets}/korisnik-update/curl-request.adoc[]
+
+==== httpie zahtjev
+include::{snippets}/korisnik-update/httpie-request.adoc[]
+
+==== HTTP zahtjev
+include::{snippets}/korisnik-update/http-request.adoc[]
+
+==== HTTP odgovor
+Prikaz odgovora nakon uspješnog ažuriranja podataka
+include::{snippets}/korisnik-update/http-response.adoc[]
+
+Podaci koji se nalaze unutar tablice objašnjavaju podatke koji su dohvaćeni sa servisa nakon uspješne izmjene podataka.
+include::{snippets}/korisnik-update/response-fields.adoc[]

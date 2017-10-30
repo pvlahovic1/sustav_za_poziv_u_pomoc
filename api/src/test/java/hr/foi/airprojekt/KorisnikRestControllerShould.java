@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -92,6 +93,32 @@ public class KorisnikRestControllerShould {
                 .content(content))
                 .andExpect(status().isOk())
                 .andDo(document("korisnik-registracija"));
+    }
+
+    @Test
+    public void updateKorisnik_onUpdateKorisnik() throws Exception {
+        FieldDescriptor[] book = new FieldDescriptor[] {
+                fieldWithPath("idKorisnik").description("Id korisnika"),
+                fieldWithPath("oib").description("OIB korisnika"),
+                fieldWithPath("ime").description("Izmjenjeno ime korisnika"),
+                fieldWithPath("prezime").description("Izmjenjeno prezime korisnika"),
+                fieldWithPath("adresa").description("Izmjenjena adresa korisnika"),
+                fieldWithPath("mail").description("Izmjenjena eMail adresa korisnika"),
+                fieldWithPath("lozinka").description("Izmjenjena lozinka korisnika"),
+                fieldWithPath("brojMob").description("Izmjenjen broj mobitela korisnika") };
+
+
+        when(korisnikService.fetchKorisnikByOib("12345678903")).thenReturn(korisnik);
+        when(korisnikService.updateKorisnik(any(), any())).thenReturn(korisnik);
+
+        String content = "{\"oib\": \"12345678903\", \"ime\": \"Ime\", \"prezime\": \"Prezime\", \"adresa\":" +
+                " \"Adresa\", \"mail\": \"mail@mail.com\", \"lozinka\": \"lozinka\", \"brojMob\": \"0987654321\"}";
+
+        mvc.perform(post("/rest-api/korisnik/update")
+                .contentType(APPLICATION_JSON_UTF8)
+                .content(content))
+                .andExpect(status().isOk())
+                .andDo(document("korisnik-update", responseFields(book)));
     }
 
 }

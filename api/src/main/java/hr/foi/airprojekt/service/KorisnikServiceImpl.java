@@ -25,6 +25,31 @@ public class KorisnikServiceImpl implements KorisnikService {
     }
 
     @Override
+    public Korisnik fetchKorisnikByOib(String oib) {
+        Korisnik korisnik = korisnikRepository.findKorisnikByOib(oib);
+
+        if (korisnik == null) {
+            throw new KorisnikCredentialsException("Invalid Oib");
+        }
+
+        return korisnik;
+    }
+
+    @Override
+    public Korisnik updateKorisnik(Korisnik stariKorisnik, Korisnik noviKorisnik) {
+        stariKorisnik.setIme(noviKorisnik.getIme());
+        stariKorisnik.setPrezime(noviKorisnik.getPrezime());
+        stariKorisnik.setMail(noviKorisnik.getMail());
+        stariKorisnik.setLozinka(noviKorisnik.getLozinka());
+        stariKorisnik.setBrojMob(noviKorisnik.getBrojMob());
+        stariKorisnik.setAdresa(noviKorisnik.getAdresa());
+
+        korisnikRepository.save(stariKorisnik);
+
+        return stariKorisnik;
+    }
+
+    @Override
     public void registerNewKorisnik(Korisnik korisnik) {
         try {
             korisnikRepository.save(korisnik);
