@@ -1,8 +1,13 @@
 package hr.air1703.procare;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
@@ -16,6 +21,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final EditText etEmail = (EditText) findViewById(R.id.etEmail);
+        final EditText pPassword = (EditText) findViewById(R.id.pPassword);
+        final Button bLogin = (Button) findViewById(R.id.bPrijava);
+        final TextView registerLink = (TextView) findViewById(R.id.tvRegistracija);
+
+        //listener
+        registerLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
+                MainActivity.this.startActivity(registerIntent);
+            }
+        });
+
         FlowManager.init(new FlowConfig.Builder(this).build());
 
         if (Korisnik.getAll().isEmpty()) {
