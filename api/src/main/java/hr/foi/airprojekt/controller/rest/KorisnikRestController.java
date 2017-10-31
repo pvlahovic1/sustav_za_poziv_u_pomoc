@@ -47,14 +47,18 @@ public class KorisnikRestController {
     }
 
     @PostMapping("/korisnik")
-    public void registerNewKorisnik(HttpServletResponse httpServletResponse, @RequestBody Korisnik korisnik) throws IOException {
+    public Korisnik registerNewKorisnik(HttpServletResponse httpServletResponse, @RequestBody Korisnik korisnik) throws IOException {
         log.info("POST /rest-api/korisnik");
+        Korisnik registriraniKorisnik = null;
+
         try {
-            korisnikService.registerNewKorisnik(korisnik);
+            registriraniKorisnik = korisnikService.registerNewKorisnik(korisnik);
         } catch (KorisnikCredentialsException e) {
             log.error(e.getMessage(), e);
             httpServletResponse.sendError(400, e.getMessage());
         }
+
+        return registriraniKorisnik;
     }
 
     @PostMapping("/korisnik/update")

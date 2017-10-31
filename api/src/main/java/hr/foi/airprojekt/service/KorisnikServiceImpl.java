@@ -50,9 +50,10 @@ public class KorisnikServiceImpl implements KorisnikService {
     }
 
     @Override
-    public void registerNewKorisnik(Korisnik korisnik) {
+    public Korisnik registerNewKorisnik(Korisnik korisnik) {
         try {
             korisnikRepository.save(korisnik);
+            return korisnik;
         } catch (Exception e) {
             String errorMessage;
             if (e.getMessage().contains("oib_UNIQUE")) {
