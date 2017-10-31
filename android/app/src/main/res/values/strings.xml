@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">ProCare</string>
+    <string name="message_to_get_data_from_api">Neuspješan dohvat podataka sa servera</string>
+    <string name="message_bad_user_data">Neispravni korisnički podaci</string>
+    <string name="error_infinitiv">Greška</string>
 </resources>

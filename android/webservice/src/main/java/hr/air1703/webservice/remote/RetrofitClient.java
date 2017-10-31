@@ -1,4 +1,4 @@
-package hr.air1703.database.remote;
+package hr.air1703.webservice.remote;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

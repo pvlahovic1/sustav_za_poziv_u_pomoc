@@ -139,8 +139,9 @@ public class Korisnik extends BaseModel {
         return SQLite.select().from(Korisnik.class).queryList();
     }
 
-    public String toLog(){
-        return " Account: idKorisnik: " + idKorisnik +
+    @Override
+    public String toString() {
+        return "Korisnik: idKorisnik: " + idKorisnik +
                 ", oib: " + oib +
                 ", ime: " + ime +
                 ", prezime: " + prezime +
@@ -149,4 +150,5 @@ public class Korisnik extends BaseModel {
                 ", lozinka: " + lozinka +
                 ", brojMob: " + brojMob;
     }
+
 }

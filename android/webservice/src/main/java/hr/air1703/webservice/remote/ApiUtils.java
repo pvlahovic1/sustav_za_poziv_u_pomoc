@@ -1,4 +1,4 @@
-package hr.air1703.database.remote;
+package hr.air1703.webservice.remote;
 
 /**
  * This class has the base URL as a static variable and also
