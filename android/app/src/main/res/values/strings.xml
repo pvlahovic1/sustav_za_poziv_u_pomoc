@@ -12,7 +12,7 @@
     <string name="error_email_validation">Email nije validan</string>
     <string name="error_oib_validation">OIB nije validan</string>
     <string name="error_lozinka_field">Šifra ne smije biti prazno</string>
-    <string name="error_lozinka_length_field">Šifra mora sadržaati minimalno 5 znakova</string>
+    <string name="error_lozinka_length_field">Šifra mora sadržavati minimalno 5 znakova</string>
     <string name="error_adresa_field">Adresa ne smije biti prazno</string>
     <string name="error_oib_field">OIB ne smije biti prazno</string>
     <string name="error_broj_mobitela_field">Broj mobitela ne smije biti prazno</string>
