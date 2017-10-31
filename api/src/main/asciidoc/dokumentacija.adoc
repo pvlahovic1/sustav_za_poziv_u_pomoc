@@ -5,7 +5,7 @@
 = Tehnička dokumentacija REST API-a sustava za slanje poziva u pomoć
 
 == Uvod
-Ovaj dokuemnt predstavlja dokumentaciju koja služi kao pomoć pri korištenju API-a. Unutar dokumenta biti će objašnjene
+Ovaj dokument predstavlja dokumentaciju koja služi kao pomoć pri korištenju API-a. Unutar dokumenta biti će objašnjene
 glavne funkcionalnosti API-a.
 
 API sustava za poziv u pomoć služi za dohvačanje podataka iz sustava. API je organiziran kao REST servis te se do podataka
@@ -80,7 +80,7 @@ Sljedeća tablica prikazuje podatke koji se nalaze unutar tijela zahtjeva u JSON
 
 
 === Update korisnika
-Zahtjevi za udpate korisnika.
+Zahtjevi za update korisnika.
 
 ==== CURL zahtjev
 include::{snippets}/korisnik-update/curl-request.adoc[]
