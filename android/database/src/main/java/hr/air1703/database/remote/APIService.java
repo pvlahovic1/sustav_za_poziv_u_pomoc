@@ -1,5 +1,5 @@
 package hr.air1703.database.remote;
-import hr.air1703.database.model.Post;
+import hr.air1703.database.model.Korisnik;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -16,7 +16,7 @@ public interface APIService {
     // Login
     @POST("/rest-api/korisnik/login")
     //@FormUrlEncoded
-    Call<Post> sendLogin(@Body Post post);
+    Call<Korisnik> sendLogin(@Body Korisnik korisnik);
 
 
     // Registration

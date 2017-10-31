@@ -14,7 +14,6 @@ import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
 import hr.air1703.database.model.Korisnik;
-import hr.air1703.database.model.Post;
 import hr.air1703.database.remote.APIService;
 import hr.air1703.database.remote.ApiUtils;
 import hr.air1703.procare.helper.MockData;
@@ -25,7 +24,6 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private APIService mAPIService;
-    private String APIResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(mail) && !TextUtils.isEmpty(lozinka)){
 
                     // create new body
-                    final Post LoginPost = new Post();
+                    final Korisnik LoginPost = new Korisnik();
                     LoginPost.setMail(mail);
                     LoginPost.setLozinka(lozinka);
 
@@ -80,27 +78,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void sendLogin(Post LoginPost){
-        mAPIService.sendLogin(LoginPost).enqueue(new Callback<Post>() {
+    public void sendLogin(Korisnik LoginPost){
+        mAPIService.sendLogin(LoginPost).enqueue(new Callback<Korisnik>() {
             @Override
-            public void onResponse(Call<Post> call, Response<Post> response) {
+            public void onResponse(Call<Korisnik> call, Response<Korisnik> response) {
                 if (response.isSuccessful()){
-                    showResponse(response.body().toString(), response.body().toLog());
+                    Log.i("API", "Login submitted to API. Response: " + response.body().toString());
+                    Log.i("API", "Received from API. Response: " + response.body().toLog());
                 }
                 else if(response.code() == 400){
                     Log.i("API", "ERROR: Message code 400.");
                 }
+                else{
+                    Log.i("API", "ERROR: Connection to API failed.");
+                }
             }
             @Override
-            public void onFailure(Call<Post> call, Throwable t) {
+            public void onFailure(Call<Korisnik> call, Throwable t) {
                     Log.e("API", "Unable to submit post to API.");
             }
         });
-    }
-
-    // Log successful response from API
-    public void showResponse(String responseBody, String responseLog){
-        Log.i("API", "Login submitted to API." + responseBody);
-        Log.i("API", "Received from API." + responseLog);
     }
 }
