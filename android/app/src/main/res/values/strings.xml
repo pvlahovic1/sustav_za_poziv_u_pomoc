@@ -22,9 +22,11 @@
     <string name="spremi">Spremi</string>
     <string name="oib">OIB</string>
     <string name="adresa">Adresa</string>
-    <string name="ifra">Šifra</string>
+    <string name="lozinka">Lozinka</string>
     <string name="email">Email</string>
     <string name="prezime">Prezime</string>
     <string name="ime">Ime</string>
+    <string name="prijava">Prijava</string>
+    <string name="registracija">Registracija</string>
 
 </resources>

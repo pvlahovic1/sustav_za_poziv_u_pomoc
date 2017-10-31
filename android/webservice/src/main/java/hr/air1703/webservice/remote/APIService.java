@@ -20,4 +20,7 @@ public interface APIService {
     @POST("/rest-api/korisnik")
     Call<Korisnik> sendRegister(@Body Korisnik korisnik);
 
+    @POST("/rest-api/korisnik/update")
+    Call<Korisnik> sendUpdate(@Body Korisnik korisnik);
+
 }

@@ -52,7 +52,7 @@ public class UserApi {
         });
     }
 
-    public void register(final Korisnik korisnik) {
+    public void register(Korisnik korisnik) {
         mAPIService.sendRegister(korisnik).enqueue(new Callback<Korisnik>() {
 
             @Override
@@ -61,20 +61,7 @@ public class UserApi {
                     Log.i("API", "Register response: " + response.body().toString());
                     APIResponseListener.onLoginSucceeded(response.body());
                 } else {
-                    String errorMessage = "";
-                    try {
-                         errorMessage = new String (response.errorBody().bytes());
-                    } catch (IOException e) {
-                        Log.e("API", "Greška bez error message", e);
-                    }
-
-                    if (!TextUtils.isEmpty(errorMessage) && errorMessage.contains("OIB")) {
-                        APIResponseListener.onError(R.string.message_oib_already_exists);
-                    } else if (!TextUtils.isEmpty(errorMessage) && errorMessage.contains("mail")) {
-                        APIResponseListener.onError(R.string.message_mail_already_exists);
-                    } else {
-                        APIResponseListener.onError(R.string.message_bad_user_data);
-                    }
+                    handleError(response);
                 }
             }
 
@@ -84,6 +71,44 @@ public class UserApi {
             }
 
         });
+    }
+
+    public void update(Korisnik korisnik) {
+        mAPIService.sendUpdate(korisnik).enqueue(new Callback<Korisnik>() {
+
+            @Override
+            public void onResponse(Call<Korisnik> call, Response<Korisnik> response) {
+                if (response.isSuccessful()) {
+                    Log.i("API", "Update response: " + response.body().toString());
+                    APIResponseListener.onLoginSucceeded(response.body());
+                } else {
+                    handleError(response);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Korisnik> call, Throwable t) {
+                APIResponseListener.onError(R.string.message_to_get_data_from_api);
+            }
+
+        });
+    }
+
+    private void handleError(Response<Korisnik> response) {
+        String errorMessage = "";
+        try {
+            errorMessage = new String (response.errorBody().bytes());
+        } catch (IOException e) {
+            Log.e("API", "Greška bez error message", e);
+        }
+
+        if (!TextUtils.isEmpty(errorMessage) && errorMessage.contains("OIB")) {
+            APIResponseListener.onError(R.string.message_oib_already_exists);
+        } else if (!TextUtils.isEmpty(errorMessage) && errorMessage.contains("mail")) {
+            APIResponseListener.onError(R.string.message_mail_already_exists);
+        } else {
+            APIResponseListener.onError(R.string.message_bad_user_data);
+        }
     }
 
 }
