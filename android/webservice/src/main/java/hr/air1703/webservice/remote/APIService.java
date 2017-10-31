@@ -17,4 +17,7 @@ public interface APIService {
     //@FormUrlEncoded
     Call<Korisnik> sendLogin(@Body Korisnik korisnik);
 
+    @POST("/rest-api/korisnik")
+    Call<Korisnik> sendRegister(@Body Korisnik korisnik);
+
 }

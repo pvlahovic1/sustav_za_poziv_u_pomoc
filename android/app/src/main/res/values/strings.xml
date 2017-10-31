@@ -2,5 +2,29 @@
     <string name="app_name">ProCare</string>
     <string name="message_to_get_data_from_api">Neuspješan dohvat podataka sa servera</string>
     <string name="message_bad_user_data">Neispravni korisnički podaci</string>
+    <string name="message_oib_already_exists">Upisani OIB već postoji</string>
+    <string name="message_mail_already_exists">Upisani eMail već postoji</string>
     <string name="error_infinitiv">Greška</string>
+    
+    <string name="error_ime_field">Ime ne smije biti prazno</string>
+    <string name="error_prezime_field">Prezime ne smije biti prazno</string>
+    <string name="error_email_field">Email ne smije biti prazno</string>
+    <string name="error_email_validation">Email nije validan</string>
+    <string name="error_oib_validation">OIB nije validan</string>
+    <string name="error_lozinka_field">Šifra ne smije biti prazno</string>
+    <string name="error_lozinka_length_field">Šifra mora sadržaati minimalno 5 znakova</string>
+    <string name="error_adresa_field">Adresa ne smije biti prazno</string>
+    <string name="error_oib_field">OIB ne smije biti prazno</string>
+    <string name="error_broj_mobitela_field">Broj mobitela ne smije biti prazno</string>
+    <string name="error_broj_mobitela_length">Broj mobitela mora biti duljine od 9 do 12 znakova</string>
+
+    <string name="broj_mobitela">Broj mobitela</string>
+    <string name="spremi">Spremi</string>
+    <string name="oib">OIB</string>
+    <string name="adresa">Adresa</string>
+    <string name="ifra">Šifra</string>
+    <string name="email">Email</string>
+    <string name="prezime">Prezime</string>
+    <string name="ime">Ime</string>
+
 </resources>

@@ -1,6 +1,5 @@
 package hr.air1703.procare;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,11 +14,11 @@ import com.raizlabs.android.dbflow.config.FlowManager;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import hr.air1703.core.LoginListener;
+import hr.air1703.core.APIResponseListener;
 import hr.air1703.database.model.Korisnik;
-import hr.air1703.procare.login.UserApiLogin;
+import hr.air1703.procare.login.UserApi;
 
-public class MainActivity extends AppCompatActivity  implements LoginListener {
+public class MainActivity extends AppCompatActivity  implements APIResponseListener {
 
     private EditText editTextMail;
     private EditText editTextPassword;
@@ -32,12 +31,16 @@ public class MainActivity extends AppCompatActivity  implements LoginListener {
         ButterKnife.bind(this);
         FlowManager.init(new FlowConfig.Builder(this).build());
 
+        editTextMail = (EditText) findViewById(R.id.etEmail);
+        editTextPassword = (EditText) findViewById(R.id.pPassword);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         if (!Korisnik.getAll().isEmpty()) {
             showUserAreaActivity();
         }
-
-        editTextMail = (EditText) findViewById(R.id.etEmail);
-        editTextPassword = (EditText) findViewById(R.id.pPassword);
     }
 
     @OnClick(R.id.tvRegistracija)
@@ -52,8 +55,8 @@ public class MainActivity extends AppCompatActivity  implements LoginListener {
         String mail = editTextMail.getText().toString().trim();
         String lozinka = editTextPassword.getText().toString().trim();
         if (!TextUtils.isEmpty(mail) && !TextUtils.isEmpty(lozinka)) {
-            UserApiLogin userApiLogin = new UserApiLogin(this);
-            userApiLogin.login(mail, lozinka);
+            UserApi userApi = new UserApi(this);
+            userApi.login(mail, lozinka);
         }
     }
 

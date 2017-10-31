@@ -60,8 +60,7 @@ public class Korisnik extends BaseModel {
         this.brojMob = "";
     }
 
-    public Korisnik(int idKorisnik, String oib, String ime, String prezime, String adresa, String mail, String lozinka, String brojMob) {
-        this.idKorisnik = idKorisnik;
+    public Korisnik(String oib, String ime, String prezime, String adresa, String mail, String lozinka, String brojMob) {
         this.oib = oib;
         this.ime = ime;
         this.prezime = prezime;
