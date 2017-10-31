@@ -1,5 +1,7 @@
 package hr.air1703.database.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
@@ -10,31 +12,52 @@ import java.util.List;
 
 import hr.air1703.database.MainDatabase;
 
-/**
- * Created by Tadija on 26.10.2017..
- */
 @Table(database = MainDatabase.class)
 public class Korisnik extends BaseModel {
 
     @PrimaryKey(autoincrement = true)
     @Column
+    @SerializedName("idKorisnik")
+    @Expose
     private int idKorisnik;
     @Column
+    @SerializedName("oib")
+    @Expose
     private String oib;
     @Column
+    @SerializedName("ime")
+    @Expose
     private String ime;
     @Column
+    @SerializedName("prezime")
+    @Expose
     private String prezime;
     @Column
+    @SerializedName("adresa")
+    @Expose
     private String adresa;
     @Column
+    @SerializedName("mail")
+    @Expose
     private String mail;
     @Column
+    @SerializedName("lozinka")
+    @Expose
     private String lozinka;
     @Column
+    @SerializedName("brojMob")
+    @Expose
     private String brojMob;
 
     public Korisnik() {
+        this.idKorisnik = -1;
+        this.oib = "";
+        this.ime = "";
+        this.prezime = "";
+        this.adresa = "";
+        this.mail = "";
+        this.lozinka = "";
+        this.brojMob = "";
     }
 
     public Korisnik(int idKorisnik, String oib, String ime, String prezime, String adresa, String mail, String lozinka, String brojMob) {
@@ -48,7 +71,7 @@ public class Korisnik extends BaseModel {
         this.brojMob = brojMob;
     }
 
-    public int getIdKorisnik() {
+    public Integer getIdKorisnik() {
         return idKorisnik;
     }
 
@@ -116,4 +139,14 @@ public class Korisnik extends BaseModel {
         return SQLite.select().from(Korisnik.class).queryList();
     }
 
+    public String toLog(){
+        return " Account: idKorisnik: " + idKorisnik +
+                ", oib: " + oib +
+                ", ime: " + ime +
+                ", prezime: " + prezime +
+                ", adresa: " + adresa +
+                ", mail: " + mail +
+                ", lozinka: " + lozinka +
+                ", brojMob: " + brojMob;
+    }
 }
