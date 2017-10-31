@@ -17,6 +17,7 @@ import butterknife.OnClick;
 import hr.air1703.core.APIResponseListener;
 import hr.air1703.database.model.Korisnik;
 import hr.air1703.procare.login.UserApi;
+import hr.air1703.procare.utils.Hashing;
 
 import static hr.air1703.procare.utils.ApplicationUtils.VALID_EMAIL_ADDRESS_REGEX;
 
@@ -98,22 +99,25 @@ public class SettingsActivity extends AppCompatActivity implements APIResponseLi
         } else {
             brojMobitela = editTextBrojMobitela.getText().toString().trim();
         }
-        if (TextUtils.isEmpty(editTextLozinka.getText().toString().trim())) {
-            editTextLozinka.setError(getText(R.string.error_lozinka_field));
-            isOk = false;
-        } else if(editTextLozinka.getText().toString().trim().length() < 5) {
-            editTextLozinka.setError(getText(R.string.error_lozinka_length_field));
-            isOk = false;
-        } else {
-            lozinka = editTextLozinka.getText().toString().trim();
-        }
 
-        if (isOk) {
-            Korisnik korisnik = new Korisnik(trenutniKorisnik.getOib(), ime, prezime, adresa, email, lozinka, brojMobitela);
+        lozinka = editTextLozinka.getText().toString();
 
-            UserApi userApi = new UserApi(this);
-            userApi.update(korisnik);
-        }
+            if (TextUtils.isEmpty(lozinka)) {
+                lozinka = trenutniKorisnik.getLozinka();
+            } else {
+                if (lozinka.trim().length() < 5) {
+                    editTextLozinka.setError(getText(R.string.error_lozinka_length_field));
+                    isOk = false;
+                } else {
+                    lozinka = Hashing.SHA1(lozinka);
+                }
+            }
+
+            if (isOk) {
+                Korisnik korisnik = new Korisnik(trenutniKorisnik.getOib(), ime, prezime, adresa, email, lozinka, brojMobitela);
+                UserApi userApi = new UserApi(this);
+                userApi.update(korisnik);
+            }
     }
 
     private boolean isBrojMobitelaOk(String brojMobitela) {
@@ -133,7 +137,6 @@ public class SettingsActivity extends AppCompatActivity implements APIResponseLi
             editTextIme.setText(trenutniKorisnik.getIme());
             editTextPrezime.setText(trenutniKorisnik.getPrezime());
             editTextEmail.setText(trenutniKorisnik.getMail());
-            editTextLozinka.setText(trenutniKorisnik.getLozinka());
             editTextAdresa.setText(trenutniKorisnik.getAdresa());
             editTextBrojMobitela.setText(trenutniKorisnik.getBrojMob());
         }
@@ -150,6 +153,10 @@ public class SettingsActivity extends AppCompatActivity implements APIResponseLi
         trenutniKorisnik.setBrojMob(korisnik.getBrojMob());
 
         trenutniKorisnik.update();
+        Toast.makeText(getApplicationContext(),
+                getText(R.string.update_succeeded), Toast.LENGTH_LONG).show();
+
+        onBackPressed();
     }
 
     @Override

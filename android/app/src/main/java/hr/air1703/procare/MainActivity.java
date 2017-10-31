@@ -17,6 +17,7 @@ import butterknife.OnClick;
 import hr.air1703.core.APIResponseListener;
 import hr.air1703.database.model.Korisnik;
 import hr.air1703.procare.login.UserApi;
+import hr.air1703.procare.utils.Hashing;
 
 public class MainActivity extends AppCompatActivity  implements APIResponseListener {
 
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity  implements APIResponseListe
         Log.i("button", "Login button clicked.");
         String mail = editTextMail.getText().toString().trim();
         String lozinka = editTextPassword.getText().toString().trim();
+        lozinka = Hashing.SHA1(lozinka);
         if (!TextUtils.isEmpty(mail) && !TextUtils.isEmpty(lozinka)) {
             UserApi userApi = new UserApi(this);
             userApi.login(mail, lozinka);

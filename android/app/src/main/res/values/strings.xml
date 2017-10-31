@@ -18,11 +18,14 @@
     <string name="error_broj_mobitela_field">Broj mobitela ne smije biti prazno</string>
     <string name="error_broj_mobitela_length">Broj mobitela mora biti duljine od 9 do 12 znakova</string>
 
+    <string name="update_succeeded">Podaci su uspješno ažurirani</string>
+
     <string name="broj_mobitela">Broj mobitela</string>
     <string name="spremi">Spremi</string>
     <string name="oib">OIB</string>
     <string name="adresa">Adresa</string>
     <string name="lozinka">Lozinka</string>
+    <string name="vasa_lozinka">Pohranjena lozinka</string>
     <string name="email">Email</string>
     <string name="prezime">Prezime</string>
     <string name="ime">Ime</string>

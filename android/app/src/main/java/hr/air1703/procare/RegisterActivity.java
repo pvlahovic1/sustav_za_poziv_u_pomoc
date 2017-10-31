@@ -17,6 +17,7 @@ import butterknife.OnClick;
 import hr.air1703.core.APIResponseListener;
 import hr.air1703.database.model.Korisnik;
 import hr.air1703.procare.login.UserApi;
+import hr.air1703.procare.utils.Hashing;
 
 import static hr.air1703.procare.utils.ApplicationUtils.VALID_EMAIL_ADDRESS_REGEX;
 
@@ -114,6 +115,7 @@ public class RegisterActivity extends AppCompatActivity implements APIResponseLi
         }
 
         if (isOk) {
+            lozinka = Hashing.SHA1(lozinka);
             Korisnik korisnik = new Korisnik(oib, ime, prezime, adresa, email, lozinka, brojMobitela);
 
             UserApi userApi = new UserApi(this);
@@ -127,11 +129,7 @@ public class RegisterActivity extends AppCompatActivity implements APIResponseLi
     }
 
     private boolean isBrojMobitelaOk(String brojMobitela) {
-        if (brojMobitela.length() > 8 && brojMobitela.length() < 13) {
-            return true;
-        }
-
-        return false;
+        return brojMobitela.length() > 8 && brojMobitela.length() < 13;
     }
 
     private boolean isMailValid(String email) {
