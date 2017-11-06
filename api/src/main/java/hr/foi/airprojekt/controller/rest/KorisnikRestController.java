@@ -5,7 +5,6 @@ import hr.foi.airprojekt.model.Korisnik;
 import hr.foi.airprojekt.service.KorisnikService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,12 +18,12 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/rest-api")
+@RequestMapping("/rest-api/korisnik")
 public class KorisnikRestController {
 
     private final KorisnikService korisnikService;
 
-    @PostMapping("/korisnik/login")
+    @PostMapping("/login")
     public Korisnik provideKorisnik(HttpServletResponse httpServletResponse, @RequestBody Map<String, String> map) throws IOException {
         log.info("POST /rest-api/korisnik/login");
         String mail = map.get("mail");
@@ -46,7 +45,7 @@ public class KorisnikRestController {
         return korisnik;
     }
 
-    @PostMapping("/korisnik")
+    @PostMapping()
     public Korisnik registerNewKorisnik(HttpServletResponse httpServletResponse, @RequestBody Korisnik korisnik) throws IOException {
         log.info("POST /rest-api/korisnik");
         Korisnik registriraniKorisnik = null;
@@ -61,7 +60,7 @@ public class KorisnikRestController {
         return registriraniKorisnik;
     }
 
-    @PostMapping("/korisnik/update")
+    @PostMapping("/update")
     public Korisnik updateKorisnik(HttpServletResponse httpServletResponse, @RequestBody Korisnik korisnikUpdate) throws IOException {
         log.info("POST /rest-api/korisnik/update");
         Korisnik postojeciKorisnik = null;

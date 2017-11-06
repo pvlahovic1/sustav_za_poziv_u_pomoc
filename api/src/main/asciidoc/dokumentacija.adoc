@@ -97,3 +97,20 @@ include::{snippets}/korisnik-update/http-response.adoc[]
 
 Podaci koji se nalaze unutar tablice objašnjavaju podatke koji su dohvaćeni sa servisa nakon uspješne izmjene podataka.
 include::{snippets}/korisnik-update/response-fields.adoc[]
+
+=== Slanje poziva u pomoć
+Podaci koji su potrebni za slanje poziva u pomoć
+include::{snippets}/poziv/request-fields.adoc[]
+
+==== CURL zahtjev
+include::{snippets}/poziv/curl-request.adoc[]
+
+==== httpie zahtjev
+include::{snippets}/poziv/httpie-request.adoc[]
+
+==== HTTP zahtjev
+include::{snippets}/poziv/http-request.adoc[]
+
+==== HTTP odgovor
+Prikaz odgovora nakon uspješnog poziva
+include::{snippets}/poziv/http-response.adoc[]
