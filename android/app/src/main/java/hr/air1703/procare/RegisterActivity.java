@@ -60,7 +60,6 @@ public class RegisterActivity extends AppCompatActivity implements APIResponseLi
         String lozinka = "";
         String adresa = "";
 
-
         if (TextUtils.isEmpty(editTextIme.getText().toString().trim())) {
             editTextIme.setError(getText(R.string.error_prezime_field));
             isOk = false;
@@ -115,7 +114,6 @@ public class RegisterActivity extends AppCompatActivity implements APIResponseLi
         } else {
             lozinka = editTextLozinka.getText().toString().trim();
         }
-
         if (isOk) {
             lozinka = Hashing.SHA1(lozinka);
             Korisnik korisnik = new Korisnik(oib, ime, prezime, adresa, email, lozinka, brojMobitela);
