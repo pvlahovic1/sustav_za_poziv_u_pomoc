@@ -1,4 +1,4 @@
-package hr.foi.airprojekt.model;
+package hr.foi.airprojekt.model.wrapper;
 
 import lombok.Data;
 

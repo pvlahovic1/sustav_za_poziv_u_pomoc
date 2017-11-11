@@ -2,17 +2,16 @@ package hr.foi.airprojekt.controller.rest;
 
 
 import hr.foi.airprojekt.exception.KorisnikCredentialsException;
-import hr.foi.airprojekt.model.PozivWrapper;
+import hr.foi.airprojekt.model.wrapper.OpisNesreceWrapper;
+import hr.foi.airprojekt.model.wrapper.PozivWrapper;
 import hr.foi.airprojekt.service.PozivService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -32,6 +31,12 @@ public class PozivRestController {
             log.error(e.getMessage());
             httpServletResponse.sendError(400, e.getLocalizedMessage());
         }
+    }
+
+    @GetMapping("/razlozi")
+    public List<OpisNesreceWrapper> provideAllReasons() {
+        log.info("GET /rest-api/poziv/razlozi");
+        return pozivService.fetchAllReasons();
     }
 
 }
