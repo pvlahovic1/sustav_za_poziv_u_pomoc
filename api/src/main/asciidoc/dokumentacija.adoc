@@ -114,3 +114,44 @@ include::{snippets}/poziv/http-request.adoc[]
 ==== HTTP odgovor
 Prikaz odgovora nakon uspješnog poziva
 include::{snippets}/poziv/http-response.adoc[]
+
+
+== Organizacije
+Unutar ovog poglavlja nalaziti će se podaci vezani uz manipulaciju podataka o organizacijama.
+
+=== Dohvat svih podataka
+
+==== CURL zahtjev
+include::{snippets}/oranizacija/curl-request.adoc[]
+
+==== httpie zahtjev
+include::{snippets}/oranizacija/httpie-request.adoc[]
+
+==== HTTP zahtjev
+include::{snippets}/oranizacija/http-request.adoc[]
+
+==== HTTP odgovor
+Prikaz odgovora nakon uspješnog zahtjeva
+include::{snippets}/oranizacija/http-response.adoc[]
+
+Podaci koji se nalaze unutar tablice objašnjavaju podatke koji su dohvaćeni sa servisa nakon uspješnog dohvata podataka.
+include::{snippets}/oranizacija/response-fields.adoc[]
+
+=== Dohvat podataka najbližih bolnica
+Podaci koji su potrebni za dohvat najbližih bolnica
+include::{snippets}/oranizacija-selected/request-fields.adoc[]
+
+==== CURL zahtjev
+include::{snippets}/oranizacija-selected/curl-request.adoc[]
+
+==== httpie zahtjev
+include::{snippets}/oranizacija-selected/httpie-request.adoc[]
+
+==== HTTP zahtjev
+include::{snippets}/oranizacija-selected/http-request.adoc[]
+
+==== HTTP odgovor
+Prikaz odgovora nakon uspješnog zahtjeva
+include::{snippets}/oranizacija-selected/http-response.adoc[]
+
+
