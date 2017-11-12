@@ -5,7 +5,10 @@ import com.google.gson.annotations.SerializedName;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
+
+import java.util.List;
 
 import hr.air1703.database.MainDatabase;
 
@@ -62,5 +65,16 @@ public class TipOrganizacije extends BaseModel{
 
     public void setSlikaURL(String slikaURL) {
         this.slikaURL = slikaURL;
+    }
+
+    List<Organizacija> organizacijaList;
+
+    public List<Organizacija> getOrganizacijaList(){
+        if(organizacijaList.isEmpty() || organizacijaList == null){
+            organizacijaList = new Select().from(Organizacija.class)
+                    .where(Organizacija_Table.idOrganizacija.eq(idTipOrganizacije))
+                    .queryList();
+        }
+        return organizacijaList;
     }
 }

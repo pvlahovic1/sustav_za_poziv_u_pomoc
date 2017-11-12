@@ -149,5 +149,4 @@ public class Korisnik extends BaseModel {
                 ", lozinka: " + lozinka +
                 ", brojMob: " + brojMob;
     }
-
 }

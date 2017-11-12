@@ -5,7 +5,11 @@ import com.google.gson.annotations.SerializedName;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
+
+import java.util.List;
 
 import hr.air1703.database.MainDatabase;
 
@@ -26,7 +30,7 @@ public class Organizacija extends BaseModel {
     @Expose
     private String naziv;
     @Column
-    @SerializedName("opis")
+    @SerializedName("naziv")
     @Expose
     private String opis;
     @Column
@@ -45,6 +49,8 @@ public class Organizacija extends BaseModel {
     @SerializedName("y_koordinata")
     @Expose
     private double y_koordinata;
+
+
 
     public Organizacija() {
     }
@@ -113,6 +119,21 @@ public class Organizacija extends BaseModel {
 
     public void setY_koordinata(double y_koordinata) {
         this.y_koordinata = y_koordinata;
+    }
+
+    public static List<Organizacija> getAll(){
+        return SQLite.select().from(Organizacija.class).queryList();
+    }
+
+    List<TipOrganizacije> tipOrganizacijeList;
+
+    public List<TipOrganizacije> getTipOrganizacijeList(){
+        if(tipOrganizacijeList.isEmpty() || tipOrganizacijeList == null){
+            tipOrganizacijeList = new Select().from(TipOrganizacije.class)
+                    .where(TipOrganizacije_Table.idTipOrganizacije.eq(idOrganizacija))
+                    .queryList();
+        }
+        return tipOrganizacijeList;
     }
 }
 
