@@ -6,7 +6,10 @@ import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.BaseModel;
+
+import java.util.List;
 
 import hr.air1703.database.MainDatabase;
 
@@ -40,7 +43,7 @@ public class TipOrganizacije extends BaseModel{
     @ForeignKey(tableClass = Organizacija.class)
     Organizacija organizacija;
 
-    
+
     public TipOrganizacije() {
     }
 
@@ -90,5 +93,9 @@ public class TipOrganizacije extends BaseModel{
 
     public void setOrganizacija(Organizacija organizacija) {
         this.organizacija = organizacija;
+    }
+
+    public static List<TipOrganizacije> getAll(){
+        return SQLite.select().from(TipOrganizacije.class).queryList();
     }
 }
