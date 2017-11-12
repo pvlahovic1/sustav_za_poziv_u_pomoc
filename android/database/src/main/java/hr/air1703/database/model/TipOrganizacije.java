@@ -3,12 +3,10 @@ package hr.air1703.database.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
-
-import java.util.List;
 
 import hr.air1703.database.MainDatabase;
 
@@ -33,14 +31,25 @@ public class TipOrganizacije extends BaseModel{
     @SerializedName("slikaURL")
     @Expose
     private String slikaURL;
+    @Column
+    @SerializedName("organizacijaId")
+    @Expose
+    private int organizacijaId;
 
+    @Column
+    @ForeignKey(tableClass = Organizacija.class)
+    Organizacija organizacija;
+
+    
     public TipOrganizacije() {
     }
 
-    public TipOrganizacije(int idTipOrganizacije, String naziv, String slikaURL) {
+    public TipOrganizacije(int idTipOrganizacije, String naziv, String slikaURL, int organizacijaId, Organizacija organizacija) {
         this.idTipOrganizacije = idTipOrganizacije;
         this.naziv = naziv;
         this.slikaURL = slikaURL;
+        this.organizacijaId = organizacijaId;
+        this.organizacija = organizacija;
     }
 
     public int getIdTipOrganizacije() {
@@ -67,14 +76,19 @@ public class TipOrganizacije extends BaseModel{
         this.slikaURL = slikaURL;
     }
 
-    List<Organizacija> organizacijaList;
+    public int getOrganizacijaId() {
+        return organizacijaId;
+    }
 
-    public List<Organizacija> getOrganizacijaList(){
-        if(organizacijaList.isEmpty() || organizacijaList == null){
-            organizacijaList = new Select().from(Organizacija.class)
-                    .where(Organizacija_Table.idOrganizacija.eq(idTipOrganizacije))
-                    .queryList();
-        }
-        return organizacijaList;
+    public void setOrganizacijaId(int organizacijaId) {
+        this.organizacijaId = organizacijaId;
+    }
+
+    public Organizacija getOrganizacija() {
+        return organizacija;
+    }
+
+    public void setOrganizacija(Organizacija organizacija) {
+        this.organizacija = organizacija;
     }
 }

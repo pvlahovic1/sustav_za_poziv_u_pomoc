@@ -55,7 +55,7 @@ public class Organizacija extends BaseModel {
     public Organizacija() {
     }
 
-    public Organizacija(int idOrganizacija, String naziv, String opis, int brojHitnih, int brojNehitnih, double x_koordinata, double y_koordinata) {
+    public Organizacija(int idOrganizacija, String naziv, String opis, int brojHitnih, int brojNehitnih, double x_koordinata, double y_koordinata, List<TipOrganizacije> tipOrganizacijeList) {
         this.idOrganizacija = idOrganizacija;
         this.naziv = naziv;
         this.opis = opis;
@@ -63,6 +63,7 @@ public class Organizacija extends BaseModel {
         this.brojNehitnih = brojNehitnih;
         this.x_koordinata = x_koordinata;
         this.y_koordinata = y_koordinata;
+        this.tipOrganizacijeList = tipOrganizacijeList;
     }
 
     public int getIdOrganizacija() {
@@ -121,6 +122,10 @@ public class Organizacija extends BaseModel {
         this.y_koordinata = y_koordinata;
     }
 
+    public void setTipOrganizacijeList(List<TipOrganizacije> tipOrganizacijeList) {
+        this.tipOrganizacijeList = tipOrganizacijeList;
+    }
+
     public static List<Organizacija> getAll(){
         return SQLite.select().from(Organizacija.class).queryList();
     }
@@ -130,10 +135,9 @@ public class Organizacija extends BaseModel {
     public List<TipOrganizacije> getTipOrganizacijeList(){
         if(tipOrganizacijeList.isEmpty() || tipOrganizacijeList == null){
             tipOrganizacijeList = new Select().from(TipOrganizacije.class)
-                    .where(TipOrganizacije_Table.idTipOrganizacije.eq(idOrganizacija))
+                    .where(TipOrganizacije_Table.organizacijaId.eq(idOrganizacija))
                     .queryList();
         }
         return tipOrganizacijeList;
     }
 }
-
