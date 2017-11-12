@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
@@ -30,7 +31,7 @@ public class Organizacija extends BaseModel {
     @Expose
     private String naziv;
     @Column
-    @SerializedName("naziv")
+    @SerializedName("opis")
     @Expose
     private String opis;
     @Column
@@ -55,7 +56,7 @@ public class Organizacija extends BaseModel {
     public Organizacija() {
     }
 
-    public Organizacija(int idOrganizacija, String naziv, String opis, int brojHitnih, int brojNehitnih, double x_koordinata, double y_koordinata, List<TipOrganizacije> tipOrganizacijeList) {
+    public Organizacija(int idOrganizacija, String naziv, String opis, int brojHitnih, int brojNehitnih, double x_koordinata, double y_koordinata) {
         this.idOrganizacija = idOrganizacija;
         this.naziv = naziv;
         this.opis = opis;
@@ -63,7 +64,6 @@ public class Organizacija extends BaseModel {
         this.brojNehitnih = brojNehitnih;
         this.x_koordinata = x_koordinata;
         this.y_koordinata = y_koordinata;
-        this.tipOrganizacijeList = tipOrganizacijeList;
     }
 
     public int getIdOrganizacija() {
@@ -122,22 +122,23 @@ public class Organizacija extends BaseModel {
         this.y_koordinata = y_koordinata;
     }
 
-    public void setTipOrganizacijeList(List<TipOrganizacije> tipOrganizacijeList) {
-        this.tipOrganizacijeList = tipOrganizacijeList;
-    }
-
     public static List<Organizacija> getAll(){
         return SQLite.select().from(Organizacija.class).queryList();
     }
 
-    List<TipOrganizacije> tipOrganizacijeList;
-
     public List<TipOrganizacije> getTipOrganizacijeList(){
-        if(tipOrganizacijeList.isEmpty() || tipOrganizacijeList == null){
-            tipOrganizacijeList = new Select().from(TipOrganizacije.class)
-                    .where(TipOrganizacije_Table.organizacijaId.eq(idOrganizacija))
-                    .queryList();
-        }
-        return tipOrganizacijeList;
+        return new Select().from(TipOrganizacije.class)
+                .where(TipOrganizacije_Table.organizacijaId.eq(idOrganizacija))
+                .queryList();
+    }
+
+    public static void deleteAll() {
+        Delete.table(Organizacija.class);
+    }
+
+
+    @Override
+    public String toString() {
+        return idOrganizacija + " " + naziv + " " + x_koordinata + " " + y_koordinata;
     }
 }

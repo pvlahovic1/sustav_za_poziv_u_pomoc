@@ -16,7 +16,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hr.air1703.core.APIResponseListener;
 import hr.air1703.database.model.Korisnik;
-import hr.air1703.database.model.Organizacija;
 import hr.air1703.procare.login.UserApi;
 import hr.air1703.procare.utils.Hashing;
 
@@ -83,8 +82,5 @@ public class MainActivity extends AppCompatActivity  implements APIResponseListe
         startActivity(intent);
         finish();
     }
-
-    Organizacija organizacija = new Organizacija();
-
 
 }

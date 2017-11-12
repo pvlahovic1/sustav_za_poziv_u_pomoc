@@ -6,6 +6,7 @@ import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
@@ -97,5 +98,14 @@ public class TipOrganizacije extends BaseModel{
 
     public static List<TipOrganizacije> getAll(){
         return SQLite.select().from(TipOrganizacije.class).queryList();
+    }
+
+    public static void deleteAll() {
+        Delete.table(TipOrganizacije.class);
+    }
+
+    @Override
+    public String toString() {
+        return naziv + " " + slikaURL;
     }
 }

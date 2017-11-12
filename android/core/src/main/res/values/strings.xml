@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">core</string>
+    <string name="error_organizacije_fetch">Nije uspio dohvat podataka o organizacijama</string>
+    <string name="error_organizacije_local">Nije uspio dohvat lokalnih podataka</string>
 </resources>
