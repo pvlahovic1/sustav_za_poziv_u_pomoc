@@ -155,6 +155,8 @@ include::{snippets}/oranizacija-all/http-request.adoc[]
 Prikaz odgovora nakon uspješnog zahtjeva
 include::{snippets}/oranizacija-all/http-response.adoc[]
 
+include::{snippets}/oranizacija-all/response-fields.adoc[]
+
 === Dohvat podataka najbližih bolnica
 Podaci koji su potrebni za dohvat najbližih bolnica
 include::{snippets}/oranizacija-selected/request-fields.adoc[]
@@ -171,5 +173,3 @@ include::{snippets}/oranizacija-selected/http-request.adoc[]
 ==== HTTP odgovor
 Prikaz odgovora nakon uspješnog poziva
 include::{snippets}/oranizacija-selected/http-response.adoc[]
-
-

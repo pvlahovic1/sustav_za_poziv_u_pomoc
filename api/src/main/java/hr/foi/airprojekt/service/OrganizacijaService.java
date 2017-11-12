@@ -1,13 +1,13 @@
 package hr.foi.airprojekt.service;
 
-import hr.foi.airprojekt.model.Organizacija;
-import hr.foi.airprojekt.model.OrganizacijaSearch;
+import hr.foi.airprojekt.model.wrapper.OrganizacijaSearch;
+import hr.foi.airprojekt.model.wrapper.OrganizacijaWrapper;
 
 import java.util.List;
 
 public interface OrganizacijaService {
 
-    List<Organizacija> fetchAllOrganizacija();
-    List<Organizacija> fetchaAllOrganizacijaBy(OrganizacijaSearch organizacijaSearch);
+    List<OrganizacijaWrapper> fetchAllOrganizacija();
+    List<OrganizacijaWrapper> fetchaAllOrganizacijaBy(OrganizacijaSearch organizacijaSearch);
 
 }

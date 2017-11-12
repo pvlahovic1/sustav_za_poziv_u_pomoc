@@ -1,8 +1,8 @@
 package hr.foi.airprojekt.controller.rest;
 
 
-import hr.foi.airprojekt.model.Organizacija;
-import hr.foi.airprojekt.model.OrganizacijaSearch;
+import hr.foi.airprojekt.model.wrapper.OrganizacijaSearch;
+import hr.foi.airprojekt.model.wrapper.OrganizacijaWrapper;
 import hr.foi.airprojekt.service.OrganizacijaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,13 +19,13 @@ public class OrganizacijaRestController {
     private final OrganizacijaService organizacijaService;
 
     @GetMapping
-    public List<Organizacija> provideAllOrganizacija() {
+    public List<OrganizacijaWrapper> provideAllOrganizacija() {
         log.info("GET /rest-api/ogranizacija");
         return organizacijaService.fetchAllOrganizacija();
     }
 
     @PostMapping
-    public List<Organizacija> provideOrganizacijaCloseToMe(@RequestBody OrganizacijaSearch organizacijaSearch) {
+    public List<OrganizacijaWrapper> provideOrganizacijaCloseToMe(@RequestBody OrganizacijaSearch organizacijaSearch) {
         log.info("POST /rest-api/ogranizacija");
         return organizacijaService.fetchaAllOrganizacijaBy(organizacijaSearch);
     }

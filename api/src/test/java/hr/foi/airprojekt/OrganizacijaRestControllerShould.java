@@ -1,7 +1,7 @@
 package hr.foi.airprojekt;
 
-import hr.foi.airprojekt.model.Organizacija;
-import hr.foi.airprojekt.model.OrganizacijaTip;
+import hr.foi.airprojekt.model.wrapper.OranizacijaTipWrapper;
+import hr.foi.airprojekt.model.wrapper.OrganizacijaWrapper;
 import hr.foi.airprojekt.service.OrganizacijaService;
 import org.junit.Before;
 import org.junit.Rule;
@@ -36,8 +36,8 @@ public class OrganizacijaRestControllerShould {
     @MockBean
     private OrganizacijaService organizacijaService;
 
-    private Organizacija organizacija;
-    private OrganizacijaTip organizacijaTip;
+    private OrganizacijaWrapper organizacija;
+    private OranizacijaTipWrapper organizacijaTip;
 
     @Autowired
     private WebApplicationContext context;
@@ -56,35 +56,31 @@ public class OrganizacijaRestControllerShould {
     }
 
     private void generateEntitys() {
-        organizacijaTip = new OrganizacijaTip();
-        organizacijaTip.setIdTipOrganizacija(1);
+        organizacijaTip = new OranizacijaTipWrapper();
         organizacijaTip.setNaziv("Tip test");
-        organizacijaTip.setUrlSlika("url_slike");
+        organizacijaTip.setSlikaURL("url_slike");
 
-        organizacija = new Organizacija();
-        organizacija.setIdOrganizacija(1);
+        organizacija = new OrganizacijaWrapper();
         organizacija.setNaziv("Organizacija test");
         organizacija.setOpis("Ovo je opis testne organizacije");
         organizacija.setBrojHitnih(10);
         organizacija.setBrojNehitnih(10);
         organizacija.setXKoordinata(0.0);
         organizacija.setYKoordinata(0.0);
-        organizacija.setTipOrganizacije(Collections.singleton(organizacijaTip));
+        organizacija.setTipOrganizacijeList(Collections.singletonList(organizacijaTip));
 
     }
 
     @Test
     public void returAllOrganizacija_onProvideAllOrganizacija() throws Exception {
         FieldDescriptor[] book = new FieldDescriptor[]{
-                fieldWithPath("[].idOrganizacija").description("Id organizacije"),
                 fieldWithPath("[].naziv").description("Naziv organizacije"),
                 fieldWithPath("[].opis").description("Kratki opis organizacije"),
                 fieldWithPath("[].brojHitnih").description("Trenutni broj hitnih slučajeva u toj organizaciji"),
                 fieldWithPath("[].brojNehitnih").description("Trenutni broj nehitnih slučajeva u toj organizacij"),
-                fieldWithPath("[].tipOrganizacije").description("Lista tipova kojima pripada ova organizacija"),
-                fieldWithPath("[].tipOrganizacije.[].idTipOrganizacija").description("Id tipa organizacije"),
-                fieldWithPath("[].tipOrganizacije.[].naziv").description("Naziv tipa organizacije"),
-                fieldWithPath("[].tipOrganizacije.[].urlSlika").description("URL slike tipa organizacije"),
+                fieldWithPath("[].tipOrganizacijeList").description("Lista tipova kojima pripada ova organizacija"),
+                fieldWithPath("[].tipOrganizacijeList.[].naziv").description("Naziv tipa organizacije"),
+                fieldWithPath("[].tipOrganizacijeList.[].slikaURL").description("URL slike tipa organizacije"),
                 fieldWithPath("[].ykoordinata").description("Y koordinata organizacije"),
                 fieldWithPath("[].xkoordinata").description("X koordinata organizacije")
         };

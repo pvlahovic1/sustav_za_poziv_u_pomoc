@@ -1,7 +1,9 @@
 package hr.foi.airprojekt.service;
 
 import hr.foi.airprojekt.model.Organizacija;
-import hr.foi.airprojekt.model.OrganizacijaSearch;
+import hr.foi.airprojekt.model.wrapper.OranizacijaTipWrapper;
+import hr.foi.airprojekt.model.wrapper.OrganizacijaSearch;
+import hr.foi.airprojekt.model.wrapper.OrganizacijaWrapper;
 import hr.foi.airprojekt.repository.OrganizacijaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,23 +22,46 @@ public class OgranizacijaServiceImpl implements OrganizacijaService {
     private final OrganizacijaRepository organizacijaRepository;
 
     @Override
-    public List<Organizacija> fetchAllOrganizacija() {
-        List<Organizacija> organizacije = new ArrayList<>();
+    public List<OrganizacijaWrapper> fetchAllOrganizacija() {
+        List<OrganizacijaWrapper> organizacijeWraper = new ArrayList<>();
 
-        organizacije.addAll(organizacijaRepository.findAll());
+        List<Organizacija> organizacije = organizacijaRepository.findAll();
 
-        return organizacije;
+        organizacije.forEach(o -> organizacijeWraper.add(convertToOrganizacijaWrapper(o)));
+
+        return organizacijeWraper;
     }
 
     @Override
-    public List<Organizacija> fetchaAllOrganizacijaBy(OrganizacijaSearch organizacijaSearch) {
-        List<Organizacija> organizacije = new ArrayList<>();
+    public List<OrganizacijaWrapper> fetchaAllOrganizacijaBy(OrganizacijaSearch organizacijaSearch) {
+        List<OrganizacijaWrapper> organizacijeWraper = new ArrayList<>();
 
-        organizacije.addAll(organizacijaRepository.findAll()
+        List<Organizacija> organizacije = organizacijaRepository.findAll()
                 .stream()
-                .filter(o -> calculateDistance(o, organizacijaSearch)).collect(Collectors.toList()));
+                .filter(o -> calculateDistance(o, organizacijaSearch)).collect(Collectors.toList());
 
-        return organizacije;
+
+
+        return organizacijeWraper;
+    }
+
+    private OrganizacijaWrapper convertToOrganizacijaWrapper(Organizacija o) {
+        OrganizacijaWrapper ow = new OrganizacijaWrapper();
+        ow.setNaziv(o.getNaziv());
+        ow.setOpis(o.getOpis());
+        ow.setBrojHitnih(o.getBrojHitnih());
+        ow.setBrojNehitnih(o.getBrojNehitnih());
+        ow.setXKoordinata(o.getXKoordinata());
+        ow.setYKoordinata(o.getYKoordinata());
+
+        o.getTipOrganizacije().forEach(t -> {
+            OranizacijaTipWrapper tw = new OranizacijaTipWrapper();
+            tw.setNaziv(t.getNaziv());
+            tw.setSlikaURL(t.getUrlSlika());
+            ow.getTipOrganizacijeList().add(tw);
+        });
+
+        return ow;
     }
 
     private boolean calculateDistance(Organizacija o, OrganizacijaSearch o1) {
