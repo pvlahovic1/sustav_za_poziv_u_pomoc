@@ -5,7 +5,7 @@
     <string name="message_oib_already_exists">Upisani OIB već postoji</string>
     <string name="message_mail_already_exists">Upisani eMail već postoji</string>
     <string name="error_infinitiv">Greška</string>
-    
+
     <string name="error_ime_field">Ime ne smije biti prazno</string>
     <string name="error_prezime_field">Prezime ne smije biti prazno</string>
     <string name="error_email_field">Email ne smije biti prazno</string>
@@ -31,5 +31,8 @@
     <string name="ime">Ime</string>
     <string name="prijava">Prijava</string>
     <string name="registracija">Registracija</string>
+    <string name="txt_postavke">Postavke</string>
+    <string name="txt_poziv_hitne_pomoci">Poziv hitne pomoći</string>
+    <string name="txt_lista_hitnih_pomoci">Lista hitnih pomoći</string>
 
 </resources>

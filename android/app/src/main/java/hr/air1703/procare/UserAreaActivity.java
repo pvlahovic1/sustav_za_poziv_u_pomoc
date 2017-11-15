@@ -65,6 +65,13 @@ public class UserAreaActivity extends AppCompatActivity implements OrganizacijaD
         UserAreaActivity.this.startActivity(settingsIntent);
     }
 
+    @OnClick(R.id.bPozivPomoc)
+    public void buttonPozivPomocClikced(View view) {
+        Intent pozivPomocIntent = new Intent(UserAreaActivity.this, HelpCallActivity.class);
+        UserAreaActivity.this.startActivity(pozivPomocIntent);
+
+    }
+
     @Override
     public void onDataLoaded(List<Organizacija> organizacije) {
         for (Organizacija o : organizacije) {
