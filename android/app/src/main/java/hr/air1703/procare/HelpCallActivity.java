@@ -3,10 +3,7 @@ package hr.air1703.procare;
 import android.app.ProgressDialog;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -14,7 +11,6 @@ import android.widget.Toast;
 
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
-import com.yayandroid.locationmanager.LocationManager;
 import com.yayandroid.locationmanager.base.LocationBaseActivity;
 import com.yayandroid.locationmanager.configuration.Configurations;
 import com.yayandroid.locationmanager.configuration.LocationConfiguration;
@@ -28,19 +24,23 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import hr.air1703.core.poziv.PozivResponseListener;
 import hr.air1703.core.poziv.RazloziDataLoadedListener;
 import hr.air1703.core.poziv.RazloziPozivaDataLoader;
+import hr.air1703.database.model.Korisnik;
 import hr.air1703.database.model.Razlog;
 import hr.air1703.database.settings.LocalApplicationLog;
-import hr.air1703.procare.loaders.OrganizacijaLocalDBDataLoader;
-import hr.air1703.procare.loaders.OrganizacijaWebDataLoader;
 import hr.air1703.procare.loaders.RazlogLocalDBDataLoader;
 import hr.air1703.procare.loaders.RazlogWebDataLoader;
+import hr.air1703.procare.poziv.PozivApi;
 import hr.air1703.procare.utils.ApplicationUtils;
 import hr.air1703.procare.utils.GPSPresenter;
+import hr.air1703.webservice.remote.wrapper.PozivUPomocWrapper;
 
 
-public class HelpCallActivity extends LocationBaseActivity implements GPSPresenter.GPSView, RazloziDataLoadedListener {
+public class HelpCallActivity extends LocationBaseActivity implements GPSPresenter.GPSView,
+        RazloziDataLoadedListener,
+        PozivResponseListener {
 
     private ProgressDialog progressDialog;
     private TextView locationText;
@@ -151,7 +151,17 @@ public class HelpCallActivity extends LocationBaseActivity implements GPSPresent
 
     @OnClick(R.id.button_poziv_pomoci)
     public void onButtonPozoviPomocClicked() {
-        Log.i("nesto", razloziSpiner.getSelectedItem().toString());
+        if (location != null) {
+            Razlog razlog = (Razlog) razloziSpiner.getSelectedItem();
+            Korisnik korisnik = Korisnik.getAll().get(0);
+
+            PozivUPomocWrapper poziv = new PozivUPomocWrapper(korisnik.getOib(),
+                    razlog.getNaziv(), location.getAltitude(), location.getLongitude());
+
+            PozivApi pozivApi = new PozivApi(this);
+
+            pozivApi.sendPozivUPomoc(poziv);
+        }
     }
 
     private void loadRazloziData() {
@@ -178,7 +188,7 @@ public class HelpCallActivity extends LocationBaseActivity implements GPSPresent
     }
 
     @Override
-    public void onDataLoaded(final List<Razlog> razlozi) {
+    public void onRazloziPozivaDataLoaded(final List<Razlog> razlozi) {
         ArrayAdapter<Razlog> adapter = new ArrayAdapter<>(getApplicationContext(),
                 android.R.layout.simple_list_item_1, razlozi);
 
@@ -189,10 +199,25 @@ public class HelpCallActivity extends LocationBaseActivity implements GPSPresent
     }
 
     @Override
-    public void onFailure(int messageCode) {
-        Toast.makeText(getApplicationContext(),
-                String.valueOf(getText(R.string.error_infinitiv)) + ": "
-                        + String.valueOf(getText(messageCode)),
-                Toast.LENGTH_LONG).show();
+    public void onRazloziPozivaFailure(int messageCode) {
+        showToast(String.valueOf(getText(R.string.error_infinitiv)) + ": "
+                + String.valueOf(getText(messageCode)));
     }
+
+    @Override
+    public void onPosivSucceeded() {
+        Toast.makeText(getApplicationContext(), getString(R.string.succeeded_poziv_u_pomoc), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onPozivFailure(int messageCode) {
+        showToast(String.valueOf(getText(R.string.error_infinitiv)) + ": "
+                + String.valueOf(getText(messageCode)));
+    }
+
+
+    private void showToast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+    }
+
 }

@@ -32,6 +32,9 @@ public class LocalApplicationLog extends BaseModel {
     @Column
     private Date vrijemeDohvacanjaRazlogaPoziva;
 
+    @Column
+    private Date vrijemeSlanjaPozivaUPomoc;
+
     public int getIdSetting() {
         return idSetting;
     }
@@ -54,6 +57,14 @@ public class LocalApplicationLog extends BaseModel {
 
     public void setVrijemeDohvacanjaRazlogaPoziva(Date vrijemeDohvacanjaRazlogaPoziva) {
         this.vrijemeDohvacanjaRazlogaPoziva = vrijemeDohvacanjaRazlogaPoziva;
+    }
+
+    public Date getVrijemeSlanjaPozivaUPomoc() {
+        return vrijemeSlanjaPozivaUPomoc;
+    }
+
+    public void setVrijemeSlanjaPozivaUPomoc(Date vrijemeSlanjaPozivaUPomoc) {
+        this.vrijemeSlanjaPozivaUPomoc = vrijemeSlanjaPozivaUPomoc;
     }
 
     public static List<LocalApplicationLog> getAll() {

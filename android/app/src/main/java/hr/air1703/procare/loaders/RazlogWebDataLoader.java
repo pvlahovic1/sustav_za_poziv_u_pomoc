@@ -52,15 +52,15 @@ public class RazlogWebDataLoader extends RazloziPozivaDataLoader {
                     localApplicationLog.setVrijemeDohvacanjaRazlogaPoziva(Calendar.getInstance().getTime());
                     localApplicationLog.save();
 
-                    razloziDataLoadedListener.onDataLoaded(Razlog.getAll());
+                    razloziDataLoadedListener.onRazloziPozivaDataLoaded(Razlog.getAll());
                 } else {
-                    razloziDataLoadedListener.onFailure(R.string.error_razlozi_service_fail);
+                    razloziDataLoadedListener.onRazloziPozivaFailure(R.string.error_razlozi_service_fail);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Razlog>> call, Throwable t) {
-                razloziDataLoadedListener.onFailure(R.string.error_razlozi_service_fail);
+                razloziDataLoadedListener.onRazloziPozivaFailure(R.string.error_razlozi_service_fail);
             }
         });
 

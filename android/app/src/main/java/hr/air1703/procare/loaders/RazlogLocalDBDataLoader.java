@@ -14,6 +14,6 @@ public class RazlogLocalDBDataLoader extends RazloziPozivaDataLoader {
     public void loadRazlozi(RazloziDataLoadedListener razloziDataLoadedListener) {
         super.loadRazlozi(razloziDataLoadedListener);
 
-        this.razloziDataLoadedListener.onDataLoaded(Razlog.getAll());
+        this.razloziDataLoadedListener.onRazloziPozivaDataLoaded(Razlog.getAll());
     }
 }

@@ -6,6 +6,7 @@
     <string name="message_mail_already_exists">Upisani eMail već postoji</string>
     <string name="error_infinitiv">Greška</string>
     <string name="error_razlozi_service_fail">Došlo je do greške prilikom dohvaćanja podataka sa servera</string>
+    <string name="error_sending_poziv_u_pomoc">Došlo je do greške prilikom slanja poziva u pomoć</string>
 
     <string name="error_ime_field">Ime ne smije biti prazno</string>
     <string name="error_prezime_field">Prezime ne smije biti prazno</string>
@@ -36,5 +37,6 @@
     <string name="txt_poziv_hitne_pomoci">Poziv hitne pomoći</string>
     <string name="txt_lista_hitnih_pomoci">Lista hitnih pomoći</string>
     <string name="poziv_pomoci">Pozovi pomoć</string>
+    <string name="succeeded_poziv_u_pomoc">Uspješno je poslan poziv u pomoć</string>
 
 </resources>

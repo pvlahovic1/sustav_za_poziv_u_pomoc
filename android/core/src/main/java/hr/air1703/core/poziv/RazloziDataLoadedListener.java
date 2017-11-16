@@ -10,7 +10,7 @@ import hr.air1703.database.model.Razlog;
 
 public interface RazloziDataLoadedListener {
 
-    void onDataLoaded(List<Razlog> organizacije);
-    void onFailure(int messageCode);
+    void onRazloziPozivaDataLoaded(List<Razlog> organizacije);
+    void onRazloziPozivaFailure(int messageCode);
 
 }
