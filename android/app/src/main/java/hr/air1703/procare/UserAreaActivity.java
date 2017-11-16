@@ -1,13 +1,23 @@
 package hr.air1703.procare;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
+import com.yayandroid.locationmanager.LocationManager;
+import com.yayandroid.locationmanager.configuration.Configurations;
+import com.yayandroid.locationmanager.configuration.LocationConfiguration;
 
 import java.util.Calendar;
 import java.util.List;
@@ -24,6 +34,8 @@ import hr.air1703.procare.loaders.OrganizacijaLocalDBDataLoader;
 import hr.air1703.procare.loaders.OrganizacijaWebDataLoader;
 import hr.air1703.procare.utils.ApplicationUtils;
 
+import static android.Manifest.permission_group.LOCATION;
+
 public class UserAreaActivity extends AppCompatActivity implements OrganizacijaDataLoadedListener {
 
     @Override
@@ -35,7 +47,6 @@ public class UserAreaActivity extends AppCompatActivity implements OrganizacijaD
         FlowManager.init(new FlowConfig.Builder(this).build());
 
         dohvatiOrganizacije();
-
     }
 
     private void dohvatiOrganizacije() {
@@ -58,7 +69,6 @@ public class UserAreaActivity extends AppCompatActivity implements OrganizacijaD
         odl.loadOrganizacije(this);
     }
 
-
     @OnClick(R.id.bPostavke)
     public void buttonPostavkeClikced(View view) {
         Intent settingsIntent = new Intent(UserAreaActivity.this, SettingsActivity.class);
@@ -69,7 +79,6 @@ public class UserAreaActivity extends AppCompatActivity implements OrganizacijaD
     public void buttonPozivPomocClikced(View view) {
         Intent pozivPomocIntent = new Intent(UserAreaActivity.this, HelpCallActivity.class);
         UserAreaActivity.this.startActivity(pozivPomocIntent);
-
     }
 
     @Override
