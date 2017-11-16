@@ -19,7 +19,6 @@ import hr.air1703.database.model.Korisnik;
 import hr.air1703.procare.login.UserApi;
 import hr.air1703.procare.utils.Hashing;
 
-
 import static hr.air1703.procare.utils.ApplicationUtils.VALID_EMAIL_ADDRESS_REGEX;
 
 public class RegisterActivity extends AppCompatActivity implements APIResponseListener {

@@ -56,11 +56,15 @@ public class UserAreaActivity extends AppCompatActivity implements OrganizacijaD
         if (!LocalApplicationLog.getAll().isEmpty()) {
             LocalApplicationLog localLog = LocalApplicationLog.getAll().get(0);
 
-            if (ApplicationUtils.getDateDiff(localLog.getVrijemeDohvacanjaOrganizacija(),
-                    Calendar.getInstance().getTime(), TimeUnit.MINUTES) > 5) {
-                odl = new OrganizacijaWebDataLoader();
+            if (localLog.getVrijemeDohvacanjaOrganizacija() != null) {
+                if (ApplicationUtils.getDateDiff(localLog.getVrijemeDohvacanjaOrganizacija(),
+                        Calendar.getInstance().getTime(), TimeUnit.MINUTES) > 5) {
+                    odl = new OrganizacijaWebDataLoader();
+                } else {
+                    odl = new OrganizacijaLocalDBDataLoader();
+                }
             } else {
-                odl = new OrganizacijaLocalDBDataLoader();
+                odl = new OrganizacijaWebDataLoader();
             }
         } else {
             odl = new OrganizacijaWebDataLoader();

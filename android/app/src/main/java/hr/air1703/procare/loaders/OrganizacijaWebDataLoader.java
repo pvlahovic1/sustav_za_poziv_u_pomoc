@@ -64,15 +64,15 @@ public class OrganizacijaWebDataLoader extends OrganizacijeDataLoader {
                         }
                     }
 
+                    LocalApplicationLog localApplicationLog;
                     if (LocalApplicationLog.getAll().isEmpty()) {
-                        LocalApplicationLog localApplicationLog = new LocalApplicationLog();
-                        localApplicationLog.setVrijemeDohvacanjaOrganizacija(Calendar.getInstance().getTime());
-                        localApplicationLog.save();
+                        localApplicationLog = new LocalApplicationLog();
                     } else {
-                        LocalApplicationLog localApplicationLog = LocalApplicationLog.getAll().get(0);
-                        localApplicationLog.setVrijemeDohvacanjaOrganizacija(Calendar.getInstance().getTime());
-                        localApplicationLog.save();
+                        localApplicationLog = LocalApplicationLog.getAll().get(0);
                     }
+
+                    localApplicationLog.setVrijemeDohvacanjaOrganizacija(Calendar.getInstance().getTime());
+                    localApplicationLog.save();
 
                     Log.i("DataLoader", "Fetching data from WebServer");
 
