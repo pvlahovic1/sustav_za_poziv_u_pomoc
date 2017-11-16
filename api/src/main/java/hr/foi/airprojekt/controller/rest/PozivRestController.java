@@ -2,6 +2,7 @@ package hr.foi.airprojekt.controller.rest;
 
 
 import hr.foi.airprojekt.exception.KorisnikCredentialsException;
+import hr.foi.airprojekt.exception.RazlogPozivaException;
 import hr.foi.airprojekt.model.wrapper.OpisNesreceWrapper;
 import hr.foi.airprojekt.model.wrapper.PozivWrapper;
 import hr.foi.airprojekt.service.PozivService;
@@ -27,7 +28,7 @@ public class PozivRestController {
 
         try {
             pozivService.addNewPozivUPomoc(poziv);
-        } catch (KorisnikCredentialsException e) {
+        } catch (KorisnikCredentialsException | RazlogPozivaException e) {
             log.error(e.getMessage());
             httpServletResponse.sendError(400, e.getLocalizedMessage());
         }

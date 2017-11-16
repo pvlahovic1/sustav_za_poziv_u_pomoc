@@ -1,7 +1,9 @@
 package hr.foi.airprojekt.service;
 
 import hr.foi.airprojekt.exception.KorisnikCredentialsException;
+import hr.foi.airprojekt.exception.RazlogPozivaException;
 import hr.foi.airprojekt.model.Korisnik;
+import hr.foi.airprojekt.model.OpisNesrece;
 import hr.foi.airprojekt.model.Poziv;
 import hr.foi.airprojekt.model.wrapper.OpisNesreceWrapper;
 import hr.foi.airprojekt.model.wrapper.PozivWrapper;
@@ -26,6 +28,11 @@ public class PozivServiceImpl implements PozivService {
     public void addNewPozivUPomoc(PozivWrapper pozivWrapper) {
 
         Korisnik korisnik = korisnikService.fetchKorisnikByOib(pozivWrapper.getOib());
+        OpisNesrece opisNesrece = opisNesreceRepository.findByNaziv(pozivWrapper.getRazlog());
+
+        if (opisNesrece == null) {
+            throw new RazlogPozivaException("OpisNesrece doesnt exist!");
+        }
 
         if (korisnik != null) {
             Poziv poziv = new Poziv();
@@ -33,6 +40,7 @@ public class PozivServiceImpl implements PozivService {
             poziv.setYKoordinata(pozivWrapper.getY());
             poziv.setVrijemePrimitka(LocalDateTime.now());
             poziv.setKorisnik(korisnik);
+            poziv.getOpisiNesrece().add(opisNesrece);
 
             pozivRepository.save(poziv);
         } else {

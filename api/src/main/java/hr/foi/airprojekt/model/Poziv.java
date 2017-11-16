@@ -4,6 +4,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "poziv", schema = "air_projekt")
@@ -30,5 +32,12 @@ public class Poziv {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "korisnik_id")
     private Korisnik korisnik;
+
+    @ManyToMany
+    @JoinTable(
+            name="poziv_opis_nesrece",
+            joinColumns=@JoinColumn(name="id_poziv", referencedColumnName="id_poziv"),
+            inverseJoinColumns=@JoinColumn(name="id_opis_nesrece", referencedColumnName="id"))
+    private List<OpisNesrece> opisiNesrece = new ArrayList<>();
 
 }

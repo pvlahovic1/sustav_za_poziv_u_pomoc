@@ -63,13 +63,14 @@ public class PozivRestControllerShould {
     public void saveHelpCall_onCallHelp() throws Exception {
         FieldDescriptor[] book = new FieldDescriptor[]{
                 fieldWithPath("oib").description("OIB korisnika koji zove pomoć"),
+                fieldWithPath("razlog").description("Razlog poziva u pomoć"),
                 fieldWithPath("x").description("X koordinata korisnika"),
                 fieldWithPath("y").description("Y koordinata korisnika")
         };
 
         mvc.perform(post("/rest-api/poziv")
                 .contentType(APPLICATION_JSON_UTF8)
-                .content("{\"oib\":\"12345678903\",\"x\": 0 , \"y\": 0}"))
+                .content("{\"oib\": \"12345678903\", \"razlog\":\"Nenaveden razlog\", \"x\": 22.3, \"y\": 22.2}"))
                 .andExpect(status().isOk())
                 .andDo(document("poziv", requestFields(book)));
     }

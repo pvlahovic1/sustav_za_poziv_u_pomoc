@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class PozivWrapper implements Serializable {
 
     private String oib;
+    private String razlog;
     private double x;
     private double y;
 
