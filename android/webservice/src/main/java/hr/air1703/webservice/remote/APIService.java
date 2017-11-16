@@ -3,6 +3,7 @@ package hr.air1703.webservice.remote;
 import java.util.List;
 
 import hr.air1703.database.model.Korisnik;
+import hr.air1703.database.model.Razlog;
 import hr.air1703.webservice.remote.wrapper.OrganizacijaWrapper;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -28,5 +29,8 @@ public interface APIService {
 
     @GET("/rest-api/ogranizacija")
     Call<List<OrganizacijaWrapper>> getOrganizacije();
+
+    @GET("/rest-api/poziv/razlozi")
+    Call<List<Razlog>> getRazloziPozivaUPomoc();
 
 }

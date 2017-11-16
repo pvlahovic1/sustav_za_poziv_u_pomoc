@@ -10,6 +10,6 @@ import com.raizlabs.android.dbflow.annotation.Database;
 public class MainDatabase {
 
     public static final String NAME = "lokalna_baza";
-    public static final int VERSION = 3;
+    public static final int VERSION = 4;
 
 }

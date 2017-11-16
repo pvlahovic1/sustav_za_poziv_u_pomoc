@@ -21,6 +21,8 @@ public class GPSPresenter {
 
     public void onLocationChanged(Location location) {
         gpsView.dismissProgress();
+
+        setLocation(location);
         setText(location);
     }
 
@@ -95,27 +97,19 @@ public class GPSPresenter {
 
     private void setText(Location location) {
         String appendValue = location.getLatitude() + ", " + location.getLongitude() + ", " + location.getAccuracy() + "\n";
-        String newValue;
-        CharSequence current = gpsView.getText();
 
-        if (!TextUtils.isEmpty(current)) {
-            newValue = appendValue;
-        } else {
-            newValue = appendValue;
-        }
-        Log.i("GPS", appendValue);
+        gpsView.setText(appendValue);
+    }
 
-        gpsView.setText(newValue);
+    private void setLocation(Location location) {
+        gpsView.setLocation(location);
     }
 
     public interface GPSView {
 
-        String getText();
-
+        void setLocation(Location location);
         void setText(String text);
-
         void updateProgress(String text);
-
         void dismissProgress();
 
     }
