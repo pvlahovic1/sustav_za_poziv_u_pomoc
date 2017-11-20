@@ -60,7 +60,7 @@ public class PozivButtonService extends PozivService {
     private void callHelp() {
         boolean canSendRequest = false;
         long timeDiff = 0;
-        long minTimeDiff = 1;
+        long minTimeDiff = 15;
 
         if (!LocalApplicationLog.getAll().isEmpty()) {
             LocalApplicationLog localApplicationLog = LocalApplicationLog.getAll().get(0);
