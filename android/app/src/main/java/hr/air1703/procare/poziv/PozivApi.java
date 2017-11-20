@@ -2,7 +2,7 @@ package hr.air1703.procare.poziv;
 
 import java.util.Calendar;
 
-import hr.air1703.core.poziv.PozivResponseListener;
+import hr.air1703.core.poziv.PozivServiceHandler;
 import hr.air1703.database.settings.LocalApplicationLog;
 import hr.air1703.procare.R;
 import hr.air1703.webservice.remote.APIService;
@@ -19,11 +19,11 @@ import retrofit2.Response;
 public class PozivApi {
 
     private APIService mAPIService;
-    private PozivResponseListener pozivResponseListener;
+    private PozivServiceHandler pozivServiceHandler;
 
-    public PozivApi(PozivResponseListener pozivResponseListener) {
+    public PozivApi(PozivServiceHandler pozivServiceHandler) {
         this.mAPIService = ApiUtils.getAPIService();
-        this.pozivResponseListener = pozivResponseListener;
+        this.pozivServiceHandler = pozivServiceHandler;
     }
 
     public void sendPozivUPomoc(PozivUPomocWrapper poziv) {
@@ -42,15 +42,15 @@ public class PozivApi {
                     localApplicationLog.setVrijemeSlanjaPozivaUPomoc(Calendar.getInstance().getTime());
                     localApplicationLog.save();
 
-                    pozivResponseListener.onPozivSucceeded();
+                    pozivServiceHandler.onPozivSucceeded();
                 } else {
-                    pozivResponseListener.onPozivFailure(R.string.error_sending_poziv_u_pomoc);
+                    pozivServiceHandler.onPozivFailure(R.string.error_sending_poziv_u_pomoc);
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                pozivResponseListener.onPozivFailure(R.string.error_sending_poziv_u_pomoc);
+                pozivServiceHandler.onPozivFailure(R.string.error_sending_poziv_u_pomoc);
             }
         });
 

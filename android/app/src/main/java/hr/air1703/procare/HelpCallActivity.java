@@ -7,6 +7,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,32 +26,32 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import hr.air1703.core.poziv.PozivResponseListener;
+import hr.air1703.core.poziv.PozivService;
+import hr.air1703.core.poziv.PozivServiceHandler;
 import hr.air1703.core.poziv.RazloziDataLoadedListener;
 import hr.air1703.core.poziv.RazloziPozivaDataLoader;
-import hr.air1703.database.model.Korisnik;
 import hr.air1703.database.model.Razlog;
 import hr.air1703.database.settings.LocalApplicationLog;
 import hr.air1703.procare.loaders.RazlogLocalDBDataLoader;
 import hr.air1703.procare.loaders.RazlogWebDataLoader;
-import hr.air1703.procare.poziv.PozivApi;
+import hr.air1703.procare.poziv.PozivButtonService;
 import hr.air1703.procare.utils.ApplicationUtils;
 import hr.air1703.procare.utils.GPSPresenter;
-import hr.air1703.webservice.remote.wrapper.PozivUPomocWrapper;
 
 
 public class HelpCallActivity extends LocationBaseActivity implements GPSPresenter.GPSView,
         RazloziDataLoadedListener,
-        PozivResponseListener {
+        PozivServiceHandler {
+
+    public static Location location;
 
     private ProgressDialog progressDialog;
-    private TextView locationText;
-    private Location location;
-
     @BindView(R.id.spinner_razlozi)
     Spinner razloziSpiner;
-
+    @BindView(R.id.button_poziv_pomoci)
+    Button buttonPozivPomoci;
+    @BindView(R.id.gpsText)
+    TextView locationText;
 
     // GPS klasa u kojoj je interface za lokaciju
     private GPSPresenter gpsPresenter;
@@ -65,37 +66,12 @@ public class HelpCallActivity extends LocationBaseActivity implements GPSPresent
 
         loadRazloziData();
 
-        // Prikaz lokacije na view
-        locationText = (TextView) findViewById(R.id.gpsText);
+        PozivService pozivService = new PozivButtonService(this, buttonPozivPomoci, razloziSpiner);
+        ((PozivButtonService)pozivService).setupButtonFunction();
+
         gpsPresenter = new GPSPresenter(this);
         getLocation();
         getLocationManager().get();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        gpsPresenter.destroy();
-    }
-
-    @Override
-    public LocationConfiguration getLocationConfiguration() {
-        return Configurations.defaultConfiguration("Gimme the permission!", "Would you mind to turn GPS on?");
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        gpsPresenter.onLocationChanged(location);
-    }
-
-    @Override
-    public void onLocationFailed(@FailType int failType) {
-        gpsPresenter.onLocationFailed(failType);
-    }
-
-    @Override
-    public void onProcessTypeChanged(@ProcessType int processType) {
-        gpsPresenter.onProcessTypeChanged(processType);
     }
 
     @Override
@@ -115,6 +91,12 @@ public class HelpCallActivity extends LocationBaseActivity implements GPSPresent
         dismissProgress();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        gpsPresenter.destroy();
+    }
+
     private void displayProgress() {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(this);
@@ -124,75 +106,6 @@ public class HelpCallActivity extends LocationBaseActivity implements GPSPresent
 
         if (!progressDialog.isShowing()) {
             progressDialog.show();
-        }
-    }
-
-    @Override
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    @Override
-    public void setText(String text) {
-        locationText.setText(text);
-    }
-
-    @Override
-    public void updateProgress(String text) {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.setMessage(text);
-        }
-    }
-
-    @Override
-    public void dismissProgress() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
-    }
-
-    @OnClick(R.id.button_poziv_pomoci)
-    public void onButtonPozoviPomocClicked() {
-        boolean canSendRequest = false;
-        long timeDiff = 0;
-        long minTimeDiff = 15;
-
-        if (!LocalApplicationLog.getAll().isEmpty()) {
-            LocalApplicationLog localApplicationLog = LocalApplicationLog.getAll().get(0);
-
-            if (localApplicationLog.getVrijemeSlanjaPozivaUPomoc() != null) {
-                timeDiff = ApplicationUtils.getDateDiff(localApplicationLog.getVrijemeSlanjaPozivaUPomoc(),
-                        Calendar.getInstance().getTime(), TimeUnit.MINUTES);
-                canSendRequest = timeDiff >= minTimeDiff;
-            }
-        } else{
-            canSendRequest = true;
-        }
-        if (canSendRequest){
-            if (location != null) {
-                Razlog razlog = (Razlog) razloziSpiner.getSelectedItem();
-                Korisnik korisnik = Korisnik.getAll().get(0);
-
-                PozivUPomocWrapper poziv = new PozivUPomocWrapper(korisnik.getOib(),
-                        razlog.getNaziv(), location.getAltitude(), location.getLongitude());
-
-                PozivApi pozivApi = new PozivApi(this);
-
-                pozivApi.sendPozivUPomoc(poziv);
-            }
-        } else{
-            AlertDialog.Builder helpAlert = new AlertDialog.Builder(this);
-            helpAlert.setTitle(R.string.alert_help_title);
-            helpAlert.setMessage(getString(R.string.alert_help_message_prefix) + " " +
-                    String.valueOf(minTimeDiff - timeDiff) + " " + getString(R.string.alert_help_message_postfix));
-            helpAlert.setPositiveButton(R.string.alert_help_button_ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            helpAlert.create();
-            helpAlert.show();
         }
     }
 
@@ -220,6 +133,50 @@ public class HelpCallActivity extends LocationBaseActivity implements GPSPresent
     }
 
     @Override
+    public LocationConfiguration getLocationConfiguration() {
+        return Configurations.defaultConfiguration("Gimme the permission!", "Would you mind to turn GPS on?");
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        gpsPresenter.onLocationChanged(location);
+    }
+
+    @Override
+    public void onLocationFailed(@FailType int failType) {
+        gpsPresenter.onLocationFailed(failType);
+    }
+
+    @Override
+    public void onProcessTypeChanged(@ProcessType int processType) {
+        gpsPresenter.onProcessTypeChanged(processType);
+    }
+
+    @Override
+    public void setLocation(Location newLocation) {
+        location = newLocation;
+    }
+
+    @Override
+    public void setText(String text) {
+        locationText.setText(text);
+    }
+
+    @Override
+    public void updateProgress(String text) {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.setMessage(text);
+        }
+    }
+
+    @Override
+    public void dismissProgress() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
+    @Override
     public void onRazloziPozivaDataLoaded(final List<Razlog> razlozi) {
         ArrayAdapter<Razlog> adapter = new ArrayAdapter<>(getApplicationContext(),
                 R.layout.custom_spinner_text, razlozi);
@@ -234,6 +191,27 @@ public class HelpCallActivity extends LocationBaseActivity implements GPSPresent
     public void onRazloziPozivaFailure(int messageCode) {
         showToast(String.valueOf(getText(R.string.error_infinitiv)) + ": "
                 + String.valueOf(getText(messageCode)));
+    }
+
+    @Override
+    public void onTimeDifferenceProblem(long timeDiff) {
+        AlertDialog.Builder helpAlert = new AlertDialog.Builder(this);
+        helpAlert.setTitle(R.string.alert_help_title);
+        helpAlert.setMessage(getString(R.string.alert_help_message_prefix) + " " +
+                String.valueOf(timeDiff) + " " + getString(R.string.alert_help_message_postfix));
+        helpAlert.setPositiveButton(R.string.alert_help_button_ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        helpAlert.create();
+        helpAlert.show();
+    }
+
+    @Override
+    public void onFiveSecondRule() {
+        Toast.makeText(getApplicationContext(), R.string.help_message_button_press, Toast.LENGTH_LONG).show();
     }
 
     @Override
