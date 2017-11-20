@@ -38,5 +38,9 @@
     <string name="txt_lista_hitnih_pomoci">Lista hitnih pomoći</string>
     <string name="poziv_pomoci">Pozovi pomoć</string>
     <string name="succeeded_poziv_u_pomoc">Uspješno je poslan poziv u pomoć</string>
+    <string name="alert_help_message_prefix">Već ste uputili poziv hitnoj pomoći unutar proteklih 15 minuta. Sljedeći poziv je moguć za</string>
+    <string name="alert_help_message_postfix">minuta</string>
+    <string name="alert_help_title">Upozorenje!</string>
+    <string name="alert_help_button_ok">Uredu</string>
 
 </resources>

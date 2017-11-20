@@ -1,6 +1,8 @@
 package hr.air1703.procare;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.Window;
@@ -151,16 +153,46 @@ public class HelpCallActivity extends LocationBaseActivity implements GPSPresent
 
     @OnClick(R.id.button_poziv_pomoci)
     public void onButtonPozoviPomocClicked() {
-        if (location != null) {
-            Razlog razlog = (Razlog) razloziSpiner.getSelectedItem();
-            Korisnik korisnik = Korisnik.getAll().get(0);
+        boolean canSendRequest = false;
+        long timeDiff = 0;
+        long minTimeDiff = 15;
 
-            PozivUPomocWrapper poziv = new PozivUPomocWrapper(korisnik.getOib(),
-                    razlog.getNaziv(), location.getAltitude(), location.getLongitude());
+        if (!LocalApplicationLog.getAll().isEmpty()) {
+            LocalApplicationLog localApplicationLog = LocalApplicationLog.getAll().get(0);
 
-            PozivApi pozivApi = new PozivApi(this);
+            if (localApplicationLog.getVrijemeSlanjaPozivaUPomoc() != null) {
+                timeDiff = ApplicationUtils.getDateDiff(localApplicationLog.getVrijemeSlanjaPozivaUPomoc(),
+                        Calendar.getInstance().getTime(), TimeUnit.MINUTES);
+                canSendRequest = timeDiff >= minTimeDiff;
+            }
+        } else{
+            canSendRequest = true;
+        }
+        if (canSendRequest){
+            if (location != null) {
+                Razlog razlog = (Razlog) razloziSpiner.getSelectedItem();
+                Korisnik korisnik = Korisnik.getAll().get(0);
 
-            pozivApi.sendPozivUPomoc(poziv);
+                PozivUPomocWrapper poziv = new PozivUPomocWrapper(korisnik.getOib(),
+                        razlog.getNaziv(), location.getAltitude(), location.getLongitude());
+
+                PozivApi pozivApi = new PozivApi(this);
+
+                pozivApi.sendPozivUPomoc(poziv);
+            }
+        } else{
+            AlertDialog.Builder helpAlert = new AlertDialog.Builder(this);
+            helpAlert.setTitle(R.string.alert_help_title);
+            helpAlert.setMessage(getString(R.string.alert_help_message_prefix) + " " +
+                    String.valueOf(minTimeDiff - timeDiff) + " " + getString(R.string.alert_help_message_postfix));
+            helpAlert.setPositiveButton(R.string.alert_help_button_ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            helpAlert.create();
+            helpAlert.show();
         }
     }
 
@@ -190,9 +222,9 @@ public class HelpCallActivity extends LocationBaseActivity implements GPSPresent
     @Override
     public void onRazloziPozivaDataLoaded(final List<Razlog> razlozi) {
         ArrayAdapter<Razlog> adapter = new ArrayAdapter<>(getApplicationContext(),
-                android.R.layout.simple_list_item_1, razlozi);
+                R.layout.custom_spinner_text, razlozi);
 
-        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.custom_spinner_text);
 
         razloziSpiner.setAdapter(adapter);
         razloziSpiner.setSelection(0);
@@ -205,7 +237,7 @@ public class HelpCallActivity extends LocationBaseActivity implements GPSPresent
     }
 
     @Override
-    public void onPosivSucceeded() {
+    public void onPozivSucceeded() {
         Toast.makeText(getApplicationContext(), getString(R.string.succeeded_poziv_u_pomoc), Toast.LENGTH_LONG).show();
     }
 

@@ -6,7 +6,7 @@ package hr.air1703.core.poziv;
 
 public interface PozivResponseListener {
 
-    void onPosivSucceeded();
+    void onPozivSucceeded();
     void onPozivFailure(int messageCode);
 
 }

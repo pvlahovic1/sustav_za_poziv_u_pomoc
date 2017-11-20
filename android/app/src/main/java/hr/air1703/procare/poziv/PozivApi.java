@@ -42,7 +42,7 @@ public class PozivApi {
                     localApplicationLog.setVrijemeSlanjaPozivaUPomoc(Calendar.getInstance().getTime());
                     localApplicationLog.save();
 
-                    pozivResponseListener.onPosivSucceeded();
+                    pozivResponseListener.onPozivSucceeded();
                 } else {
                     pozivResponseListener.onPozivFailure(R.string.error_sending_poziv_u_pomoc);
                 }
