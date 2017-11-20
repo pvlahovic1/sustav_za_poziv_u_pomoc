@@ -69,6 +69,8 @@ public class PozivButtonService extends PozivService {
                 timeDiff = ApplicationUtils.getDateDiff(localApplicationLog.getVrijemeSlanjaPozivaUPomoc(),
                         Calendar.getInstance().getTime(), TimeUnit.MINUTES);
                 canSendRequest = timeDiff >= minTimeDiff;
+            } else {
+                canSendRequest = true;
             }
         } else {
             canSendRequest = true;
