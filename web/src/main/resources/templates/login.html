@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
     <title>Prijava</title>
@@ -9,13 +9,14 @@
     <link rel="stylesheet" type="text/css" href="/css/default-design.css" />
 </head>
 <body>
-<h2 class="font-weight-bold text-center">ProCare web</h2>
+<h2 class="font-weight-bold text-center" th:text="#{label.form.login.title}">ProCare web</h2>
 <div class="container">
     <div class="card card-container">
         <form class="form-signin" name='form_login' action="login" method='POST'>
             <input type="text" id="username" name="username" class="form-control" placeholder="Korisničko ime" autofocus="true" required="true"/>
             <input type="password" id="password" name="password" class="form-control" placeholder="Lozinka" required="true"/>
-            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Prijava</button>
+            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" th:text="#{label.form.login}">Prijava</button>
+            <a th:href="@{/register}" th:text="#{label.form.registerLink}">Registracija</a>
         </form>
     </div>
 </div>

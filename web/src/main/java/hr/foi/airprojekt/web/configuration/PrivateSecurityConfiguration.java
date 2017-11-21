@@ -22,7 +22,7 @@ public class PrivateSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/login*", "/logout*").permitAll()
+                .antMatchers("/login*", "/logout*", "/register*").permitAll()
                 .antMatchers("/homepage*").hasAnyAuthority("User")
                 .anyRequest().authenticated()
                     .and()
