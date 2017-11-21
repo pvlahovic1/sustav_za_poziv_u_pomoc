@@ -17,6 +17,8 @@ import butterknife.OnClick;
 import hr.air1703.core.APIResponseListener;
 import hr.air1703.database.model.Korisnik;
 import hr.air1703.procare.login.UserApi;
+import hr.air1703.procare.shaker.AccelerometerManager;
+import hr.air1703.procare.shaker.AndroidServiceStartOnBoot;
 import hr.air1703.procare.utils.Hashing;
 
 public class MainActivity extends AppCompatActivity  implements APIResponseListener {
@@ -35,6 +37,12 @@ public class MainActivity extends AppCompatActivity  implements APIResponseListe
 
         editTextMail = (EditText) findViewById(R.id.etEmail);
         editTextPassword = (EditText) findViewById(R.id.pPassword);
+
+        // Start accelerometer service if it has never been run
+        if (!AccelerometerManager.isListening()){
+            Intent serviceIntent = new Intent(this, AndroidServiceStartOnBoot.class);
+            this.startService(serviceIntent);
+        }
     }
 
     @Override
