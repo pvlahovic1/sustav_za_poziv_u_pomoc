@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,15 +22,26 @@ public class PrivateSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/login*").anonymous()
+                .antMatchers("/login*", "/logout*").permitAll()
+                .antMatchers("/homepage*").hasAnyAuthority("User")
                 .anyRequest().authenticated()
                     .and()
-                        .formLogin().loginPage("/login.html")
+                        .formLogin().loginPage("/login")
                                     .loginProcessingUrl("/login")
-                                    .defaultSuccessUrl("/homepage.html")
-                                    .failureUrl("/login.html?error=true")
+                                    .defaultSuccessUrl("/homepage")
+                                    .failureUrl("/login?error=true")
                     .and()
-                    .logout().logoutSuccessUrl("/login.html");
+                        .logout()
+                            .logoutUrl("/logout")
+                            .logoutSuccessUrl("/login");
+
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers("/webjars/**")
+                .antMatchers("/css/**");
     }
 
     @Override

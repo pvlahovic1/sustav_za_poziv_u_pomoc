@@ -2,11 +2,13 @@ package hr.foi.airprojekt.web.model;
 
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @Entity
@@ -16,7 +18,7 @@ public class Dispatcher implements UserDetails {
     @Id
     @Column(name = "id")
     @GeneratedValue
-    private Integer id;
+    private int id;
 
     @Column(name = "ime")
     private String ime;
@@ -35,7 +37,10 @@ public class Dispatcher implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<>();
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        grantedAuthorities.add(new SimpleGrantedAuthority("User"));
+
+        return grantedAuthorities;
     }
 
     @Override
