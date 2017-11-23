@@ -7,5 +7,6 @@ import java.util.List;
 public interface OrganizacijeService {
 
     List<Organizacija> fetchAllOrganizacija();
+    Organizacija fetchById(int idOrganizacija);
 
 }

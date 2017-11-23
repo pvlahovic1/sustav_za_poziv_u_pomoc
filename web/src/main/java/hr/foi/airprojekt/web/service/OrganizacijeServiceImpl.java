@@ -18,4 +18,9 @@ public class OrganizacijeServiceImpl implements OrganizacijeService {
         return organizacijaRepository.findAll();
     }
 
+    @Override
+    public Organizacija fetchById(int idOrganizacija) {
+        return organizacijaRepository.findByIdOrganizacije(idOrganizacija);
+    }
+
 }

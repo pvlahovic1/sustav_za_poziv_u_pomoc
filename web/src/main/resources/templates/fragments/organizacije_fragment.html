@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="organizacije_show_modal_content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" th:text="${org.naziv}">Naziv bolnice</h4>
+    </div>
+    <div class="modal-body">
+        <div class="card border-primary">
+            <div class="card-body">
+                <blockquote class="card-blockquote">
+                    <span>Opis:</span><p th:text="${org.opis}"></p>
+                    <span>Broj hitnih:</span><p th:text="${org.brojHitnih}"></p>
+                    <span>Broj nehitnih:</span><p th:text="${org.brojNehitnih}"></p>
+                </blockquote>
+            </div>
+            <div>
+                <h4>Tipovi organizacije:</h4>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Naziv</th>
+                        <th>Url slike</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="tip : ${org.tipoviOrganizacije}">
+                        <td th:text="${tip.naziv}">Naziv</td>
+                        <td th:text="${tip.urlSlika}">URL</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+    </div>
+</div>
+
+</html>

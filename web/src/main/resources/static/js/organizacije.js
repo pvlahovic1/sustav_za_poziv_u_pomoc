@@ -8,4 +8,17 @@ $(document).ready(function(){
 
 function showDetails(id) {
     $('#organizacijeModal').modal('show');
+
+    $.ajax({
+        url : "/organizacije/" + id,
+        type : 'GET',
+        success : function(data) {
+            $("#bolnica-modal-content").html(data);
+        },
+        error : function(request,error)
+        {
+            console.log("Request: "+JSON.stringify(request));
+        }
+    });
+
 }

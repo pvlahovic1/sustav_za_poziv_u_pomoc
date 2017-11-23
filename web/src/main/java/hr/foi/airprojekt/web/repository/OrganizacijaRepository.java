@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OrganizacijaRepository extends JpaRepository<Organizacija, Integer> {
 
+    Organizacija findByIdOrganizacije(int idOrganizacija);
+
 }

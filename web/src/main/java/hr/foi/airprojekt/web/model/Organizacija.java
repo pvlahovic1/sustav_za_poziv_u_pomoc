@@ -2,6 +2,8 @@ package hr.foi.airprojekt.web.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -30,5 +32,13 @@ public class Organizacija {
 
     @Column(name = "broj_nehitnih")
     private int brojNehitnih;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "organizacija_tip_organizacije",
+            joinColumns = { @JoinColumn(name = "id_organizacija") },
+            inverseJoinColumns = { @JoinColumn(name = "id_tip_organizacija") }
+    )
+    Set<OrganizacijaTip> tipoviOrganizacije = new HashSet<>();
 
 }
