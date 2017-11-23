@@ -23,12 +23,12 @@ public class PrivateSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers("/login*", "/logout*", "/register*").permitAll()
-                .antMatchers("/homepage*").hasAnyAuthority("User")
+                .antMatchers("/nesrece*", "/organizacije*").hasAnyAuthority("User")
                 .anyRequest().authenticated()
                     .and()
                         .formLogin().loginPage("/login")
                                     .loginProcessingUrl("/login")
-                                    .defaultSuccessUrl("/homepage")
+                                    .defaultSuccessUrl("/nesrece")
                                     .failureUrl("/login?error=true")
                     .and()
                         .logout()
@@ -41,7 +41,8 @@ public class PrivateSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .antMatchers("/webjars/**")
-                .antMatchers("/css/**");
+                .antMatchers("/css/**")
+                .antMatchers("/js/**");
     }
 
     @Override

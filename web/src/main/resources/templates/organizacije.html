@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Organizacije</title>
+
+    <script src="webjars/jquery/3.2.1/jquery.js"></script>
+    <script src="webjars/datatables/1.9.4/media/js/jquery.dataTables.min.js"></script>
+    <script src="webjars/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <script src="/js/organizacije.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/default-design.css" />
+    <link rel="stylesheet" type="text/css" href="/css/organizacije.css" />
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="/nesrece">Nesreće</a></li>
+                <li class="active"><a href="#">Bolnice</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Odjava</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="col-xs-12" style="height:50px;"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 table-wrapper">
+            <table id="organizacije_table" class="table">
+                <thead>
+                <tr>
+                    <th>Naziv</th>
+                    <th>Opis</th>
+                    <th>Broj hitnih</th>
+                    <th>Broj nehitnih</th>
+                    <th>Akcije</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="organizacija : ${organizacije}">
+                    <td th:text="${organizacija.naziv}">Naziv</td>
+                    <td th:text="${organizacija.opis}">Opis</td>
+                    <td th:text="${organizacija.brojHitnih}">Broj hitnih</td>
+                    <td th:text="${organizacija.brojNehitnih}">Broj nehitnih</td>
+                    <td><button class="btn btn-secondary" th:onclick="'showDetails(' + ${organizacija.idOrganizacije} + ');'" th:text="Detalji">Detalji</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade dark" id="organizacijeModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Naziv bolnice</h4>
+            </div>
+            <div class="modal-body">
+                <p>Opis</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+</body>
+</html>

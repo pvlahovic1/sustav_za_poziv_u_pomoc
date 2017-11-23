@@ -26,7 +26,7 @@ public class LoginController {
 
     @GetMapping("/")
     public String getDefault() {
-        return "homepage";
+        return "nesrece";
     }
 
     @GetMapping("/login")
@@ -34,7 +34,7 @@ public class LoginController {
         String url;
 
         if (isAuthenticated()) {
-            url = "redirect:/homepage";
+            url = "redirect:/nesrece";
         } else {
             url = "login";
         }
@@ -47,7 +47,7 @@ public class LoginController {
         String url;
 
         if (isAuthenticated()) {
-            url = "redirect:/homepage";
+            url = "redirect:/nesrece";
         } else {
             User user = new User();
             model.addAttribute("user", user);
@@ -73,12 +73,6 @@ public class LoginController {
             return new ModelAndView("login", "user", user);
         }
     }
-
-    @GetMapping("/homepage")
-    public String getHomepage() {
-        return "homepage";
-    }
-
 
     private boolean isAuthenticated() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
