@@ -14,10 +14,14 @@
                     <span>OIB:</span><p th:text="${nesreca.oib}"></p>
                     <span>Ime:</span><p th:text="${nesreca.ime}"></p>
                     <span>Prezime:</span><p th:text="${nesreca.prezime}"></p>
-                    <span>Broj mobitela:</span><p th:text="${nesreca.brojMobitela}"></p>
+                    <span>Broj mobitela:</span><p id="brojMobitela" th:text="${nesreca.brojMobitela}"></p>
                     <span>Vrijeme primitka:</span><p th:text="${nesreca.vrijemePrimitka}"></p>
                 </blockquote>
             </div>
+
+            <input type="hidden" id="xKoordinata" th:value="${nesreca.x}" />
+            <input type="hidden" id="yKoordinata" th:value="${nesreca.y}" />
+
             <div>
                 <h4>Opis nesrece:</h4>
                 <table class="table">
@@ -35,6 +39,7 @@
                     </tbody>
                 </table>
             </div>
+            <div id="map" class="row" style="height:400px"></div>
         </div>
     </div>
     <div class="modal-footer">
