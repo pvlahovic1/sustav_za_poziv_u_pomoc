@@ -35,8 +35,72 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+        <button type="button" class="btn btn-default" th:onclick="'editDetails(' + ${org.idOrganizacije} + ');'" th:text="Uredi">Uredi</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" th:text="Zatvori">Zatvori</button>
     </div>
+</div>
+
+<div th:fragment="organizacije_edit_modal_content">
+    <form id="organizacijaSaveForm">
+        <div class="modal-header row">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title" th:text="${org.naziv}">Naziv bolnice</h4>
+        </div>
+        <div class="modal-body row">
+            <div class="card border-primary">
+                <input type="hidden" name="idOrganizacije" th:value="${org.idOrganizacije}" />
+                <div class="con">
+                    <div class="form-group">
+                        <span>Naziv:</span>
+                        <input th:type="text" id="naziv" name="naziv" class="form-control" th:value="${org.naziv}"/>
+                    </div>
+                    <div class="form-group">
+                        <span>Opis:</span>
+                        <textarea class="form-control" rows="3" id="opis" name="opis" th:text="${org.opis}"> </textarea>
+                    </div>
+                    <div class="form-group">
+                        <span>Broj hitnih:</span>
+                        <input th:type="number" th:step="1" id="broj_hitnih" name="brojHitnih" class="form-control" th:value="${org.brojHitnih}"/>
+                    </div>
+                    <div class="form-group">
+                        <span>Broj nehitnih:</span>
+                        <input th:type="number" th:step="1" id="broj_nehitnih" name="brojNehitnih" class="form-control" th:value="${org.brojNehitnih}"/>
+                    </div>
+                    <div class="form-group">
+                        <span>X koordinata:</span>
+                        <input th:type="number" th:step="any" id="x_koordinata" name="x" class="form-control" th:value="${org.x}"/>
+                    </div>
+                    <div class="form-group">
+                        <span>Y koordinata:</span>
+                        <input th:type="number" th:step="any" id="y_koordinata" name="y" class="form-control" th:value="${org.y}"/>
+                    </div>
+                </div>
+
+                <div>
+                    <h4>Tipovi organizacije:</h4>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Naziv</th>
+                            <th>Uvijet</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="tip : ${org.sviTipoviOrganizacija}">
+                            <td th:text="${tip.naziv}">Naziv</td>
+                            <td><input type="checkbox" name="odabraniTipoviOrganizacije" th:value="${tip.idTipOrganizacija}"
+                            th:checked="${#lists.contains(org.tipoviOrganizacije, tip)}"/></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer row">
+            <button type="button" class="btn btn-default" th:onclick="'saveOrganizacija(' + ${org.idOrganizacije} + ');'" th:text="Pohrani">Pohrani</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" th:text="Zatvori">Zatvori</button>
+        </div>
+    </form>
 </div>
 
 </html>

@@ -19,10 +19,10 @@ public class Organizacija {
     private String naziv;
 
     @Column(name = "x_koordinata")
-    private String xKoordinata;
+    private double xKoordinata;
 
     @Column(name = "y_koordinata")
-    private String yKoordinata;
+    private double yKoordinata;
 
     @Column(name = "opis")
     private String opis;
