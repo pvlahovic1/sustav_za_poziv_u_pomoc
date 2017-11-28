@@ -52,4 +52,17 @@ public class OrganizacijeController {
         organizacijeService.deleteOrganzacija(idOrganizacija);
     }
 
+    @GetMapping("/organizacije/new")
+    public String createNewOrganizacija(Model model) {
+        model.addAttribute("org", organizacijeService.createNewOrganizacijaWrapper());
+
+        return "fragments/organizacije_fragment::organizacije_new_modal_content";
+    }
+
+    @PostMapping("/organizacije/new/save")
+    @ResponseBody
+    public void saveNewOrganizacija(@RequestBody OrganizacijaEditWrapper organizacijaEditWrapper) {
+        organizacijeService.saveNewOrganizacija(organizacijaEditWrapper);
+    }
+
 }

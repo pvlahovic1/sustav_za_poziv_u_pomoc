@@ -40,7 +40,7 @@ function saveOrganizacija(id) {
     $.ajax({
         url : "/organizacije/update",
         type : 'POST',
-        data : JSON.stringify(getFormData()),
+        data : JSON.stringify(getFormData("organizacijaSaveForm")),
         contentType: "application/json; charset=UTF-8",
 
         success : function(data) {
@@ -53,9 +53,9 @@ function saveOrganizacija(id) {
     });
 }
 
-function getFormData() {
+function getFormData(formName) {
     var data = {};
-    $("#organizacijaSaveForm").serializeArray().map(function(x){data[x.name] = x.value;});
+    $("#" + formName).serializeArray().map(function(x){data[x.name] = x.value;});
 
     var odabraniTipoviOrganizacije = [];
     $("input:checked").each(function() {
@@ -83,4 +83,37 @@ function deleteOrganizacija(id) {
             }
         });
     }
+}
+
+function showDodajNovuBolnicu(id) {
+    $('#organizacijeModal').modal('show');
+
+    $.ajax({
+        url : "/organizacije/new",
+        type : 'GET',
+        success : function(data) {
+            $("#bolnica-modal-content").html(data);
+        },
+        error : function(request,error)
+        {
+            console.log("Request: "+JSON.stringify(request));
+        }
+    });
+}
+
+function saveNovuBolnicu() {
+    $.ajax({
+        url : "/organizacije/new/save",
+        type : 'POST',
+        data : JSON.stringify(getFormData("organizacijaNewForm")),
+        contentType: "application/json; charset=UTF-8",
+
+        success : function(data) {
+            $('#organizacijeModal').modal('hide');
+        },
+        error : function(request,error)
+        {
+            console.log("Request: "+JSON.stringify(request));
+        }
+    });
 }

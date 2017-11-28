@@ -2,6 +2,7 @@ package hr.foi.airprojekt.web.model;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -18,4 +19,9 @@ public class OrganizacijaEditWrapper {
     List<OrganizacijaTip> sviTipoviOrganizacija;
     List<Integer> odabraniTipoviOrganizacije;
 
+    public OrganizacijaEditWrapper() {
+        tipoviOrganizacije = new ArrayList<>();
+        sviTipoviOrganizacija = new ArrayList<>();
+        odabraniTipoviOrganizacije = new ArrayList<>();
+    }
 }

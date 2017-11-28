@@ -46,6 +46,15 @@ public class OrganizacijeServiceImpl implements OrganizacijeService {
     }
 
     @Override
+    public OrganizacijaEditWrapper createNewOrganizacijaWrapper() {
+        OrganizacijaEditWrapper oew = new OrganizacijaEditWrapper();
+
+        oew.setSviTipoviOrganizacija(organizacijaTipRepository.findAll());
+
+        return oew;
+    }
+
+    @Override
     public Organizacija updateOrganizacija(OrganizacijaEditWrapper oew) {
         Organizacija o = organizacijaRepository.findByIdOrganizacije(oew.getIdOrganizacije());
 
@@ -65,6 +74,21 @@ public class OrganizacijeServiceImpl implements OrganizacijeService {
     @Override
     public void deleteOrganzacija(int idOrganizacija) {
         organizacijaRepository.delete(idOrganizacija);
+    }
+
+    @Override
+    public void saveNewOrganizacija(OrganizacijaEditWrapper oew) {
+        Organizacija o = new Organizacija();
+
+        o.setBrojHitnih(oew.getBrojHitnih());
+        o.setBrojNehitnih(oew.getBrojNehitnih());
+        o.setNaziv(oew.getNaziv());
+        o.setXKoordinata(oew.getX());
+        o.setYKoordinata(oew.getY());
+        o.setOpis(oew.getOpis());
+        o.setTipoviOrganizacije(organizacijaTipRepository.findByIdTipOrganizacijaIn(oew.getOdabraniTipoviOrganizacije()));
+
+        organizacijaRepository.save(o);
     }
 
 }

@@ -10,8 +10,10 @@ public interface OrganizacijeService {
     List<Organizacija> fetchAllOrganizacija();
     Organizacija fetchById(int idOrganizacija);
     OrganizacijaEditWrapper fetchEditWrapperById(int idOrganizacija);
+    OrganizacijaEditWrapper createNewOrganizacijaWrapper();
 
     Organizacija updateOrganizacija(OrganizacijaEditWrapper oew);
     void deleteOrganzacija(int idOrganizacija);
+    void saveNewOrganizacija(OrganizacijaEditWrapper oew);
 
 }
