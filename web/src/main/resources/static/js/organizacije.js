@@ -76,6 +76,7 @@ function deleteOrganizacija(id) {
             type : 'GET',
             success : function(data) {
                 $('#organizacijeModal').modal('hide');
+                refreshPage();
             },
             error : function(request,error)
             {
@@ -110,10 +111,16 @@ function saveNovuBolnicu() {
 
         success : function(data) {
             $('#organizacijeModal').modal('hide');
+            refreshPage();
         },
         error : function(request,error)
         {
             console.log("Request: "+JSON.stringify(request));
         }
     });
+}
+
+//TODO: Zamjeniti refreshPage sa refreshDataTables
+function refreshPage() {
+    location.reload();
 }
