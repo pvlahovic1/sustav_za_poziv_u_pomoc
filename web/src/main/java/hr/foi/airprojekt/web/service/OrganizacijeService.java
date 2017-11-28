@@ -1,7 +1,7 @@
 package hr.foi.airprojekt.web.service;
 
 import hr.foi.airprojekt.web.model.Organizacija;
-import hr.foi.airprojekt.web.model.OrganizacijaEditWrapper;
+import hr.foi.airprojekt.web.model.wrappers.OrganizacijaEditWrapper;
 
 import java.util.List;
 

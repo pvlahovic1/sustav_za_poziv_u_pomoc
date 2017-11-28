@@ -1,4 +1,4 @@
-package hr.foi.airprojekt.web.model;
+package hr.foi.airprojekt.web.model.wrappers;
 
 import hr.foi.airprojekt.web.validator.PasswordMatches;
 import lombok.Data;

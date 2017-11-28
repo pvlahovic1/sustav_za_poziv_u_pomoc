@@ -1,6 +1,6 @@
 package hr.foi.airprojekt.web.validator;
 
-import hr.foi.airprojekt.web.model.User;
+import hr.foi.airprojekt.web.model.wrappers.User;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

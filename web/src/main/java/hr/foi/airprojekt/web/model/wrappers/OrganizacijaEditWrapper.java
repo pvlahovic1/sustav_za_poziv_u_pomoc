@@ -1,5 +1,6 @@
-package hr.foi.airprojekt.web.model;
+package hr.foi.airprojekt.web.model.wrappers;
 
+import hr.foi.airprojekt.web.model.OrganizacijaTip;
 import lombok.Data;
 
 import java.util.ArrayList;

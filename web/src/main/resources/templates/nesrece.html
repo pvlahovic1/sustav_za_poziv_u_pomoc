@@ -1,10 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>Nesreće</title>
+    <title>Organizacije</title>
+
+    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/default-design.css" />
+    <link rel="stylesheet" type="text/css" href="/css/organizacije.css" />
+
+    <script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+    <script src="webjars/datatables/1.9.4/media/js/jquery.dataTables.min.js"></script>
+    <script src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/js/nesrece.js"></script>
+
 </head>
 <body>
-Radi <a href="/logout">Logout</a><a href="/organizacije">Bolnice</a>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Nesreće</a></li>
+                <li><a href="/organizacije">Bolnice</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Odjava</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="col-xs-12" style="height:50px;"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 table-wrapper">
+            <table id="nesreceTable" class="table">
+                <thead>
+                <tr>
+                    <th>OIB</th>
+                    <th>Ime</th>
+                    <th>Prezime</th>
+                    <th>Broj mobitela</th>
+                    <th>Vrijeme primitka</th>
+                    <th>Akcije</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="nesreca : ${nesrece}">
+                    <td th:text="${nesreca.oib}">Oib</td>
+                    <td th:text="${nesreca.ime}">Ime</td>
+                    <td th:text="${nesreca.prezime}">Prezime</td>
+                    <td th:text="${nesreca.brojMobitela}">Broj mobitela</td>
+                    <td th:text="${nesreca.vrijemePrimitka}">Vrijeme primitka</td>
+                    <td><button class="btn btn-secondary" th:onclick="'showDetails(' + ${nesreca.idPoziva} + ');'" th:text="Detalji">Detalji</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

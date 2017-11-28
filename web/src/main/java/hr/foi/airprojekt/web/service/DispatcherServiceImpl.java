@@ -2,7 +2,7 @@ package hr.foi.airprojekt.web.service;
 
 import hr.foi.airprojekt.web.exception.UsernameExistsException;
 import hr.foi.airprojekt.web.model.Dispatcher;
-import hr.foi.airprojekt.web.model.User;
+import hr.foi.airprojekt.web.model.wrappers.User;
 import hr.foi.airprojekt.web.repository.DispatcherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
