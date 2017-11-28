@@ -62,4 +62,9 @@ public class OrganizacijeServiceImpl implements OrganizacijeService {
         return o;
     }
 
+    @Override
+    public void deleteOrganzacija(int idOrganizacija) {
+        organizacijaRepository.delete(idOrganizacija);
+    }
+
 }

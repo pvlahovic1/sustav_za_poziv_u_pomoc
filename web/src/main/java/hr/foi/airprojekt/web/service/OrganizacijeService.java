@@ -12,5 +12,6 @@ public interface OrganizacijeService {
     OrganizacijaEditWrapper fetchEditWrapperById(int idOrganizacija);
 
     Organizacija updateOrganizacija(OrganizacijaEditWrapper oew);
+    void deleteOrganzacija(int idOrganizacija);
 
 }

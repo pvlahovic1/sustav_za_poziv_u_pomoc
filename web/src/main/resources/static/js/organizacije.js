@@ -67,3 +67,20 @@ function getFormData() {
 
     return data;
 }
+
+function deleteOrganizacija(id) {
+    var result = confirm("Sigurno želite obrisati organizaciju?");
+    if (result) {
+        $.ajax({
+            url : "/organizacije/delete/" + id,
+            type : 'GET',
+            success : function(data) {
+                $('#organizacijeModal').modal('hide');
+            },
+            error : function(request,error)
+            {
+                console.log("Request: "+JSON.stringify(request));
+            }
+        });
+    }
+}

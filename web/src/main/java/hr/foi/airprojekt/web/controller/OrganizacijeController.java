@@ -6,10 +6,7 @@ import hr.foi.airprojekt.web.service.OrganizacijeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -47,6 +44,12 @@ public class OrganizacijeController {
         model.addAttribute("org", o);
 
         return "fragments/organizacije_fragment::organizacije_show_modal_content";
+    }
+
+    @GetMapping("/organizacije/delete/{id}")
+    @ResponseBody
+    public void deleteOrganizacija(@PathVariable("id") int idOrganizacija) {
+        organizacijeService.deleteOrganzacija(idOrganizacija);
     }
 
 }
