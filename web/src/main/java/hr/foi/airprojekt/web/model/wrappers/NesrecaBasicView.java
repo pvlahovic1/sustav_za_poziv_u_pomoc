@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class NesreceTableView {
+public class NesrecaBasicView {
 
     private Integer idPoziva;
     private String oib;

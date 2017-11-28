@@ -5,3 +5,19 @@ $(document).ready(function(){
         }
     });
 });
+
+function showDetails(id) {
+    $('#poziviModal').modal('show');
+
+    $.ajax({
+        url : "/nesrece/" + id,
+        type : 'GET',
+        success : function(data) {
+            $("#nesreca-modal-content").html(data);
+        },
+        error : function(request,error)
+        {
+            console.log("Request: "+JSON.stringify(request));
+        }
+    });
+}

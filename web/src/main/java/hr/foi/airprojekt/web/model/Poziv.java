@@ -4,6 +4,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -16,10 +18,10 @@ public class Poziv {
     private int idPoziv;
 
     @Column(name = "x_koordinata")
-    private String xKoordinata;
+    private double xKoordinata;
 
     @Column(name = "y_koordinata")
-    private String yKoordinata;
+    private double yKoordinata;
 
     @Column(name = "vrijeme_rjesavanja")
     private LocalDateTime vrijemeRjesavanja;
@@ -30,5 +32,13 @@ public class Poziv {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="korisnik_id")
     private Korisnik korisnik;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "poziv_opis_nesrece",
+            joinColumns = { @JoinColumn(name = "id_poziv") },
+            inverseJoinColumns = { @JoinColumn(name = "id_opis_nesrece") }
+    )
+    Set<OpisNesrece> opisiNesrece = new HashSet<>();
 
 }
