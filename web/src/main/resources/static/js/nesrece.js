@@ -23,6 +23,20 @@ function showDetails(id) {
     });
 }
 
+function oznaciKaoRijeseno(id) {
+    $.ajax({
+        url : "/nesrece/rijeseno/" + id,
+        type : 'GET',
+        success : function(data) {
+            $('#poziviModal').modal('hide');
+        },
+        error : function(request,error)
+        {
+            console.log("Request: "+JSON.stringify(request));
+        }
+    });
+}
+
 function myMap(x, y) {
     var myLatLng = {lat: parseFloat(x), lng: parseFloat(y)};
 

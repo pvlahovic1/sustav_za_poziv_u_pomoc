@@ -8,6 +8,7 @@ import hr.foi.airprojekt.web.repository.PozivReposirtory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +62,15 @@ public class PozivServiceImpl implements PozivService {
         ndv.setOib(korisnik.getOib());
 
         return ndv;
+    }
+
+    @Override
+    public void makeNesrecaResolved(int id) {
+        Poziv p = pozivReposirtory.findOne(id);
+
+        p.setVrijemeRjesavanja(LocalDateTime.now());
+
+        pozivReposirtory.save(p);
     }
 
 }

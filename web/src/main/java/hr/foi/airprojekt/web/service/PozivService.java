@@ -10,5 +10,6 @@ public interface PozivService {
     List<NesrecaBasicView> fetchAllNesrece();
     NesrecaDetailsView fetchNesrecaDetailViewByNesrecaId(int id);
 
+    void makeNesrecaResolved(int id);
 
 }

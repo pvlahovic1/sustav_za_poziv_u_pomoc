@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,6 +27,12 @@ public class NesreceController {
         model.addAttribute("nesreca", pozivService.fetchNesrecaDetailViewByNesrecaId(id));
 
         return "fragments/nesrece_fragment::nesreca_show_modal_content";
+    }
+
+    @GetMapping("/nesrece/rijeseno/{id}")
+    @ResponseBody
+    public void setAsResolved(@PathVariable("id") int id) {
+        pozivService.makeNesrecaResolved(id);
     }
 
 }
