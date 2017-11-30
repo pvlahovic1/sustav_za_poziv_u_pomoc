@@ -37,6 +37,48 @@ function oznaciKaoRijeseno(id) {
     });
 }
 
+function urediPodatke(id) {
+    $.ajax({
+        url : "/nesrece/edit/" + id,
+        type : 'GET',
+        success : function(data) {
+            $("#nesreca-modal-content").html(data);
+        },
+        error : function(request,error)
+        {
+            console.log("Request: "+JSON.stringify(request));
+        }
+    });
+}
+
+function pohraniUredenuNesrecu(id) {
+    $.ajax({
+        url : "/nesrece/update",
+        type : 'POST',
+        data : JSON.stringify(getFormData()),
+        contentType: "application/json; charset=UTF-8",
+        success : function(data) {
+            $('#poziviModal').modal('hide');
+        },
+        error : function(request,error)
+        {
+            console.log("Request: "+JSON.stringify(request));
+        }
+    });
+}
+
+function getFormData() {
+    var data = {};
+    var odabraniTipoviNesrece = [];
+    $("input:checked").each(function() {
+        odabraniTipoviNesrece.push(parseInt($(this).val()));
+    });
+    data['opisiNesrece'] = odabraniTipoviNesrece;
+    data['idNesrece'] = $("#idPoziva").val();
+
+    return data;
+}
+
 function myMap(x, y) {
     var myLatLng = {lat: parseFloat(x), lng: parseFloat(y)};
 

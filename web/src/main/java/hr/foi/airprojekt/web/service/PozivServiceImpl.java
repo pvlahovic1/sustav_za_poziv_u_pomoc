@@ -4,6 +4,9 @@ import hr.foi.airprojekt.web.model.Korisnik;
 import hr.foi.airprojekt.web.model.Poziv;
 import hr.foi.airprojekt.web.model.wrappers.NesrecaBasicView;
 import hr.foi.airprojekt.web.model.wrappers.NesrecaDetailsView;
+import hr.foi.airprojekt.web.model.wrappers.NesrecaEditDto;
+import hr.foi.airprojekt.web.model.wrappers.NesrecaEditView;
+import hr.foi.airprojekt.web.repository.OpisNesreceRepository;
 import hr.foi.airprojekt.web.repository.PozivReposirtory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,7 @@ import java.util.List;
 public class PozivServiceImpl implements PozivService {
 
     private final PozivReposirtory pozivReposirtory;
+    private final OpisNesreceRepository opisNesreceRepository;
 
     @Override
     public List<NesrecaBasicView> fetchAllNesrece() {
@@ -62,6 +66,40 @@ public class PozivServiceImpl implements PozivService {
         ndv.setOib(korisnik.getOib());
 
         return ndv;
+    }
+
+    @Override
+    public NesrecaDetailsView updateNesreca(NesrecaEditDto nesrecaEditDto) {
+        Poziv poziv = pozivReposirtory.findOne(nesrecaEditDto.getIdNesrece());
+
+        poziv.setOpisiNesrece(opisNesreceRepository.findAllByIdIn(nesrecaEditDto.getOpisiNesrece()));
+
+        pozivReposirtory.save(poziv);
+
+        return fetchNesrecaDetailViewByNesrecaId(nesrecaEditDto.getIdNesrece());
+    }
+
+    @Override
+    public NesrecaEditView fetchEditWrapper(int id) {
+        Poziv p = pozivReposirtory.findOne(id);
+        NesrecaEditView editWrapper = new NesrecaEditView();
+
+        editWrapper.setIdPoziva(p.getIdPoziv());
+        editWrapper.setX(p.getXKoordinata());
+        editWrapper.setY(p.getYKoordinata());
+        editWrapper.setOpisiNesrece(new ArrayList<>(p.getOpisiNesrece()));
+        editWrapper.setSviOpisiNesrece(opisNesreceRepository.findAll());
+        editWrapper.setVrijemePrimitka(p.getVrijemePrimitka());
+
+        Korisnik k = p.getKorisnik();
+
+        editWrapper.setIme(k.getIme());
+        editWrapper.setPrezime(k.getPrezime());
+        editWrapper.setBrojMobitela(k.getBrojMob());
+        editWrapper.setOib(k.getOib());
+
+
+        return editWrapper;
     }
 
     @Override

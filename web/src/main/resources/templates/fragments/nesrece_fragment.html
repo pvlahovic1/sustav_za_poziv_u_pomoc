@@ -49,5 +49,49 @@
     </div>
 </div>
 
-
+<div th:fragment="nesreca_edit_modal_content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" th:text="${nesreca.vrijemePrimitka}">Datum</h4>
+    </div>
+    <div class="modal-body">
+        <div class="card border-primary">
+            <div class="card-body">
+                <blockquote class="card-blockquote">
+                    <span>OIB:</span><p th:text="${nesreca.oib}"></p>
+                    <span>Ime:</span><p th:text="${nesreca.ime}"></p>
+                    <span>Prezime:</span><p th:text="${nesreca.prezime}"></p>
+                    <span>Broj mobitela:</span><p id="brojMobitela" th:text="${nesreca.brojMobitela}"></p>
+                    <span>Vrijeme primitka:</span><p th:text="${nesreca.vrijemePrimitka}"></p>
+                </blockquote>
+            </div>
+            <input type="hidden" id="xKoordinata" th:value="${nesreca.x}" />
+            <input type="hidden" id="yKoordinata" th:value="${nesreca.y}" />
+            <input type="hidden" id="idPoziva" th:value="${nesreca.idPoziva}" />
+            <div>
+                <h4>Opis nesreće:</h4>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Naziv</th>
+                        <th>Uvijet</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="opis : ${nesreca.sviOpisiNesrece}">
+                        <td th:text="${opis.naziv}">Naziv</td>
+                        <td><input type="checkbox" name="odabraniOpisNesrece" th:value="${opis.id}"
+                                   th:checked="${#lists.contains(nesreca.opisiNesrece, opis)}"/></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" th:onclick="'oznaciKaoRijeseno(' + ${nesreca.idPoziva} + ');'">Označi kao riješeno</button>
+        <button type="button" class="btn btn-default" th:onclick="'pohraniUredenuNesrecu(' + ${nesreca.idPoziva} + ');'">Pohrani podatke</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" th:text="Zatvori">Zatvori</button>
+    </div>
+</div>
 </html>
