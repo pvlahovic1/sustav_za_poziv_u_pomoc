@@ -26,7 +26,7 @@ public class LoginController {
 
     @GetMapping("/")
     public String getDefault() {
-        return "nesrece";
+        return "redirect:/nesrece";
     }
 
     @GetMapping("/login")
