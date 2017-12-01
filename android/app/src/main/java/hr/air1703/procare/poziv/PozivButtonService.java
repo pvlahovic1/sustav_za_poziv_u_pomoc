@@ -83,7 +83,7 @@ public class PozivButtonService extends PozivService {
                 Korisnik korisnik = Korisnik.getAll().get(0);
 
                 PozivUPomocWrapper poziv = new PozivUPomocWrapper(korisnik.getOib(),
-                        razlog.getNaziv(), location.getAltitude(), location.getLongitude());
+                        razlog.getNaziv(), location.getLatitude(), location.getLongitude());
 
                 PozivApi pozivApi = new PozivApi(pozivServiceHandler);
 
