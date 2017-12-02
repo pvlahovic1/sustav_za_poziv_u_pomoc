@@ -24,7 +24,12 @@ public class AndroidServiceStartOnBoot extends Service implements AccelerometerL
 
     @Override
     public void onShake(float force) {
-        Toast.makeText(this, "Motion detected", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Poziv u pomoć", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent("android.intent.category.LAUNCHER");
+        intent.setClassName("hr.air1703.procare", "hr.air1703.procare.HelpCallActivity");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     @Override
