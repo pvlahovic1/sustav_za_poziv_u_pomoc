@@ -6,6 +6,8 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
+import hr.air1703.procare.R;
+
 public class AndroidServiceStartOnBoot extends Service implements AccelerometerListener {
 
     @Nullable
@@ -24,7 +26,7 @@ public class AndroidServiceStartOnBoot extends Service implements AccelerometerL
 
     @Override
     public void onShake(float force) {
-        Toast.makeText(this, "Poziv u pomoć", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.onShake_call), Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent("android.intent.category.LAUNCHER");
         intent.setClassName("hr.air1703.procare", "hr.air1703.procare.HelpCallActivity");

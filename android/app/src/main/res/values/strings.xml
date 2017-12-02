@@ -42,6 +42,8 @@
     <string name="alert_help_message_postfix">minuta</string>
     <string name="alert_help_title">Upozorenje!</string>
     <string name="alert_help_button_ok">Uredu</string>
-    <string name="help_message_button_press">Za slanje poziva u pomoć gumb je porebno držati 5 sekundi</string>
+    <string name="help_message_button_press">Za slanje poziva u pomoć gumb je potrebno držati 5 sekundi</string>
+    <string name="display_progress">Dobavljam lokaciju…</string>
+    <string name="onShake_call">Poziv u pomoć</string>
 
 </resources>

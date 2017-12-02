@@ -206,7 +206,7 @@ public class HelpCallActivity extends AppCompatActivity implements GPSView,
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(this);
             progressDialog.getWindow().addFlags(Window.FEATURE_NO_TITLE);
-            progressDialog.setMessage("Getting location...");
+            progressDialog.setMessage(getString(R.string.display_progress));
         }
 
         if (!progressDialog.isShowing()) {

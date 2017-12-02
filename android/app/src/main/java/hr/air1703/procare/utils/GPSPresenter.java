@@ -77,15 +77,15 @@ public class GPSPresenter {
     public void onProcessTypeChanged(@ProcessType int newProcess) {
         switch (newProcess) {
             case ProcessType.GETTING_LOCATION_FROM_GOOGLE_PLAY_SERVICES: {
-                gpsView.updateProgress("Getting Location from Google Play Services...");
+                gpsView.updateProgress("DObavljanje lokacije sa Google Play Servisa");
                 break;
             }
             case ProcessType.GETTING_LOCATION_FROM_GPS_PROVIDER: {
-                gpsView.updateProgress("Getting Location from GPS...");
+                gpsView.updateProgress("Dobavljanje GPS lokacije...");
                 break;
             }
             case ProcessType.GETTING_LOCATION_FROM_NETWORK_PROVIDER: {
-                gpsView.updateProgress("Getting Location from Network...");
+                gpsView.updateProgress("Dobavljanje lokacije sa mreže...");
                 break;
             }
             case ProcessType.ASKING_PERMISSIONS:
