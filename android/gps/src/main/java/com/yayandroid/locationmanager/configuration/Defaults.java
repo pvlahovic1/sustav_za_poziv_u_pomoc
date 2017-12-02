@@ -30,7 +30,7 @@ public final class Defaults {
     public static final String[] LOCATION_PERMISSIONS = new String[] { Manifest.permission.ACCESS_COARSE_LOCATION,
           Manifest.permission.ACCESS_FINE_LOCATION };
 
-    private static final int LOCATION_PRIORITY = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY;
+    private static final int LOCATION_PRIORITY = LocationRequest.PRIORITY_HIGH_ACCURACY;
     private static final int LOCATION_FASTEST_INTERVAL = MINUTE;
 
     /**
