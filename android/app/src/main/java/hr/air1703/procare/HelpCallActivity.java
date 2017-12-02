@@ -2,9 +2,14 @@ package hr.air1703.procare;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,9 +19,6 @@ import android.widget.Toast;
 
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
-import com.yayandroid.locationmanager.base.LocationBaseActivity;
-import com.yayandroid.locationmanager.configuration.Configurations;
-import com.yayandroid.locationmanager.configuration.LocationConfiguration;
 import com.yayandroid.locationmanager.constants.FailType;
 import com.yayandroid.locationmanager.constants.ProcessType;
 
@@ -37,14 +39,15 @@ import hr.air1703.procare.loaders.RazlogWebDataLoader;
 import hr.air1703.procare.poziv.PozivButtonService;
 import hr.air1703.procare.utils.ApplicationUtils;
 import hr.air1703.procare.utils.GPSPresenter;
+import hr.air1703.procare.utils.GPSPresenter.GPSView;
+import hr.air1703.procare.utils.GPSService;
 
 
-public class HelpCallActivity extends LocationBaseActivity implements GPSPresenter.GPSView,
+public class HelpCallActivity extends AppCompatActivity implements GPSView,
         RazloziDataLoadedListener,
         PozivServiceHandler {
 
     public static Location location;
-
     private ProgressDialog progressDialog;
     @BindView(R.id.spinner_razlozi)
     Spinner razloziSpiner;
@@ -55,6 +58,7 @@ public class HelpCallActivity extends LocationBaseActivity implements GPSPresent
 
     // GPS klasa u kojoj je interface za lokaciju
     private GPSPresenter gpsPresenter;
+    private IntentFilter intentFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,48 +69,28 @@ public class HelpCallActivity extends LocationBaseActivity implements GPSPresent
         FlowManager.init(new FlowConfig.Builder(this).build());
 
         loadRazloziData();
-
         PozivService pozivService = new PozivButtonService(this, buttonPozivPomoci, razloziSpiner);
         ((PozivButtonService)pozivService).setupButtonFunction();
 
         gpsPresenter = new GPSPresenter(this);
-        getLocation();
-        getLocationManager().get();
+        displayProgress();
+        startService(new Intent(this, GPSService.class));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        if (getLocationManager().isWaitingForLocation()
-                && !getLocationManager().isAnyDialogShowing()) {
-            displayProgress();
-        }
+        // Register GPS receiver
+        registerReceiver(broadcastReceiver, getIntentFilter());
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        dismissProgress();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        gpsPresenter.destroy();
-    }
-
-    private void displayProgress() {
-        if (progressDialog == null) {
-            progressDialog = new ProgressDialog(this);
-            progressDialog.getWindow().addFlags(Window.FEATURE_NO_TITLE);
-            progressDialog.setMessage("Getting location...");
-        }
-
-        if (!progressDialog.isShowing()) {
-            progressDialog.show();
-        }
+        // Unregister GPS receiver
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void loadRazloziData() {
@@ -130,50 +114,6 @@ public class HelpCallActivity extends LocationBaseActivity implements GPSPresent
         }
 
         razloziPozivaDataLoader.loadRazlozi(this);
-    }
-
-    @Override
-    public LocationConfiguration getLocationConfiguration() {
-        return Configurations.defaultConfiguration("Gimme the permission!", "Would you mind to turn GPS on?");
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        gpsPresenter.onLocationChanged(location);
-    }
-
-    @Override
-    public void onLocationFailed(@FailType int failType) {
-        gpsPresenter.onLocationFailed(failType);
-    }
-
-    @Override
-    public void onProcessTypeChanged(@ProcessType int processType) {
-        gpsPresenter.onProcessTypeChanged(processType);
-    }
-
-    @Override
-    public void setLocation(Location newLocation) {
-        location = newLocation;
-    }
-
-    @Override
-    public void setText(String text) {
-        locationText.setText(text);
-    }
-
-    @Override
-    public void updateProgress(String text) {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.setMessage(text);
-        }
-    }
-
-    @Override
-    public void dismissProgress() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
     }
 
     @Override
@@ -225,9 +165,70 @@ public class HelpCallActivity extends LocationBaseActivity implements GPSPresent
                 + String.valueOf(getText(messageCode)));
     }
 
-
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void setLocation(Location newLocation) {
+        location = newLocation;
+    }
+
+    @Override
+    public void setText(String text) {
+        locationText.setText(text);
+    }
+
+    @Override
+    public void updateProgress(String text) {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.setMessage(text);
+        }
+    }
+
+    @Override
+    public void dismissProgress() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
+    private void displayProgress() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.getWindow().addFlags(Window.FEATURE_NO_TITLE);
+            progressDialog.setMessage("Getting location...");
+        }
+
+        if (!progressDialog.isShowing()) {
+            progressDialog.show();
+        }
+    }
+
+    private IntentFilter getIntentFilter() {
+        if (intentFilter == null) {
+            intentFilter = new IntentFilter();
+            intentFilter.addAction(GPSService.ACTION_LOCATION_CHANGED);
+            intentFilter.addAction(GPSService.ACTION_LOCATION_FAILED);
+            intentFilter.addAction(GPSService.ACTION_PROCESS_CHANGED);
+        }
+        return intentFilter;
+    }
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(GPSService.ACTION_LOCATION_CHANGED)) {
+                gpsPresenter.onLocationChanged((Location) intent.getParcelableExtra(GPSService.EXTRA_LOCATION));
+            } else if (action.equals(GPSService.ACTION_LOCATION_FAILED)) {
+                //noinspection WrongConstant
+                gpsPresenter.onLocationFailed(intent.getIntExtra(GPSService.EXTRA_FAIL_TYPE, FailType.UNKNOWN));
+            } else if (action.equals(GPSService.ACTION_PROCESS_CHANGED)) {
+                //noinspection WrongConstant
+                gpsPresenter.onProcessTypeChanged(intent.getIntExtra(GPSService.EXTRA_PROCESS_TYPE,
+                        ProcessType.GETTING_LOCATION_FROM_CUSTOM_PROVIDER));
+            }
+        }
+    };
 }

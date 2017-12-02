@@ -28,6 +28,8 @@
         <activity android:name=".UserAreaActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".HelpCallActivity" />
+
+        <service android:name=".utils.GPSService" />
     </application>
 
 </manifest>
