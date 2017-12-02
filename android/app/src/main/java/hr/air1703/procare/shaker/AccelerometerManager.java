@@ -16,6 +16,14 @@ import java.util.List;
 
 public class AccelerometerManager extends Service {
 
+    /**
+     * Accuracy configuration
+     */
+    private static float sensibility = 2.0f;
+    private static int interval = 1000;
+    private static int shakeCount = 5;
+    private static int callToActionInterval = 60000;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -23,11 +31,6 @@ public class AccelerometerManager extends Service {
     }
 
     private static Context context = null;
-    /**
-     * Accuracy configuration
-     */
-    private static float threshold = 15.0f;
-    private static int interval = 200;
 
     private static SensorManager sensorManager;
     private static AccelerometerListener listener;
@@ -87,12 +90,14 @@ public class AccelerometerManager extends Service {
     /**
      * Configure the listener for shaking
      *
-     * @param threshold minimum acceleration variation for considering shaking
-     * @param interval minimum interval between to shake events
+     * @param sensibility minimum acceleration variation for considering shaking
+     * @param interval maximal interval between shake events
+     * @param shakeCount minimal number of shakes required for action
      */
-    public static void configure(int threshold, int interval) {
-        AccelerometerManager.threshold = threshold;
+    public static void configure(float sensibility, int interval, int shakeCount) {
+        AccelerometerManager.sensibility = sensibility;
         AccelerometerManager.interval = interval;
+        AccelerometerManager.shakeCount = shakeCount;
     }
 
     /**
@@ -125,74 +130,61 @@ public class AccelerometerManager extends Service {
      * And registers a listener and start listening
      *
      * @param accelerometerListener callback for accelerometer events
-     * @param threshold minimum acceleration variation for considering shaking
-     * @param interval minimum interval between to shake events
+     * @param sensibility minimum acceleration variation for considering shaking
+     * @param interval maximal interval between shake events
+     * @param shakeCount minimal number of shakes required for action
      */
-    public static void startListening(AccelerometerListener accelerometerListener, int threshold, int interval) {
-        configure(threshold, interval);
+    public static void startListening(AccelerometerListener accelerometerListener, float sensibility, int interval, int shakeCount) {
+        configure(sensibility, interval, shakeCount);
         startListening(accelerometerListener);
     }
 
     private static SensorEventListener sensorEventListener = new SensorEventListener() {
 
-        private long now = 0;
-        private long timeDiff = 0;
-        private long lastUpdate = 0;
-        private long lastShake = 0;
-
-        private float x = 0;
-        private float y = 0;
-        private float z = 0;
-        private float lastX = 0;
-        private float lastY = 0;
-        private float lastZ = 0;
-        private float force = 0;
+        private static final int SHAKE_SLOP_TIME_MS = 500;
+        private long mShakeTimestamp;
+        private int mShakeCount;
+        private long lastCalledActionTimestamp;
 
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
         }
 
         public void onSensorChanged(SensorEvent event) {
-            now = event.timestamp;
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
 
-            x = event.values[0];
-            y = event.values[1];
-            z = event.values[2];
+            float gX = x / SensorManager.GRAVITY_EARTH;
+            float gY = y / SensorManager.GRAVITY_EARTH;
+            float gZ = z / SensorManager.GRAVITY_EARTH;
 
-            if (lastUpdate == 0) {
-                lastUpdate = now;
-                lastShake = now;
-                lastX = x;
-                lastY = y;
-                lastZ = z;
-                Toast.makeText(context, "No Motion detected", Toast.LENGTH_SHORT).show();
+            float gForce = (float) Math.sqrt(gX * gX + gY * gY + gZ * gZ);
 
-            } else {
-                timeDiff = now - lastUpdate;
+            if (gForce > sensibility) {
 
-                if (timeDiff > 0) {
+                Log.d("LISTENER", "force: " + gForce + " count: " + mShakeCount);
 
-                    force = Math.abs(x + y + z - lastX - lastY - lastZ);
+                final long now = System.currentTimeMillis();
 
-                    if (Float.compare(force, threshold) > 0) {
+                if (mShakeTimestamp + SHAKE_SLOP_TIME_MS > now) {
+                    return;
+                }
 
-                        if (now - lastShake >= interval) {
-                            listener.onShake(force);
-                        } else {
-                            Toast.makeText(context, "No Motion detected",
-                                    Toast.LENGTH_SHORT).show();
+                if (mShakeTimestamp + interval < now) {
+                    mShakeCount = 0;
+                }
 
-                        }
-                        lastShake = now;
+                mShakeTimestamp = now;
+                mShakeCount++;
+
+                if (shakeCount == mShakeCount) {
+                    if (now - lastCalledActionTimestamp > callToActionInterval) {
+                        lastCalledActionTimestamp = now;
+                        listener.onShake(gForce);
                     }
-                    lastX = x;
-                    lastY = y;
-                    lastZ = z;
-                    lastUpdate = now;
-                } else {
-                    Toast.makeText(context, "No Motion detected", Toast.LENGTH_SHORT).show();
                 }
             }
-            listener.onAccelerationChanged(x, y, z);
         }
+
     };
 }
