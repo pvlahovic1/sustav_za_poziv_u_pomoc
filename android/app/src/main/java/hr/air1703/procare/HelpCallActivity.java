@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.widget.ArrayAdapter;
@@ -17,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.karan.churi.PermissionManager.PermissionManager;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.yayandroid.locationmanager.constants.FailType;
@@ -60,6 +62,9 @@ public class HelpCallActivity extends AppCompatActivity implements GPSView,
     private GPSPresenter gpsPresenter;
     private IntentFilter intentFilter;
 
+    // Manager for permissions
+    PermissionManager permissionManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +72,10 @@ public class HelpCallActivity extends AppCompatActivity implements GPSView,
 
         ButterKnife.bind(this);
         FlowManager.init(new FlowConfig.Builder(this).build());
+
+        // Check permissions
+        permissionManager = new PermissionManager() {};
+        permissionManager.checkAndRequestPermissions(this);
 
         loadRazloziData();
         PozivService pozivService = new PozivButtonService(this, buttonPozivPomoci, razloziSpiner);
@@ -231,4 +240,10 @@ public class HelpCallActivity extends AppCompatActivity implements GPSView,
             }
         }
     };
+
+    // Handle permission results
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        permissionManager.checkResult(requestCode, permissions, grantResults);
+    }
 }

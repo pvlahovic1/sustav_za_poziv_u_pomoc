@@ -40,4 +40,6 @@ dependencies {
     compile 'com.android.volley:volley:1.0.0'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
+
+    compile 'com.github.karanchuri:PermissionManager:0.1.0'
 }

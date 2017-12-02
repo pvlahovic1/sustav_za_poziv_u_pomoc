@@ -2,6 +2,7 @@ package hr.air1703.procare;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.karan.churi.PermissionManager.PermissionManager;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity  implements APIResponseListe
     private EditText editTextMail;
     private EditText editTextPassword;
 
+    // Manager for permissions
+    PermissionManager permissionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,10 @@ public class MainActivity extends AppCompatActivity  implements APIResponseListe
 
         editTextMail = (EditText) findViewById(R.id.etEmail);
         editTextPassword = (EditText) findViewById(R.id.pPassword);
+
+        // Check permissions
+        permissionManager = new PermissionManager() {};
+        permissionManager.checkAndRequestPermissions(this);
     }
 
     @Override
@@ -84,5 +92,9 @@ public class MainActivity extends AppCompatActivity  implements APIResponseListe
         finish();
     }
 
-
+    // Handle permission results
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        permissionManager.checkResult(requestCode, permissions, grantResults);
+    }
 }
