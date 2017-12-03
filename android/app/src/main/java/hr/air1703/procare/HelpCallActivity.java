@@ -11,7 +11,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,7 +30,6 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import hr.air1703.core.poziv.PozivService;
 import hr.air1703.core.poziv.PozivServiceHandler;
 import hr.air1703.core.poziv.RazloziDataLoadedListener;
 import hr.air1703.core.poziv.RazloziPozivaDataLoader;
@@ -40,6 +38,8 @@ import hr.air1703.database.settings.LocalApplicationLog;
 import hr.air1703.procare.loaders.RazlogLocalDBDataLoader;
 import hr.air1703.procare.loaders.RazlogWebDataLoader;
 import hr.air1703.procare.poziv.PozivButtonService;
+import hr.air1703.procare.poziv.PozivService;
+import hr.air1703.procare.poziv.PozivShakerService;
 import hr.air1703.procare.utils.ApplicationUtils;
 import hr.air1703.procare.utils.GPSPresenter;
 import hr.air1703.procare.utils.GPSPresenter.GPSView;
@@ -66,7 +66,6 @@ public class HelpCallActivity extends AppCompatActivity implements GPSView,
     // Manager for permissions
     PermissionManager permissionManager;
 
-    private PozivService pozivService;
     private boolean calledFromShake;
 
     @Override
@@ -82,8 +81,8 @@ public class HelpCallActivity extends AppCompatActivity implements GPSView,
         permissionManager.checkAndRequestPermissions(this);
 
         loadRazloziData();
-        pozivService = new PozivButtonService(this, buttonPozivPomoci, razloziSpiner);
-        ((PozivButtonService)pozivService).setupButtonFunction();
+        PozivService pozivService = new PozivButtonService(this, buttonPozivPomoci, razloziSpiner);
+        ((PozivButtonService) pozivService).setupButtonFunction();
 
 
         gpsPresenter = new GPSPresenter(this);
@@ -194,13 +193,9 @@ public class HelpCallActivity extends AppCompatActivity implements GPSView,
         location = newLocation;
 
         if (calledFromShake) {
-            sendCallForHelp();
+            PozivService pozivService = new PozivShakerService(this);
+            ((PozivShakerService)pozivService).shakerCallHelp((Razlog)razloziSpiner.getSelectedItem());
         }
-    }
-
-    private void sendCallForHelp(){
-        ((PozivButtonService) pozivService).callHelpFunction();
-        Log.i("CALL", "Function sendCallForHelp triggered");
     }
 
     @Override
