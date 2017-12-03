@@ -57,6 +57,10 @@ public class PozivButtonService extends PozivService {
         });
     }
 
+    public void callHelpFunction(){
+        callHelp();
+    }
+
     private void callHelp() {
         boolean canSendRequest = false;
         long timeDiff = 0;

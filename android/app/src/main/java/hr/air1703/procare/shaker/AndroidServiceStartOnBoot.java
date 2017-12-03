@@ -31,6 +31,9 @@ public class AndroidServiceStartOnBoot extends Service implements AccelerometerL
         Intent intent = new Intent("android.intent.category.LAUNCHER");
         intent.setClassName("hr.air1703.procare", "hr.air1703.procare.HelpCallActivity");
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        // send confirmation to activity that it was called from shake intent
+        intent.putExtra("call", true );
         startActivity(intent);
     }
 

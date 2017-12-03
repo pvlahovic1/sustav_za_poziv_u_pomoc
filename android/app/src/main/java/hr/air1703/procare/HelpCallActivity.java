@@ -11,6 +11,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -65,6 +66,9 @@ public class HelpCallActivity extends AppCompatActivity implements GPSView,
     // Manager for permissions
     PermissionManager permissionManager;
 
+    private PozivService pozivService;
+    private boolean calledFromShake;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,12 +82,19 @@ public class HelpCallActivity extends AppCompatActivity implements GPSView,
         permissionManager.checkAndRequestPermissions(this);
 
         loadRazloziData();
-        PozivService pozivService = new PozivButtonService(this, buttonPozivPomoci, razloziSpiner);
+        pozivService = new PozivButtonService(this, buttonPozivPomoci, razloziSpiner);
         ((PozivButtonService)pozivService).setupButtonFunction();
+
 
         gpsPresenter = new GPSPresenter(this);
         displayProgress();
         startService(new Intent(this, GPSService.class));
+
+        // get intent and check if it was sent from onShake
+        Bundle extras = getIntent().getExtras();
+        if (extras != null){
+            calledFromShake = extras.getBoolean("call");
+        }
     }
 
     @Override
@@ -181,6 +192,15 @@ public class HelpCallActivity extends AppCompatActivity implements GPSView,
     @Override
     public void setLocation(Location newLocation) {
         location = newLocation;
+
+        if (calledFromShake) {
+            sendCallForHelp();
+        }
+    }
+
+    private void sendCallForHelp(){
+        ((PozivButtonService) pozivService).callHelpFunction();
+        Log.i("CALL", "Function sendCallForHelp triggered");
     }
 
     @Override
