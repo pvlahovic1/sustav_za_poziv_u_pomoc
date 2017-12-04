@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 
 import javax.annotation.PostConstruct;
 import java.util.TimeZone;
@@ -19,6 +20,11 @@ public class WebApplication {
     @PostConstruct
     void started() {
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/Zagreb"));
+    }
+
+    @Bean
+    public Java8TimeDialect java8TimeDialect() {
+	    return new Java8TimeDialect();
     }
 
 	@Bean

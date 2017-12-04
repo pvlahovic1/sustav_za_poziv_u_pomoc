@@ -5,7 +5,7 @@
 <div th:fragment="nesreca_show_modal_content">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title" th:text="${nesreca.vrijemePrimitka}">Datum</h4>
+        <h4 class="modal-title" th:text="${#temporals.format(nesreca.vrijemePrimitka, 'dd.MM.yyyy HH:mm')}">Datum</h4>
     </div>
     <div class="modal-body">
         <div class="card border-primary">
@@ -15,7 +15,7 @@
                     <span>Ime:</span><p th:text="${nesreca.ime}"></p>
                     <span>Prezime:</span><p th:text="${nesreca.prezime}"></p>
                     <span>Broj mobitela:</span><p id="brojMobitela" th:text="${nesreca.brojMobitela}"></p>
-                    <span>Vrijeme primitka:</span><p th:text="${nesreca.vrijemePrimitka}"></p>
+                    <span>Vrijeme primitka:</span><p th:text="${#temporals.format(nesreca.vrijemePrimitka, 'dd.MM.yyyy HH:mm')}"></p>
                 </blockquote>
             </div>
 
@@ -52,7 +52,7 @@
 <div th:fragment="nesreca_edit_modal_content">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title" th:text="${nesreca.vrijemePrimitka}">Datum</h4>
+        <h4 class="modal-title" th:text="${#temporals.format(nesreca.vrijemePrimitka, 'dd.MM.yyyy HH:mm')}">Datum</h4>
     </div>
     <div class="modal-body">
         <div class="card border-primary">
@@ -62,7 +62,7 @@
                     <span>Ime:</span><p th:text="${nesreca.ime}"></p>
                     <span>Prezime:</span><p th:text="${nesreca.prezime}"></p>
                     <span>Broj mobitela:</span><p id="brojMobitela" th:text="${nesreca.brojMobitela}"></p>
-                    <span>Vrijeme primitka:</span><p th:text="${nesreca.vrijemePrimitka}"></p>
+                    <span>Vrijeme primitka:</span><p th:text="${#temporals.format(nesreca.vrijemePrimitka, 'dd.MM.yyyy HH:mm')}"></p>
                 </blockquote>
             </div>
             <input type="hidden" id="xKoordinata" th:value="${nesreca.x}" />
@@ -114,7 +114,7 @@
             <td th:text="${nesreca.ime}">Ime</td>
             <td th:text="${nesreca.prezime}">Prezime</td>
             <td th:text="${nesreca.brojMobitela}">Broj mobitela</td>
-            <td th:text="${nesreca.vrijemePrimitka}">Vrijeme primitka</td>
+            <td th:text="${#temporals.format(nesreca.vrijemePrimitka, 'dd.MM.yyyy HH:mm')}">Vrijeme primitka</td>
             <td><button class="btn btn-secondary" th:onclick="'showDetails(' + ${nesreca.idPoziva} + ');'" th:text="Detalji">Detalji</button></td>
         </tr>
         </tbody>

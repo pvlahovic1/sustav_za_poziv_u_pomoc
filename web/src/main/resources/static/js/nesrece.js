@@ -1,10 +1,15 @@
 $(document).ready(function(){
+    initDatables();
+});
+
+function initDatables() {
     $('#nesreceTable').dataTable({
         "language": {
             "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Croatian.json"
-        }
+        },
+        "order": [[ 4, "desc" ]]
     });
-});
+}
 
 function showDetails(id) {
     $('#poziviModal').modal('show');
@@ -86,7 +91,7 @@ function refreshNesrece() {
         type : 'GET',
         success : function(data) {
             $("#tableWrapper").html(data);
-            $("#nesreceTable").dataTable();
+            initDatables();
         },
         error : function(request,error)
         {
