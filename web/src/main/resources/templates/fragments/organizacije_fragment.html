@@ -105,15 +105,6 @@
     </form>
 </div>
 
-
-
-
-
-
-
-
-
-
 <div th:fragment="organizacije_new_modal_content">
     <form id="organizacijaNewForm">
         <div class="modal-header row">
@@ -176,4 +167,28 @@
         </div>
     </form>
 </div>
+
+<div th:fragment="organizacije_table">
+    <table id="organizacije_table" class="table">
+        <thead>
+        <tr>
+            <th>Naziv</th>
+            <th>Opis</th>
+            <th>Broj hitnih</th>
+            <th>Broj nehitnih</th>
+            <th>Akcije</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="organizacija : ${organizacije}">
+            <td th:text="${organizacija.naziv}">Naziv</td>
+            <td th:text="${organizacija.opis}">Opis</td>
+            <td th:text="${organizacija.brojHitnih}">Broj hitnih</td>
+            <td th:text="${organizacija.brojNehitnih}">Broj nehitnih</td>
+            <td><button class="btn btn-secondary" th:onclick="'showDetails(' + ${organizacija.idOrganizacije} + ');'" th:text="Detalji">Detalji</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 </html>

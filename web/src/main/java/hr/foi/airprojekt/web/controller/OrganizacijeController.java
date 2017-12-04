@@ -23,6 +23,13 @@ public class OrganizacijeController {
         return "organizacije";
     }
 
+    @GetMapping("/organizacije/table")
+    public String getOrganizacijeTable(Model model) {
+        model.addAttribute("organizacije", organizacijeService.fetchAllOrganizacija());
+
+        return "fragments/organizacije_fragment::organizacije_table";
+    }
+
     @GetMapping("/organizacije/{id}")
     public String getOrganizacijaById(@PathVariable("id") int idOrganizacija, Model model) {
         model.addAttribute("org", organizacijeService.fetchById(idOrganizacija));
