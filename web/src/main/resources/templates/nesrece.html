@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>Organizacije</title>
+    <title>Nesreće</title>
 
     <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/css/default-design.css" />
@@ -35,29 +35,8 @@
 <div class="col-xs-12" style="height:50px;"></div>
 <div class="container">
     <div class="row">
-        <div class="col-sm-12 table-wrapper">
-            <table id="nesreceTable" class="table">
-                <thead>
-                <tr>
-                    <th>OIB</th>
-                    <th>Ime</th>
-                    <th>Prezime</th>
-                    <th>Broj mobitela</th>
-                    <th>Vrijeme primitka</th>
-                    <th>Akcije</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="nesreca : ${nesrece}">
-                    <td th:text="${nesreca.oib}">Oib</td>
-                    <td th:text="${nesreca.ime}">Ime</td>
-                    <td th:text="${nesreca.prezime}">Prezime</td>
-                    <td th:text="${nesreca.brojMobitela}">Broj mobitela</td>
-                    <td th:text="${nesreca.vrijemePrimitka}">Vrijeme primitka</td>
-                    <td><button class="btn btn-secondary" th:onclick="'showDetails(' + ${nesreca.idPoziva} + ');'" th:text="Detalji">Detalji</button></td>
-                </tr>
-                </tbody>
-            </table>
+        <div id="tableWrapper" class="col-sm-12 table-wrapper">
+            <div th:replace="fragments/nesrece_fragment::nesreca_table"></div>
         </div>
     </div>
 </div>

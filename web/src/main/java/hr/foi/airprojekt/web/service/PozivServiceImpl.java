@@ -26,7 +26,7 @@ public class PozivServiceImpl implements PozivService {
     public List<NesrecaBasicView> fetchAllNesrece() {
         List<NesrecaBasicView> nesrece = new ArrayList<>();
 
-        List<Poziv> pozivi = pozivReposirtory.findAllByVrijemeRjesavanjaIsNull();
+        List<Poziv> pozivi = pozivReposirtory.findAllByVrijemeRjesavanjaIsNullOrderByVrijemeRjesavanjaDesc();
 
         pozivi.forEach(p -> {
             NesrecaBasicView ntv = new NesrecaBasicView();

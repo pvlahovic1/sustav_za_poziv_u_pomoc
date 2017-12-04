@@ -29,6 +29,7 @@ function oznaciKaoRijeseno(id) {
         type : 'GET',
         success : function(data) {
             $('#poziviModal').modal('hide');
+            refreshNesrece();
         },
         error : function(request,error)
         {
@@ -77,6 +78,21 @@ function getFormData() {
     data['idNesrece'] = $("#idPoziva").val();
 
     return data;
+}
+
+function refreshNesrece() {
+    $.ajax({
+        url : "/nesrece/table",
+        type : 'GET',
+        success : function(data) {
+            $("#tableWrapper").html(data);
+            $("#nesreceTable").dataTable();
+        },
+        error : function(request,error)
+        {
+            console.log("Request: "+JSON.stringify(request));
+        }
+    });
 }
 
 function myMap(x, y) {

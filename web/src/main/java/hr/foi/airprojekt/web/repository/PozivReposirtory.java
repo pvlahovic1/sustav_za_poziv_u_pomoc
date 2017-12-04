@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface PozivReposirtory extends JpaRepository<Poziv, Integer> {
 
-    List<Poziv> findAllByVrijemeRjesavanjaIsNull();
+    List<Poziv> findAllByVrijemeRjesavanjaIsNullOrderByVrijemeRjesavanjaDesc();
 
 }

@@ -94,4 +94,31 @@
         <button type="button" class="btn btn-default" data-dismiss="modal" th:text="Zatvori">Zatvori</button>
     </div>
 </div>
+
+
+<div th:fragment="nesreca_table">
+    <table id="nesreceTable" class="table">
+        <thead>
+        <tr>
+            <th>OIB</th>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Broj mobitela</th>
+            <th>Vrijeme primitka</th>
+            <th>Akcije</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="nesreca : ${nesrece}">
+            <td th:text="${nesreca.oib}">Oib</td>
+            <td th:text="${nesreca.ime}">Ime</td>
+            <td th:text="${nesreca.prezime}">Prezime</td>
+            <td th:text="${nesreca.brojMobitela}">Broj mobitela</td>
+            <td th:text="${nesreca.vrijemePrimitka}">Vrijeme primitka</td>
+            <td><button class="btn btn-secondary" th:onclick="'showDetails(' + ${nesreca.idPoziva} + ');'" th:text="Detalji">Detalji</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 </html>

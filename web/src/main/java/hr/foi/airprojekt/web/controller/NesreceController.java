@@ -48,4 +48,11 @@ public class NesreceController {
         pozivService.makeNesrecaResolved(id);
     }
 
+    @GetMapping("/nesrece/table")
+    public String getNesreceTable(Model model) {
+        model.addAttribute("nesrece", pozivService.fetchAllNesrece());
+
+        return "fragments/nesrece_fragment::nesreca_table";
+    }
+
 }
