@@ -24,8 +24,14 @@ public class UserAreaActivity extends AppCompatActivity {
 
     @OnClick(R.id.bPostavke)
     public void buttonPostavkeClikced(View view) {
-        Intent settingsIntent = new Intent(UserAreaActivity.this, AccountActivity.class);
+        Intent settingsIntent = new Intent(UserAreaActivity.this, SettingsActivity.class);
         UserAreaActivity.this.startActivity(settingsIntent);
+    }
+
+    @OnClick(R.id.bAccount)
+    public void buttonAccountClicked(View view) {
+        Intent accountIntent = new Intent(UserAreaActivity.this, AccountActivity.class);
+        UserAreaActivity.this.startActivity(accountIntent);
     }
 
     @OnClick(R.id.bPozivPomoc)

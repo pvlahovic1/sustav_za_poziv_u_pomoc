@@ -51,6 +51,7 @@
         <activity android:name=".AccountActivity" />
         <activity android:name=".HelpCallActivity" />
         <activity android:name=".HospitalListActivity" />
+        <activity android:name=".SettingsActivity"></activity>
     </application>
 
 </manifest>

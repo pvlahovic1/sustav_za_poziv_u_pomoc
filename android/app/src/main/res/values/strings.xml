@@ -33,7 +33,7 @@
     <string name="ime">Ime</string>
     <string name="prijava">Prijava</string>
     <string name="registracija">Registracija</string>
-    <string name="txt_postavke">Postavke</string>
+    <string name="txt_postavke">Račun</string>
     <string name="txt_poziv_hitne_pomoci">Poziv hitne pomoći</string>
     <string name="txt_lista_hitnih_pomoci">Lista hitnih pomoći</string>
     <string name="poziv_pomoci">Pozovi pomoć</string>
@@ -45,5 +45,7 @@
     <string name="help_message_button_press">Za slanje poziva u pomoć gumb je potrebno držati 5 sekundi</string>
     <string name="display_progress">Dobavljam lokaciju…</string>
     <string name="onShake_call">Poziv u pomoć</string>
+    <string name="bPostavke">Postavke</string>
+    <string name="switchSettings">Shaker service</string>
 
 </resources>
