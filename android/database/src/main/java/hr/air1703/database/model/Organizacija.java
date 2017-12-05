@@ -66,6 +66,16 @@ public class Organizacija extends BaseModel {
         this.y_koordinata = y_koordinata;
     }
 
+    public Organizacija(Organizacija organizacija) {
+        this.idOrganizacija = organizacija.idOrganizacija;
+        this.naziv = organizacija.naziv;
+        this.opis = organizacija.opis;
+        this.brojHitnih = organizacija.brojHitnih;
+        this.brojNehitnih = organizacija.brojNehitnih;
+        this.x_koordinata = organizacija.x_koordinata;
+        this.y_koordinata = organizacija.y_koordinata;
+    }
+
     public int getIdOrganizacija() {
         return idOrganizacija;
     }
