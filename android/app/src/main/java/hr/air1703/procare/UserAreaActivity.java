@@ -24,7 +24,7 @@ public class UserAreaActivity extends AppCompatActivity {
 
     @OnClick(R.id.bPostavke)
     public void buttonPostavkeClikced(View view) {
-        Intent settingsIntent = new Intent(UserAreaActivity.this, SettingsActivity.class);
+        Intent settingsIntent = new Intent(UserAreaActivity.this, AccountActivity.class);
         UserAreaActivity.this.startActivity(settingsIntent);
     }
 
@@ -39,4 +39,5 @@ public class UserAreaActivity extends AppCompatActivity {
         Intent listaHitnihPomoci = new Intent(UserAreaActivity.this, HospitalListActivity.class);
         UserAreaActivity.this.startActivity(listaHitnihPomoci);
     }
+
 }

@@ -21,7 +21,7 @@ import hr.air1703.procare.utils.Hashing;
 
 import static hr.air1703.procare.utils.ApplicationUtils.VALID_EMAIL_ADDRESS_REGEX;
 
-public class SettingsActivity extends AppCompatActivity implements APIResponseListener {
+public class AccountActivity extends AppCompatActivity implements APIResponseListener {
 
     private Korisnik trenutniKorisnik;
 
@@ -36,7 +36,7 @@ public class SettingsActivity extends AppCompatActivity implements APIResponseLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_account);
 
         ButterKnife.bind(this);
         FlowManager.init(new FlowConfig.Builder(this).build());
