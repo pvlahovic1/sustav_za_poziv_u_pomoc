@@ -34,26 +34,9 @@
     <div class="row">
         <div class="col-sm-12 table-wrapper">
             <button type="button" class="btn btn-default" onclick="showDodajNovuBolnicu()">Dodan novu bolnicu</button>
-            <table id="organizacije_table" class="table">
-                <thead>
-                <tr>
-                    <th>Naziv</th>
-                    <th>Opis</th>
-                    <th>Broj hitnih</th>
-                    <th>Broj nehitnih</th>
-                    <th>Akcije</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="organizacija : ${organizacije}">
-                    <td th:text="${organizacija.naziv}">Naziv</td>
-                    <td th:text="${organizacija.opis}">Opis</td>
-                    <td th:text="${organizacija.brojHitnih}">Broj hitnih</td>
-                    <td th:text="${organizacija.brojNehitnih}">Broj nehitnih</td>
-                    <td><button class="btn btn-secondary" th:onclick="'showDetails(' + ${organizacija.idOrganizacije} + ');'" th:text="Detalji">Detalji</button></td>
-                </tr>
-                </tbody>
-            </table>
+            <div id="tableWrapper">
+                <div th:replace="fragments/organizacije_fragment::organizacije_table"></div>
+            </div>
         </div>
     </div>
 </div>

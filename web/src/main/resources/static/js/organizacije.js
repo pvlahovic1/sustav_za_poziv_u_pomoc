@@ -1,10 +1,14 @@
 $(document).ready(function(){
-    $('#organizacije_table').dataTable({
+    initDatables();
+});
+
+function initDatables() {
+    $('#nesreceTable').dataTable({
         "language": {
             "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Croatian.json"
         }
     });
-});
+}
 
 function showDetails(id) {
     $('#organizacijeModal').modal('show');
@@ -28,6 +32,7 @@ function editDetails(id) {
         type : 'GET',
         success : function(data) {
             $("#bolnica-modal-content").html(data);
+            refreshPage();
         },
         error : function(request,error)
         {
@@ -45,6 +50,7 @@ function saveOrganizacija(id) {
 
         success : function(data) {
             $("#bolnica-modal-content").html(data);
+            refreshPage();
         },
         error : function(request,error)
         {
@@ -120,7 +126,17 @@ function saveNovuBolnicu() {
     });
 }
 
-//TODO: Zamjeniti refreshPage sa refreshDataTables
 function refreshPage() {
-    location.reload();
+    $.ajax({
+        url : "/organizacije/table",
+        type : 'GET',
+        success : function(data) {
+            $("#tableWrapper").html(data);
+            initDatables();
+        },
+        error : function(request,error)
+        {
+            console.log("Request: "+JSON.stringify(request));
+        }
+    });
 }
