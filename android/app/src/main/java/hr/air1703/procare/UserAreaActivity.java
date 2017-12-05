@@ -39,22 +39,4 @@ public class UserAreaActivity extends AppCompatActivity {
         Intent listaHitnihPomoci = new Intent(UserAreaActivity.this, HospitalListActivity.class);
         UserAreaActivity.this.startActivity(listaHitnihPomoci);
     }
-
-/*
-    @Override
-    public void onDataLoaded(List<Organizacija> organizacije) {
-        for (Organizacija o : organizacije) {
-            Log.i("service", o.toString());
-            for(TipOrganizacije t : o.getTipOrganizacijeList()) {
-                Log.i("service", t.toString());
-            }
-        }
-    }
-
-    @Override
-    public void onFailure(int messageCode) {
-        Log.i("service", getString(messageCode));
-    }
-*/
-
 }
