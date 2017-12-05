@@ -1,0 +1,5 @@
+<resources>
+    <style name="PreferenceThemeOverlay">
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+    </style>
+</resources>
