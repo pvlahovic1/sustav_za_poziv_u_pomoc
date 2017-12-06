@@ -3,7 +3,7 @@
         <PreferenceCategory
             android:title="Postavke">
             <SwitchPreference
-                android:key="shakeKey"
+                android:key="pref_shakeKey"
                 android:title="Shake service"
                 android:defaultValue="true" />
         </PreferenceCategory>

@@ -1,7 +1,9 @@
 package hr.air1703.procare;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -46,10 +48,19 @@ public class MainActivity extends AppCompatActivity  implements APIResponseListe
         permissionManager = new PermissionManager() {};
         permissionManager.checkAndRequestPermissions(this);
 
-        // Start accelerometer service if it has never been run
-        if (!AccelerometerManager.isListening()){
-            Intent serviceIntent = new Intent(this, AndroidServiceStartOnBoot.class);
-            this.startService(serviceIntent);
+        // Preferences first run default value initialization
+        PreferenceManager.setDefaultValues(this, R.xml.app_preferences, true);
+
+        // check for user settings
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Boolean shakeKey = sharedPreferences.getBoolean("pref_shakeKey", true);
+
+        if(shakeKey) {
+            // Start accelerometer service if it has never been run
+            if (!AccelerometerManager.isListening()) {
+                Intent serviceIntent = new Intent(this, AndroidServiceStartOnBoot.class);
+                this.startService(serviceIntent);
+            }
         }
     }
 
