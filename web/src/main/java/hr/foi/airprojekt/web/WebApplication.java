@@ -17,11 +17,6 @@ public class WebApplication {
 		SpringApplication.run(WebApplication.class, args);
 	}
 
-    @PostConstruct
-    void started() {
-        TimeZone.setDefault(TimeZone.getTimeZone("Europe/Zagreb"));
-    }
-
     @Bean
     public Java8TimeDialect java8TimeDialect() {
 	    return new Java8TimeDialect();
