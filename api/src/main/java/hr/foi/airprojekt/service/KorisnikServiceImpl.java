@@ -43,6 +43,7 @@ public class KorisnikServiceImpl implements KorisnikService {
         stariKorisnik.setLozinka(noviKorisnik.getLozinka());
         stariKorisnik.setBrojMob(noviKorisnik.getBrojMob());
         stariKorisnik.setAdresa(noviKorisnik.getAdresa());
+        stariKorisnik.setMessageToken(noviKorisnik.getMessageToken());
 
         korisnikRepository.save(stariKorisnik);
 
@@ -66,4 +67,5 @@ public class KorisnikServiceImpl implements KorisnikService {
             throw new KorisnikCredentialsException(errorMessage);
         }
     }
+
 }

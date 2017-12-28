@@ -35,4 +35,7 @@ public class Korisnik {
     @Column(name = "broj_mob")
     private String brojMob;
 
+    @Column(name = "message_token")
+    private String messageToken;
+
 }

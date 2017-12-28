@@ -71,7 +71,8 @@ public class KorisnikRestControllerShould {
                 fieldWithPath("adresa").description("Adresa traženog korisnika"),
                 fieldWithPath("mail").description("eMail adresa traženog korisnika"),
                 fieldWithPath("lozinka").description("Lozinka traženog korisnika"),
-                fieldWithPath("brojMob").description("Broj mobitela traženog korisnika") };
+                fieldWithPath("brojMob").description("Broj mobitela traženog korisnika"),
+                fieldWithPath("messageToken").description("Korisnički token") };
 
         when(korisnikService.fetchKorisnikByMailAndLozinka("korisnik@mail.com", "lozinka")).thenReturn(korisnik);
 
@@ -105,7 +106,8 @@ public class KorisnikRestControllerShould {
                 fieldWithPath("adresa").description("Izmjenjena adresa korisnika"),
                 fieldWithPath("mail").description("Izmjenjena eMail adresa korisnika"),
                 fieldWithPath("lozinka").description("Izmjenjena lozinka korisnika"),
-                fieldWithPath("brojMob").description("Izmjenjen broj mobitela korisnika") };
+                fieldWithPath("brojMob").description("Izmjenjen broj mobitela korisnika"),
+                fieldWithPath("messageToken").description("Izmjenjen token korisnika")};
 
 
         when(korisnikService.fetchKorisnikByOib("12345678903")).thenReturn(korisnik);
