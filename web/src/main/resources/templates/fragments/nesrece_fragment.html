@@ -43,6 +43,7 @@
         </div>
     </div>
     <div class="modal-footer">
+        <button type="button" class="btn btn-default" th:onclick="'sendPushNofitication(' + ${nesreca.idPoziva} + ');'">Pošalji notifkaciju</button>
         <button type="button" class="btn btn-default" th:onclick="'oznaciKaoRijeseno(' + ${nesreca.idPoziva} + ');'">Označi kao riješeno</button>
         <button type="button" class="btn btn-default" th:onclick="'urediPodatke(' + ${nesreca.idPoziva} + ');'">Uredi podatke</button>
         <button type="button" class="btn btn-default" data-dismiss="modal" th:text="Zatvori">Zatvori</button>
@@ -89,6 +90,7 @@
         </div>
     </div>
     <div class="modal-footer">
+        <button type="button" class="btn btn-default" th:onclick="'sendPushNofitication(' + ${nesreca.idPoziva} + ');'">Pošalji notifkaciju</button>
         <button type="button" class="btn btn-default" th:onclick="'oznaciKaoRijeseno(' + ${nesreca.idPoziva} + ');'">Označi kao riješeno</button>
         <button type="button" class="btn btn-default" th:onclick="'pohraniUredenuNesrecu(' + ${nesreca.idPoziva} + ');'">Pohrani podatke</button>
         <button type="button" class="btn btn-default" data-dismiss="modal" th:text="Zatvori">Zatvori</button>

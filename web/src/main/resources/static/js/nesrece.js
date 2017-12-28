@@ -100,6 +100,20 @@ function refreshNesrece() {
     });
 }
 
+function sendPushNofitication(nesrecaId) {
+    $.ajax({
+        url : "/nesrece/push_notifikacija/" + nesrecaId,
+        type : 'GET',
+        success : function(data) {
+            alert(data);
+        },
+        error : function(request,error)
+        {
+            console.log("Request: "+JSON.stringify(request));
+        }
+    });
+}
+
 function myMap(x, y) {
     var myLatLng = {lat: parseFloat(x), lng: parseFloat(y)};
 

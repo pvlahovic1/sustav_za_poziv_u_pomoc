@@ -14,5 +14,6 @@ public interface PozivService {
     NesrecaDetailsView updateNesreca(NesrecaEditDto nesrecaEditDto);
     NesrecaEditView fetchEditWrapper(int id);
     void makeNesrecaResolved(int id);
+    String sendPushNotification(int idNesrece);
 
 }

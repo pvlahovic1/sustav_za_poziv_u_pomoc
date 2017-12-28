@@ -1,5 +1,6 @@
 package hr.foi.airprojekt.web.service;
 
+import hr.foi.airprojekt.web.model.Dispatcher;
 import hr.foi.airprojekt.web.model.Korisnik;
 import hr.foi.airprojekt.web.model.Poziv;
 import hr.foi.airprojekt.web.model.wrappers.NesrecaBasicView;
@@ -8,8 +9,13 @@ import hr.foi.airprojekt.web.model.wrappers.NesrecaEditDto;
 import hr.foi.airprojekt.web.model.wrappers.NesrecaEditView;
 import hr.foi.airprojekt.web.repository.OpisNesreceRepository;
 import hr.foi.airprojekt.web.repository.PozivReposirtory;
+import hr.foi.airprojekt.web.sender.PushNotificationSenderService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,10 +23,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PozivServiceImpl implements PozivService {
 
     private final PozivReposirtory pozivReposirtory;
     private final OpisNesreceRepository opisNesreceRepository;
+    private final PushNotificationSenderService pushNotificationSenderService;
 
     @Override
     public List<NesrecaBasicView> fetchAllNesrece() {
@@ -109,6 +117,34 @@ public class PozivServiceImpl implements PozivService {
         p.setVrijemeRjesavanja(LocalDateTime.now());
 
         pozivReposirtory.save(p);
+    }
+
+    @Override
+    public String sendPushNotification(int idNesrece) {
+         Poziv poziv = pozivReposirtory.findOne(idNesrece);
+         Korisnik korisnik = poziv.getKorisnik();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Dispatcher dispatcher = (Dispatcher)authentication.getPrincipal();
+
+        String title = "ProCare poziv u pomoc";
+        String message = "Vas poziv preuzeo je: " + dispatcher.getIme() + " " + dispatcher.getPrezime();
+
+        String povratnaInformacija = "Notifikacija je uspješno poslana!";
+
+        if (StringUtils.isEmpty(korisnik.getMessageToken())) {
+            povratnaInformacija = "Korisnik nema token za slanje notifikacije";
+        } else {
+            try {
+                pushNotificationSenderService.sendPushNotification(korisnik.getMessageToken(), title, message);
+            } catch (Exception e) {
+                log.info(e.getMessage());
+                povratnaInformacija = "Došlo je do greške prilikom slanja notifikacije";
+            }
+        }
+
+        return povratnaInformacija;
     }
 
 }
