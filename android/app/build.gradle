@@ -32,7 +32,6 @@ dependencies {
     compile project(':webservice')
     compile project(':gps')
 
-// recycler and expandable recycler
     compile 'com.bignerdranch.android:expandablerecyclerview:3.0.0-RC1'
     compile 'com.bignerdranch.android:expandablerecyclerview:3.0.0-RC1'
     compile 'com.android.support:appcompat-v7:26.+'
@@ -46,4 +45,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.android.support:preference-v7:26.+'
+
+    compile 'com.google.firebase:firebase-messaging:11.8.0'
 }
+
+apply plugin: 'com.google.gms.google-services'

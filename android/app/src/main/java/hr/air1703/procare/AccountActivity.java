@@ -114,7 +114,15 @@ public class AccountActivity extends AppCompatActivity implements APIResponseLis
             }
 
             if (isOk) {
-                Korisnik korisnik = new Korisnik(trenutniKorisnik.getOib(), ime, prezime, adresa, email, lozinka, brojMobitela);
+                Korisnik korisnik = Korisnik.getAll().get(0);
+
+                korisnik.setIme(ime);
+                korisnik.setPrezime(prezime);
+                korisnik.setAdresa(adresa);
+                korisnik.setMail(email);
+                korisnik.setLozinka(lozinka);
+                korisnik.setBrojMob(brojMobitela);
+
                 UserApi userApi = new UserApi(this);
                 userApi.update(korisnik);
             }

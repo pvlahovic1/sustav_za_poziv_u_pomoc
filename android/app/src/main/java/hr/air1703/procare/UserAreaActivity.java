@@ -1,7 +1,9 @@
 package hr.air1703.procare;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -10,6 +12,7 @@ import com.raizlabs.android.dbflow.config.FlowManager;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import hr.air1703.procare.login.TokenApi;
 
 public class UserAreaActivity extends AppCompatActivity {
 
@@ -20,6 +23,8 @@ public class UserAreaActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         FlowManager.init(new FlowConfig.Builder(this).build());
+
+        checkMessageToken();
     }
 
     @OnClick(R.id.bPostavke)
@@ -44,6 +49,17 @@ public class UserAreaActivity extends AppCompatActivity {
     public void buttonListaHitnaPomocClicked(View view) {
         Intent listaHitnihPomoci = new Intent(UserAreaActivity.this, HospitalListActivity.class);
         UserAreaActivity.this.startActivity(listaHitnihPomoci);
+    }
+
+    private void checkMessageToken() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        if (sharedPreferences.contains("messageToken")) {
+            TokenApi tokenApi = new TokenApi(getApplicationContext());
+            tokenApi.updateToken(sharedPreferences.getString("messageToken", null));
+        }
+
+
     }
 
 }

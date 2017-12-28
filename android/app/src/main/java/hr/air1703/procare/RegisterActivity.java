@@ -115,7 +115,7 @@ public class RegisterActivity extends AppCompatActivity implements APIResponseLi
         }
         if (isOk) {
             lozinka = Hashing.SHA1(lozinka);
-            Korisnik korisnik = new Korisnik(oib, ime, prezime, adresa, email, lozinka, brojMobitela);
+            Korisnik korisnik = new Korisnik(oib, ime, prezime, adresa, email, lozinka, brojMobitela, "");
 
             UserApi userApi = new UserApi(this);
             userApi.register(korisnik);

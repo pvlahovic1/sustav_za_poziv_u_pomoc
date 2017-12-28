@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "275205802863",
+    "firebase_url": "https://air-android-a6a88.firebaseio.com",
+    "project_id": "air-android-a6a88",
+    "storage_bucket": "air-android-a6a88.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:275205802863:android:1c13bcb1ea881d44",
+        "android_client_info": {
+          "package_name": "hr.air1703.procare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "275205802863-q7m8iitsjb7u619i2ae9cmuppv2me5ra.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0UbELrreGYDMoo1ldllaIKrfPCVYzl6U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

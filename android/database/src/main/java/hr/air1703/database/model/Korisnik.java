@@ -48,6 +48,10 @@ public class Korisnik extends BaseModel {
     @SerializedName("brojMob")
     @Expose
     private String brojMob;
+    @Column
+    @SerializedName("messageToken")
+    @Expose
+    private String messageToken;
 
     public Korisnik() {
         this.idKorisnik = -1;
@@ -58,9 +62,10 @@ public class Korisnik extends BaseModel {
         this.mail = "";
         this.lozinka = "";
         this.brojMob = "";
+        this.messageToken = "";
     }
 
-    public Korisnik(String oib, String ime, String prezime, String adresa, String mail, String lozinka, String brojMob) {
+    public Korisnik(String oib, String ime, String prezime, String adresa, String mail, String lozinka, String brojMob, String messageToken) {
         this.oib = oib;
         this.ime = ime;
         this.prezime = prezime;
@@ -68,6 +73,7 @@ public class Korisnik extends BaseModel {
         this.mail = mail;
         this.lozinka = lozinka;
         this.brojMob = brojMob;
+        this.messageToken = messageToken;
     }
 
     public Integer getIdKorisnik() {
@@ -138,6 +144,14 @@ public class Korisnik extends BaseModel {
         return SQLite.select().from(Korisnik.class).queryList();
     }
 
+    public String getMessageToken() {
+        return messageToken;
+    }
+
+    public void setMessageToken(String messageToken) {
+        this.messageToken = messageToken;
+    }
+
     @Override
     public String toString() {
         return "Korisnik: idKorisnik: " + idKorisnik +
@@ -147,6 +161,7 @@ public class Korisnik extends BaseModel {
                 ", adresa: " + adresa +
                 ", mail: " + mail +
                 ", lozinka: " + lozinka +
-                ", brojMob: " + brojMob;
+                ", brojMob: " + brojMob +
+                ", messageToken: " + messageToken;
     }
 }
