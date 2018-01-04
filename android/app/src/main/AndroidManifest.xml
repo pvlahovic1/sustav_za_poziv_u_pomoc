@@ -52,6 +52,7 @@
         <activity android:name=".HelpCallActivity" />
         <activity android:name=".HospitalListActivity" />
         <activity android:name=".SettingsActivity" />
+        <activity android:name=".HospitalMapActivity" />
 
         <meta-data
             android:name="com.google.android.gms.version"
