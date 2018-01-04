@@ -48,5 +48,7 @@
     <string name="onShake_call">Poziv u pomoć</string>
     <string name="bPostavke">Postavke</string>
     <string name="switchSettings">Shaker service</string>
+    <string name="button_map">Karta</string>
+    <string name="button_hospital_lista">Lista</string>
 
 </resources>
