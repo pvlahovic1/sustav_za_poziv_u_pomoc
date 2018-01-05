@@ -65,8 +65,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Organiz
                     position = new LatLng(o.getX_koordinata(), o.getY_koordinata());
                     googleMap.addMarker(new MarkerOptions()
                             .position(position)
-                            .title(o.getNaziv()));
-                    Log.i("map", o.getNaziv());
+                            .title(o.getNaziv())
+                            .snippet(o.getOpis()));
                 }
             }
         }
