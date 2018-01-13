@@ -27,6 +27,7 @@ public class TokenApi {
     public void updateToken(final String token) {
         Korisnik korisnik  = Korisnik.getAll().get(0);
         korisnik.setMessageToken(token);
+        korisnik.save();
 
         mAPIService.sendUpdate(korisnik).enqueue(new Callback<Korisnik>() {
 
