@@ -42,6 +42,7 @@ public class PrivateSecurityConfiguration extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers("/webjars/**")
                 .antMatchers("/css/**")
+                .antMatchers("/json/**")
                 .antMatchers("/js/**");
     }
 

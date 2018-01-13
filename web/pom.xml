@@ -76,7 +76,7 @@
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>datatables</artifactId>
-			<version>1.9.4-2</version>
+			<version>1.10.12</version>
 		</dependency>
 
 		<dependency>

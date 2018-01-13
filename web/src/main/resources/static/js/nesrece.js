@@ -5,9 +5,13 @@ $(document).ready(function(){
 function initDatables() {
     $('#nesreceTable').dataTable({
         "language": {
-            "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Croatian.json"
+            "url": "/json/Croatian.json"
         },
+        columnDefs: [
+            { type: 'de_datetime', targets: 4 }
+        ],
         "order": [[ 4, "desc" ]]
+
     });
 }
 
