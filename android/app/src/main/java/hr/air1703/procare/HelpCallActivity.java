@@ -34,7 +34,6 @@ import hr.air1703.core.poziv.PozivServiceHandler;
 import hr.air1703.core.poziv.RazloziDataLoadedListener;
 import hr.air1703.core.poziv.RazloziPozivaDataLoader;
 import hr.air1703.database.model.Razlog;
-import hr.air1703.database.settings.LocalApplicationLog;
 import hr.air1703.procare.loaders.RazlogLocalDBDataLoader;
 import hr.air1703.procare.loaders.RazlogWebDataLoader;
 import hr.air1703.procare.poziv.PozivButtonService;
@@ -44,6 +43,7 @@ import hr.air1703.procare.utils.ApplicationUtils;
 import hr.air1703.procare.utils.GPSPresenter;
 import hr.air1703.procare.utils.GPSPresenter.GPSView;
 import hr.air1703.procare.utils.GPSService;
+import hr.air1703.core.sharedpreferences.SharedPreferencesWorker;
 
 
 public class HelpCallActivity extends AppCompatActivity implements GPSView,
@@ -80,6 +80,8 @@ public class HelpCallActivity extends AppCompatActivity implements GPSView,
         permissionManager = new PermissionManager() {};
         permissionManager.checkAndRequestPermissions(this);
 
+        SharedPreferencesWorker.getInstance(getApplicationContext());
+
         loadRazloziData();
         PozivService pozivService = new PozivButtonService(this, buttonPozivPomoci, razloziSpiner);
         ((PozivButtonService) pozivService).setupButtonFunction();
@@ -113,23 +115,15 @@ public class HelpCallActivity extends AppCompatActivity implements GPSView,
     }
 
     private void loadRazloziData() {
+        SharedPreferencesWorker sharedPreferencesWorker = SharedPreferencesWorker.getInstance();
+
         RazloziPozivaDataLoader razloziPozivaDataLoader;
 
-        if (!LocalApplicationLog.getAll().isEmpty()) {
-            LocalApplicationLog localLog = LocalApplicationLog.getAll().get(0);
-
-            if (localLog.getVrijemeDohvacanjaRazlogaPoziva() != null) {
-                if (ApplicationUtils.getDateDiff(localLog.getVrijemeDohvacanjaRazlogaPoziva(),
-                        Calendar.getInstance().getTime(), TimeUnit.MINUTES) > 5) {
-                    razloziPozivaDataLoader = new RazlogWebDataLoader();
-                } else {
-                    razloziPozivaDataLoader = new RazlogLocalDBDataLoader();
-                }
-            } else {
-                razloziPozivaDataLoader = new RazlogWebDataLoader();
-            }
-        } else {
+        if (ApplicationUtils.getDateDiff(sharedPreferencesWorker.getVrijemeDohvacanjaRazlogaPoziva(),
+                Calendar.getInstance().getTime(), TimeUnit.MINUTES) > 5) {
             razloziPozivaDataLoader = new RazlogWebDataLoader();
+        } else {
+            razloziPozivaDataLoader = new RazlogLocalDBDataLoader();
         }
 
         razloziPozivaDataLoader.loadRazlozi(this);

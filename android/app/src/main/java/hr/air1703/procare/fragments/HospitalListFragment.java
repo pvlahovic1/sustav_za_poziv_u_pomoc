@@ -1,9 +1,9 @@
 package hr.air1703.procare.fragments;
 
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,8 +18,8 @@ import java.util.concurrent.TimeUnit;
 
 import hr.air1703.core.OrganizacijaDataLoadedListener;
 import hr.air1703.core.OrganizacijeDataLoader;
+import hr.air1703.core.sharedpreferences.SharedPreferencesWorker;
 import hr.air1703.database.model.Organizacija;
-import hr.air1703.database.settings.LocalApplicationLog;
 import hr.air1703.procare.R;
 import hr.air1703.procare.adapters.ExpandableHospitalsItem;
 import hr.air1703.procare.adapters.HospitalsRecycleAdapter;
@@ -46,21 +46,13 @@ public class HospitalListFragment extends Fragment implements OrganizacijaDataLo
 
         OrganizacijeDataLoader odl;
 
-        if (!LocalApplicationLog.getAll().isEmpty()) {
-            LocalApplicationLog localLog = LocalApplicationLog.getAll().get(0);
+        SharedPreferencesWorker sharedPreferencesWorker = SharedPreferencesWorker.getInstance(getActivity().getApplicationContext());
 
-            if (localLog.getVrijemeDohvacanjaOrganizacija() != null) {
-                if (ApplicationUtils.getDateDiff(localLog.getVrijemeDohvacanjaOrganizacija(),
-                        Calendar.getInstance().getTime(), TimeUnit.MINUTES) > 5) {
-                    odl = new OrganizacijaWebDataLoader();
-                } else {
-                    odl = new OrganizacijaLocalDBDataLoader();
-                }
-            } else {
-                odl = new OrganizacijaWebDataLoader();
-            }
-        } else {
+        if (ApplicationUtils.getDateDiff(sharedPreferencesWorker.getVrijemeDohvacanjaOrganizacija(),
+                Calendar.getInstance().getTime(), TimeUnit.MINUTES) > 5) {
             odl = new OrganizacijaWebDataLoader();
+        } else {
+            odl = new OrganizacijaLocalDBDataLoader();
         }
 
         odl.loadOrganizacije(this);

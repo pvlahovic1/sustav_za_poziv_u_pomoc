@@ -7,9 +7,9 @@ import java.util.List;
 
 import hr.air1703.core.OrganizacijaDataLoadedListener;
 import hr.air1703.core.OrganizacijeDataLoader;
+import hr.air1703.core.sharedpreferences.SharedPreferencesWorker;
 import hr.air1703.database.model.Organizacija;
 import hr.air1703.database.model.TipOrganizacije;
-import hr.air1703.database.settings.LocalApplicationLog;
 import hr.air1703.webservice.remote.APIService;
 import hr.air1703.webservice.remote.ApiUtils;
 import hr.air1703.webservice.remote.wrapper.OrganizacijaTipWrapper;
@@ -39,6 +39,7 @@ public class OrganizacijaWebDataLoader extends OrganizacijeDataLoader {
             @Override
             public void onResponse(Call<List<OrganizacijaWrapper>> call, Response<List<OrganizacijaWrapper>> response) {
                 if (response.isSuccessful()) {
+                    SharedPreferencesWorker sharedPreferencesWorker = SharedPreferencesWorker.getInstance();
                     List<OrganizacijaWrapper> oranizacije = response.body();
                     TipOrganizacije.deleteAll();
                     Organizacija.deleteAll();
@@ -64,21 +65,12 @@ public class OrganizacijaWebDataLoader extends OrganizacijeDataLoader {
                         }
                     }
 
-                    LocalApplicationLog localApplicationLog;
-                    if (LocalApplicationLog.getAll().isEmpty()) {
-                        localApplicationLog = new LocalApplicationLog();
-                    } else {
-                        localApplicationLog = LocalApplicationLog.getAll().get(0);
-                    }
-
-                    localApplicationLog.setVrijemeDohvacanjaOrganizacija(Calendar.getInstance().getTime());
-                    localApplicationLog.save();
+                    sharedPreferencesWorker.setVrijemeDohvacanjaOrganizacija(Calendar.getInstance().getTime());
 
                     Log.i("DataLoader", "Fetching data from WebServer");
 
                     organizacijaDataLoadedListener.onDataLoaded(Organizacija.getAll());
                 }
-
             }
 
             @Override

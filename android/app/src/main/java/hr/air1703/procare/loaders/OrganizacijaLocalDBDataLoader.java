@@ -2,12 +2,9 @@ package hr.air1703.procare.loaders;
 
 import android.util.Log;
 
-import java.util.Calendar;
-
 import hr.air1703.core.OrganizacijaDataLoadedListener;
 import hr.air1703.core.OrganizacijeDataLoader;
 import hr.air1703.database.model.Organizacija;
-import hr.air1703.database.settings.LocalApplicationLog;
 import hr.air1703.procare.R;
 
 /**

@@ -5,8 +5,8 @@ import java.util.List;
 
 import hr.air1703.core.poziv.RazloziDataLoadedListener;
 import hr.air1703.core.poziv.RazloziPozivaDataLoader;
+import hr.air1703.core.sharedpreferences.SharedPreferencesWorker;
 import hr.air1703.database.model.Razlog;
-import hr.air1703.database.settings.LocalApplicationLog;
 import hr.air1703.procare.R;
 import hr.air1703.webservice.remote.APIService;
 import hr.air1703.webservice.remote.ApiUtils;
@@ -34,6 +34,7 @@ public class RazlogWebDataLoader extends RazloziPozivaDataLoader {
             @Override
             public void onResponse(Call<List<Razlog>> call, Response<List<Razlog>> response) {
                 if (response.isSuccessful()) {
+                    SharedPreferencesWorker sharedPreferencesWorker = SharedPreferencesWorker.getInstance();
                     Razlog.deleteAll();
 
                     List<Razlog> razlozi = response.body();
@@ -42,15 +43,7 @@ public class RazlogWebDataLoader extends RazloziPozivaDataLoader {
                         razlog.save();
                     }
 
-                    LocalApplicationLog localApplicationLog;
-                    if (LocalApplicationLog.getAll().isEmpty()) {
-                        localApplicationLog = new LocalApplicationLog();
-                    } else {
-                        localApplicationLog = LocalApplicationLog.getAll().get(0);
-                    }
-
-                    localApplicationLog.setVrijemeDohvacanjaRazlogaPoziva(Calendar.getInstance().getTime());
-                    localApplicationLog.save();
+                    sharedPreferencesWorker.setVrijemeDohvacanjaRazlogaPoziva(Calendar.getInstance().getTime());
 
                     razloziDataLoadedListener.onRazloziPozivaDataLoaded(Razlog.getAll());
                 } else {

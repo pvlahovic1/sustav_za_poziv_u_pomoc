@@ -3,7 +3,7 @@ package hr.air1703.procare.poziv;
 import java.util.Calendar;
 
 import hr.air1703.core.poziv.PozivServiceHandler;
-import hr.air1703.database.settings.LocalApplicationLog;
+import hr.air1703.core.sharedpreferences.SharedPreferencesWorker;
 import hr.air1703.procare.R;
 import hr.air1703.webservice.remote.APIService;
 import hr.air1703.webservice.remote.ApiUtils;
@@ -32,15 +32,9 @@ public class PozivApi {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    LocalApplicationLog localApplicationLog;
-                    if (LocalApplicationLog.getAll().isEmpty()) {
-                        localApplicationLog = new LocalApplicationLog();
-                    } else {
-                        localApplicationLog = LocalApplicationLog.getAll().get(0);
-                    }
+                    SharedPreferencesWorker sharedPreferencesWorker = SharedPreferencesWorker.getInstance();
 
-                    localApplicationLog.setVrijemeSlanjaPozivaUPomoc(Calendar.getInstance().getTime());
-                    localApplicationLog.save();
+                    sharedPreferencesWorker.setVrijemeSlanjaPozivaUPomoc(Calendar.getInstance().getTime());
 
                     pozivServiceHandler.onPozivSucceeded();
                 } else {
