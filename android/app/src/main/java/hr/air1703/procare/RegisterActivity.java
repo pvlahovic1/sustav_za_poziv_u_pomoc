@@ -21,13 +21,15 @@ import static hr.air1703.procare.utils.ApplicationUtils.isMailValid;
 
 public class RegisterActivity extends AppCompatActivity implements APIResponseListener {
 
-    private EditText editTextIme;
-    private EditText editTextPrezime;
-    private EditText editTextEmail;
-    private EditText editTextAdresa;
-    private EditText editTextOib;
-    private EditText editTextBrojMobitela;
-    private EditText editTextLozinka;
+    public EditText editTextIme;
+    public EditText editTextPrezime;
+    public EditText editTextEmail;
+    public EditText editTextAdresa;
+    public EditText editTextOib;
+    public EditText editTextBrojMobitela;
+    public EditText editTextLozinka;
+
+    public UserApi userApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,8 @@ public class RegisterActivity extends AppCompatActivity implements APIResponseLi
         editTextBrojMobitela = (EditText) findViewById(R.id.etBrojMob);
         editTextOib = (EditText) findViewById(R.id.etOIB);
         editTextLozinka = (EditText) findViewById(R.id.pPassword);
+
+        userApi = new UserApi(this);
     }
 
     @OnClick(R.id.buttonRegistracija)
@@ -115,7 +119,6 @@ public class RegisterActivity extends AppCompatActivity implements APIResponseLi
             lozinka = Hashing.SHA1(lozinka);
             Korisnik korisnik = new Korisnik(oib, ime, prezime, adresa, email, lozinka, brojMobitela, "");
 
-            UserApi userApi = new UserApi(this);
             userApi.register(korisnik);
         }
 
