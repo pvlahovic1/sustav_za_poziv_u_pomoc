@@ -21,15 +21,16 @@ import static hr.air1703.procare.utils.ApplicationUtils.isMailValid;
 
 public class AccountActivity extends AppCompatActivity implements APIResponseListener {
 
-    private Korisnik trenutniKorisnik;
+    public Korisnik trenutniKorisnik;
 
-    private TextView textViewOib;
-    private EditText editTextIme;
-    private EditText editTextPrezime;
-    private EditText editTextEmail;
-    private EditText editTextAdresa;
-    private EditText editTextBrojMobitela;
-    private EditText editTextLozinka;
+    public UserApi userApi;
+    public TextView textViewOib;
+    public EditText editTextIme;
+    public EditText editTextPrezime;
+    public EditText editTextEmail;
+    public EditText editTextAdresa;
+    public EditText editTextBrojMobitela;
+    public EditText editTextLozinka;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,8 @@ public class AccountActivity extends AppCompatActivity implements APIResponseLis
         editTextAdresa = (EditText) findViewById(R.id.etAdresa);
         editTextBrojMobitela = (EditText) findViewById(R.id.etBrojMob);
         editTextLozinka = (EditText) findViewById(R.id.pPassword);
+
+        userApi = new UserApi(this);
 
         fillUserData();
 
@@ -112,17 +115,15 @@ public class AccountActivity extends AppCompatActivity implements APIResponseLis
             }
 
             if (isOk) {
-                Korisnik korisnik = Korisnik.getAll().get(0);
 
-                korisnik.setIme(ime);
-                korisnik.setPrezime(prezime);
-                korisnik.setAdresa(adresa);
-                korisnik.setMail(email);
-                korisnik.setLozinka(lozinka);
-                korisnik.setBrojMob(brojMobitela);
+                trenutniKorisnik.setIme(ime);
+                trenutniKorisnik.setPrezime(prezime);
+                trenutniKorisnik.setAdresa(adresa);
+                trenutniKorisnik.setMail(email);
+                trenutniKorisnik.setLozinka(lozinka);
+                trenutniKorisnik.setBrojMob(brojMobitela);
 
-                UserApi userApi = new UserApi(this);
-                userApi.update(korisnik);
+                userApi.update(trenutniKorisnik);
             }
     }
 
