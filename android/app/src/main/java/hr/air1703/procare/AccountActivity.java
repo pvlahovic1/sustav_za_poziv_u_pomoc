@@ -10,8 +10,6 @@ import android.widget.Toast;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
-import java.util.regex.Matcher;
-
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hr.air1703.core.APIResponseListener;
@@ -19,7 +17,7 @@ import hr.air1703.database.model.Korisnik;
 import hr.air1703.procare.login.UserApi;
 import hr.air1703.procare.utils.Hashing;
 
-import static hr.air1703.procare.utils.ApplicationUtils.VALID_EMAIL_ADDRESS_REGEX;
+import static hr.air1703.procare.utils.ApplicationUtils.isMailValid;
 
 public class AccountActivity extends AppCompatActivity implements APIResponseListener {
 
@@ -130,11 +128,6 @@ public class AccountActivity extends AppCompatActivity implements APIResponseLis
 
     private boolean isBrojMobitelaOk(String brojMobitela) {
         return brojMobitela.length() > 8 && brojMobitela.length() < 13;
-    }
-
-    private boolean isMailValid(String email) {
-        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(email);
-        return matcher.find();
     }
 
     private void fillUserData() {

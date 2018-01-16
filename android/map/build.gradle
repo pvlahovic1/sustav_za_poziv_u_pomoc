@@ -31,6 +31,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:11+'
     compile 'com.github.karanchuri:PermissionManager:0.1.0'
     compile 'com.google.android.gms:play-services-location:11.6.0'
+    testCompile 'junit:junit:4.12'
     compile project(path: ':core')
     compile project(path: ':webservice')
 }
