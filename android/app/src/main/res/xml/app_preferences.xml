@@ -4,7 +4,7 @@
             android:title="Postavke">
             <SwitchPreference
                 android:key="pref_shakeKey"
-                android:title="Shake service"
+                android:title="@string/switchSettings"
                 android:defaultValue="true" />
         </PreferenceCategory>
 </PreferenceScreen>

@@ -42,12 +42,12 @@
     <string name="alert_help_message_prefix">Već ste uputili poziv hitnoj pomoći unutar proteklih 15 minuta. Sljedeći poziv je moguć za</string>
     <string name="alert_help_message_postfix">minuta</string>
     <string name="alert_help_title">Upozorenje!</string>
-    <string name="alert_help_button_ok">Uredu</string>
+    <string name="alert_help_button_ok">U redu</string>
     <string name="help_message_button_press">Za slanje poziva u pomoć gumb je potrebno držati 5 sekundi</string>
     <string name="display_progress">Dobavljam lokaciju…</string>
     <string name="onShake_call">Poziv u pomoć</string>
     <string name="bPostavke">Postavke</string>
-    <string name="switchSettings">Shaker service</string>
+    <string name="switchSettings">Servis za trešnju</string>
     <string name="button_map">Karta</string>
     <string name="button_hospital_lista">Lista</string>
 
