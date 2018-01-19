@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.raizlabs.android.dbflow.config.FlowConfig;
@@ -25,6 +27,29 @@ public class UserAreaActivity extends AppCompatActivity {
         FlowManager.init(new FlowConfig.Builder(this).build());
 
         checkMessageToken();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_settings:
+                Intent settingsIntent = new Intent(UserAreaActivity.this, SettingsActivity.class);
+                UserAreaActivity.this.startActivity(settingsIntent);
+                return true;
+            case R.id.action_account:
+                Intent accountIntent = new Intent(UserAreaActivity.this, AccountActivity.class);
+                UserAreaActivity.this.startActivity(accountIntent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @OnClick(R.id.bPostavke)
