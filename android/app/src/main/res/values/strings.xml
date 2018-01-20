@@ -8,6 +8,7 @@
     <string name="error_razlozi_service_fail">Došlo je do greške prilikom dohvaćanja podataka sa servera</string>
     <string name="error_sending_poziv_u_pomoc">Došlo je do greške prilikom slanja poziva u pomoć</string>
     <string name="error_razlog_nije_naveden">Za slanje poziva u pomoć potrebno je odabrati razlog poziva</string>
+    <string name="error_lokacija_nije_dohvacena">Vaša lokacija nija dohvačena</string>
 
     <string name="error_ime_field">Ime ne smije biti prazno</string>
     <string name="error_prezime_field">Prezime ne smije biti prazno</string>

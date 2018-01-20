@@ -50,6 +50,8 @@ public abstract class PozivService {
                     PozivApi pozivApi = new PozivApi(pozivServiceHandler);
 
                     pozivApi.sendPozivUPomoc(poziv);
+                } else {
+                    pozivServiceHandler.onPozivFailure(R.string.error_lokacija_nije_dohvacena);
                 }
             } else {
                 pozivServiceHandler.onTimeDifferenceProblem(minTimeDiff - timeDiff);
