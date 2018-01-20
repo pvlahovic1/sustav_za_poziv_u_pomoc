@@ -114,4 +114,10 @@
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent" />
 
+    <ImageView
+        android:id="@+id/imageViewAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/procare2" />
+
 </android.support.constraint.ConstraintLayout>

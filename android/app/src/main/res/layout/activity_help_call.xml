@@ -41,12 +41,11 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageViewHelpCall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/procare2"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        />
 
     <ProgressBar
         android:id="@+id/progressStatus"
