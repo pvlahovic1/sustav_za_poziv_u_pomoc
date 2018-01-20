@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,6 +59,8 @@ public class HelpCallActivity extends AppCompatActivity implements GPSView,
     Button buttonPozivPomoci;
     @BindView(R.id.gpsText)
     TextView locationText;
+    @BindView(R.id.progressStatus)
+    ProgressBar progressBar;
 
     // GPS klasa u kojoj je interface za lokaciju
     private GPSPresenter gpsPresenter;
@@ -83,9 +86,8 @@ public class HelpCallActivity extends AppCompatActivity implements GPSView,
         SharedPreferencesWorker.getInstance(getApplicationContext());
 
         loadRazloziData();
-        PozivService pozivService = new PozivButtonService(this, buttonPozivPomoci, razloziSpiner);
+        PozivService pozivService = new PozivButtonService(this, buttonPozivPomoci, razloziSpiner, progressBar);
         ((PozivButtonService) pozivService).setupButtonFunction();
-
 
         gpsPresenter = new GPSPresenter(this);
         displayProgress();
